@@ -27,6 +27,10 @@ User.init(
       validate: {
         len: [8],
       },
+      is: {
+        args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\S).{8,}$/],
+        msg: 'Password must include an uppercase letter, a lowercase letter, a number, and no spaces.',
+      },
     },
     created_at: {
       type: DataTypes.DATE,
