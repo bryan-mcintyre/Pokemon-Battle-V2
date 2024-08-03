@@ -21,14 +21,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-      },
-    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -36,13 +28,20 @@ User.init(
         len: [8],
       },
     },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: false,
+    },
   },
   {
     // Hooks are used so that if a user is created or updated, the password is encrypted before being stored in the database.
     hooks: {
       beforeSave: async (newUserData) => {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        return newUserData;
+        if (newUserData.changed('password')) {
+          newUserData.password = await bcrypt.hash(newUserData.password, 10);
+          return newUserData;
+        }
       },
     },
     sequelize,
