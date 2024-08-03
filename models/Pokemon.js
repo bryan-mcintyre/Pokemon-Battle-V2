@@ -51,6 +51,7 @@ Pokemon.init(
                 model: 'user',
                 key: 'id',
             },
+            onDelete: 'CASCADE',
         },
         pokemon_level_id: {
             type: DataTypes.INTEGER,

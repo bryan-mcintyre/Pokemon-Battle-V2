@@ -59,6 +59,7 @@ PokemonStats.init(
                 model: 'pokemon',
                 key: 'id',
             },
+            onDelete: 'CASCADE',
         },
     },
     {

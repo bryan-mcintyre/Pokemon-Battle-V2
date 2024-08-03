@@ -3,13 +3,14 @@ const Wallet = require('./Wallet');
 const Pokemon = require('./Pokemon');
 const PokemonStats = require('./PokemonStats');
 const PokemonLevel = require('./PokemonLevel');
+const PokemonAbility = require('./PokemonAbility');
+const Ability = require('./Ability');
 
 // Defining Relationships
 
 // oneToOne: User - Wallet
 User.hasOne(Wallet, {
     foreignKey: 'user_id',
-    onDelete: 'CASCADE',
 });
 Wallet.belongsTo(User, {
     foreignKey: 'user_id',
@@ -18,8 +19,8 @@ Wallet.belongsTo(User, {
 // oneToMany: User - Pokemon
 User.hasMany(Pokemon, {
     foreignKey: 'user_id',
-    onDelete: 'CASCADE',
 });
+// manyToOne: Pokemon - User
 Pokemon.belongsTo(User, {
     foreignKey: 'user_id',
 });
@@ -27,18 +28,33 @@ Pokemon.belongsTo(User, {
 // oneToOne: Pokemon - PokemonStats
 Pokemon.hasOne(PokemonStats, {
     foreignKey: 'pokemon_id',
-    onDelete: 'CASCADE',
 });
+// oneToOne: PokemonStats - Pokemon
 PokemonStats.belongsTo(Pokemon, {
     foreignKey: 'pokemon_id',
 });
 
-// oneToOne: Pokemon - PokemonLevel
+// manyToOne: Pokemon - PokemonLevel
 Pokemon.belongsTo(PokemonLevel, {
     foreignKey: 'pokemon_level_id',
 });
+// oneToMany PokemonLevel - Pokemon
 PokemonLevel.hasMany(Pokemon, {
     foreignKey: 'pokemon_level_id',
+});
+
+// oneToMany: Pokemon - Ability
+Pokemon.belongsToMany(Ability, {
+    through: PokemonAbility,
+    foreignKey: 'pokemon_id',
+    otherKey: 'ability_id',
+});
+
+// manyToOne Ability - Pokemon
+Ability.belongsToMany(Pokemon, {
+    through: PokemonAbility,
+    foreignKey: 'ability_id',
+    otherKey: 'pokemon_id',
 });
 
 module.exports = {
