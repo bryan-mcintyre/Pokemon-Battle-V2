@@ -25,7 +25,7 @@ Pokemon.init(
             defaultValue: true,
         },
         favorite: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
         },
