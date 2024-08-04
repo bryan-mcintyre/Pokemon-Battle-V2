@@ -5,6 +5,9 @@ const PokemonStats = require('./PokemonStats');
 const PokemonLevel = require('./PokemonLevel');
 const PokemonAbility = require('./PokemonAbility');
 const Ability = require('./Ability');
+const Store = require('./Store');
+const Item = require('./Item');
+const Backpack = require('./Backpack');
 
 // Defining Relationships
 
@@ -57,10 +60,47 @@ Ability.belongsToMany(Pokemon, {
     otherKey: 'pokemon_id',
 });
 
+// oneToMany: User - Store
+User.hasMany(Store, {
+    foreignKey: 'user_id',
+});
+Store.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// manyToOne: Store - Item
+Store.belongsTo(Item, {
+    foreignKey: 'item_id',
+});
+Item.hasMany(Store, {
+    foreignKey: 'item_id',
+});
+
+// oneToMany: User - Backpack
+User.hasMany(Backpack, {
+    foreignKey: 'user_id',
+});
+Backpack.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// manyToOne: Backpack - Item
+Backpack.belongsTo(Item, {
+    foreignKey: 'item_id',
+});
+Item.hasMany(Backpack, {
+    foreignKey: 'item_id',
+});
+
 module.exports = {
     User,
     Wallet,
     Pokemon,
     PokemonStats,
     PokemonLevel,
+    PokemonAbility,
+    Ability,
+    Store,
+    Backpack,
+    Item,
 };
