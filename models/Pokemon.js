@@ -75,10 +75,9 @@ Pokemon.init(
                 if (currentLevel >= maxLevel) {
 
                     // if yes, then pokemon.exp = max value experience
-                    pokemon.experience = await PokemonLevel.findOne({
-                        where: { level: currentLevel }
-                    }).then(level => level.experience);
-
+                    const levelData = await PokemonLevel.findOne({ where: { level: currentLevel } });
+                    pokemon.experience = levelData.experience;
+                    pokemon.pokemon_level_id = maxLevel.id;
                     return;
                 }
 
@@ -93,7 +92,9 @@ Pokemon.init(
                 if (nextLevel && pokemon.experience >= nextLevel.experience) {
 
                     pokemon.level = nextLevel.level;
+                    pokemon.pokemon_level_id = nextLevel.id;
                     if (pokemon.level === maxLevel) {
+                        pokemon.pokemon_level_id = nextLevel.id;
                         pokemon.experience = nextLevel.experience;
                     }
                 }
