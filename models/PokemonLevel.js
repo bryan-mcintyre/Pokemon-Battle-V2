@@ -26,7 +26,7 @@ PokemonLevel.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                min: 100,
+                min: 0,
                 max: 5000
             }
         },

@@ -52,6 +52,7 @@ PokemonStats.init(
             validate: {
                 min: 0,
             },
+            defaultValue: 0
         },
         pokemon_id: {
             type: DataTypes.INTEGER,
