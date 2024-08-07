@@ -79,10 +79,10 @@ footer {
   color: var(--light);
   width: 100%;
   text-align: center;
-  padding: 10px 0;
-  position: absolute;
-  bottom: 0;
+  padding-top: 20px;
+  margin-top: auto;
 }
+
 a:hover {
   color: #FFCC00;
 }
@@ -109,6 +109,53 @@ a:hover {
   border-width: thick;
   background-color: var(--tertiary);
   color: var(--dark);
+}
+
+.login-form {
+  background-color: var(--tertiary);
+  border: 3px solid var(--dark);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
+.login-form .control {
+  margin-bottom: 15px;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--dark);
+  font-weight: bold;
+}
+
+.login-form .input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.login-form .button {
+  background-color: var(--primary);
+  color: var(--light);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-form .button:hover {
+  background-color: var(--dark);
 }
 
 .battle-container {
@@ -140,20 +187,24 @@ a:hover {
 .bg-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 50%;
-  height: 500px;
-  /* Adjust as needed */
-  position: relative;
-  padding: 15px;
+  gap: 10px; /* Space between items */
+  padding: 20px;
   background-color: var(--secondary);
   border-radius: 10px;
+  border-style: inset;
+  border-color: #FFCC00;
+  box-sizing:border-box;
+  width: 80%; 
+  margin: auto; /* Center the container */
 }
 
 .item-card {
   border: solid, 5px, #1C3AA9;
   background-color: var(--light);
+  display: flex;
+  justify-content: space-around;
 }
+
 .link {
   color:rgb(228, 46, 1);
   text-decoration: underline;
@@ -179,6 +230,75 @@ a:hover {
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
+}
+
+.storage-pokemon {
+  display: flex;
+  align-content: center;
+  color: var(--light);
+  padding: 10px;
+  font-size: 25px;
+  text-shadow: 2px 2px 2px #29396A;
+}
+
+.store-item {
+  background-color: var(--light);
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  width: 200px;
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.store-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.store-item h2 {
+  color:#FFCC00;
+  text-shadow: 2px 2px 1px #1C3AA9;
+  text-decoration: underline;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.store-item p {
+  margin: 5px 0;
+  color:#1C3AA9;
+  text-shadow: 1px 1px 1px #FFCC00;
+}
+
+.quantity-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.purchase-button {
+  background-color: #3B4CCA;
+  color: var(--light);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center; /* Ensure text is centered */
+  font-size: 16px; /* Adjust font size as needed */
+  font-weight: bold; /* Make text bold */
+  display: inline-block; /* Make the button inline-block */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.purchase-button:hover {
+  background-color: var(--dark);
 }
 
 #image-left {
@@ -215,4 +335,5 @@ a:hover {
   font-weight: 400;
   font-style: normal;
   padding-top: 25px;
+  padding-bottom: 20px;
 }
