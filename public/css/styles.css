@@ -137,6 +137,23 @@ a:hover {
   text-align: center;
 }
 
+.bg-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  height: 500px;
+  /* Adjust as needed */
+  position: relative;
+  padding: 15px;
+  background-color: var(--secondary);
+  border-radius: 10px;
+}
+
+.item-card {
+  border: solid, 5px, #1C3AA9;
+  background-color: var(--light);
+}
 .link {
   color:rgb(228, 46, 1);
   text-decoration: underline;
