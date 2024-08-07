@@ -3,7 +3,7 @@ const withAuth = require('../utils/auth');
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability } = require('../models');
 
 // TODO: Add auth check and save session
-router.get('/:id', async (req, res) => {
+router.get('/:id', withAuth,async (req, res) => {
     try {
 
         const userData = await User.findByPk(req.params.id, {

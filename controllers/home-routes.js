@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const {Pokemon, PokemonStats} = require('../models');
+const {Pokemon, PokemonStats, Item} = require('../models');
 const dashboardRoutes = require('./api/dashboard');
+const withAuth = require('../utils/auth');
 
 // Renders the login page
 router.get('/login', (req, res) => {
@@ -65,11 +66,14 @@ router.get('/battle', async (req, res) => {
 res.render('battle');
 });
 //Backpack route
-router.get('/backpack', async (req, res) => {
+router.get('/backpack', withAuth, async (req, res) => {
     res.render('backpack');
 });
 //Store route
-router.get('/store', async (req, res) => {
+router.get('/store', withAuth,async (req, res) => {
+    try{
+        const itemData = await Item
+    }
     res.render('store');
 });
 
