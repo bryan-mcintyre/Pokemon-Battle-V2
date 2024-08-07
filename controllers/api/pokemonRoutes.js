@@ -9,8 +9,7 @@ router.post('/', async (req, res) => {
     try {
         const pokemon = await fetchRandomPokemon();
 
-        const user = await User.findByPk(2);
-
+        const user = await User.findByPk(1);
         const data = await createPokemonForUser(user.id, pokemon);
 
 

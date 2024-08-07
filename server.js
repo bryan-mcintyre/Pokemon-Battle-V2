@@ -29,7 +29,7 @@ const hbs = exphbs.create({});
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views')); 
+app.set('views', path.join(__dirname, 'views'));
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {

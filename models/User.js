@@ -19,6 +19,7 @@ User.init(
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         email: {
             type: DataTypes.STRING,
@@ -32,7 +33,14 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [8],
+                len: {
+                    args: [8],
+                    msg: 'Password len min 8 characters'
+                }
+            },
+            is: {
+                args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\S).{8,}$/],
+                msg: 'Password must include an uppercase letter, a lowercase letter, a number, and no spaces.',
             },
         },
         createdAt: {
