@@ -9,17 +9,11 @@
     </nav>
   </header>
 
-<div>
-    <h2 id="home-color">PokéStore 🏪</h2>
-    {{!-- Show how many items --}}
-</div>
-<div class="bg-container">
-    
-    {{!-- {{#each items}} --}}
-    {{!-- This should call the object {{item}} partials?--}}
-    <div class="item-card"> item </div>
-    <div class="item-card"> item 2 </div>
-{{!-- {{/each}} --}}
-</div>
+<main>
+  <h2 id="home-color">PokéStore 🏪</h2>
+  <div class="bg-container" id="store-items"></div>
+</main>
 
+<script src="/js/store.js"></script>
 <script src="/js/logout.js"></script>
+
