@@ -40,8 +40,7 @@ header {
 }
 
 nav {
-  background-color: var(--primary);
-  /* Match header background */
+  padding: 25px;
 }
 
 nav ul {
@@ -49,7 +48,7 @@ nav ul {
   /* Remove list bullets */
   display: flex;
   /* Display items in a row */
-  gap: 15px;
+  gap: 25px;
   /* Space between items */
 }
 
@@ -64,6 +63,8 @@ nav ul li a {
   text-decoration: none;
   /* Remove underline */
   font-weight: bold;
+  font-size: 18px;
+  text-shadow: 1px 1px 2px black;
 }
 
 main {
@@ -81,6 +82,9 @@ footer {
   padding: 10px 0;
   position: absolute;
   bottom: 0;
+}
+a:hover {
+  color: #FFCC00;
 }
 
 .container {
@@ -115,6 +119,7 @@ footer {
   height: 500px;
   /* Adjust as needed */
   position: relative;
+  padding: 15px;
 }
 
 .battle-container img {
@@ -138,9 +143,8 @@ footer {
 }
 
 .link:hover {
-  color: yellow;
+  color: #FFCC00;
 }
-
 
 #image-left {
   left: 0;
