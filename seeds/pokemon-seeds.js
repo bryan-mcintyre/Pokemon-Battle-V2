@@ -1,5 +1,5 @@
-const { sequelize, User, PokemonLevel, Ability } = require('../models');
-const { fetchPokemonByName, fetchRandomPokemon, PokemonData } = require('../utils/pokemonFetch');
+const { User, Ability } = require('../models');
+const { fetchRandomPokemon, } = require('../utils/pokemonFetch');
 const { createPokemonForUser, createAbilityForPokemon } = require('../service/pokemonService');
 
 const pokemonData = [];
