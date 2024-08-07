@@ -4,6 +4,7 @@ const seedPokemons = require('./pokemon-seeds');
 const seedPokemonLevels = require('./level-seeds');
 const seedAbilities = require('./ability-seeds');
 const seedWallets = require('./wallet-seeds')
+const seedItems = require('./item-seeds');
 
 const seedAll = async () => {
   await sequelize.sync({ force: true });
@@ -23,6 +24,9 @@ const seedAll = async () => {
 
   await seedPokemons();
   console.log('\n----- POKEMONS SEEDED -----\n');
+
+  await seedItems();
+  console.log('\n----- ITEMS SEEDED -----\n');
 
   process.exit(0);
 };
