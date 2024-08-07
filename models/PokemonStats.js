@@ -79,7 +79,7 @@ PokemonStats.init(
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'pokemon_stats',
+        modelName: 'pokemon_stat',
     }
 );
 

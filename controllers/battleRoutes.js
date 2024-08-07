@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const withAuth = require('../../utils/auth');
-const { User, Pokemon, PokemonStats } = require('../../models');
-const { json } = require('sequelize');
+const withAuth = require('../utils/auth');
+const { User, Pokemon, PokemonStats, PokemonAbility, Ability } = require('../models');
 
-// TODO: get battle page
+// TODO: Add auth check and save session
 router.get('/:id', async (req, res) => {
     try {
 
@@ -11,24 +10,21 @@ router.get('/:id', async (req, res) => {
             attributes: { exclude: ['password'] },
             raw: true
         })
-        console.log(userData)
 
         const pokemonData = await Pokemon.findAll({
             where: {
                 user_id: userData.id
             },
             include: [
-                PokemonStats
-            ]
+                { model: PokemonStats },
+                { model: Ability, through: PokemonAbility }
+            ],
         });
 
-        const map = pokemonData.map(pokemon => pokemon.get({ plain: true }))
-        console.log(pokemonData);
+        const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }))
 
         res.render('battle', {
-            gallery: pokemonData,
-            // Pass the logged in flag to the template
-            // logged_in: req.session.logged_in,
+            gallery: convertPokemonData,
         });
     } catch (err) {
         res.status(500).json(err);
