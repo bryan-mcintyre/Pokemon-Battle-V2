@@ -26,7 +26,7 @@ body {
   min-height: 100vh;
   justify-content: flex-start;
   align-items: center;
-  background-color: var(--primary);
+  background: radial-gradient(circle, #3B4CCA, #1C3AA9, #1D2951);
 }
 
 header {
@@ -36,10 +36,7 @@ header {
   align-items: center;
   width: 100%;
   padding: 10px 20px;
-  /* Add some padding */
-  color: var(--light);
-  background-color: var(--primary);
-  /* Dark blue */
+  margin-top: 25px;
 }
 
 nav {
