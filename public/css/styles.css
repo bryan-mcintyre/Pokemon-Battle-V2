@@ -58,6 +58,7 @@ nav ul {
 
 nav ul li {
   margin: 0;
+  display: inline;
 }
 
 nav ul li a {
