@@ -1,10 +1,15 @@
 const router = require('express').Router();
-const { Backpack, Item, User, Wallet } = require('../../models');
+const { Backpack, Item, Wallet } = require('../../models');
+const withAuth = require('../../utils/auth')
 
-router.post('/purchase', async (req, res) => {
+router.post('/purchase', withAuth, async (req, res) => {
   try {
     const { item, quantity } = req.body;
-    const userId = req.session.user_id;
+    const user_id = req.session.user_id;
+
+    if (!user_id) {
+        return res.status(400).json({ message: 'Not logged in!' });
+    }
 
     // Fetch the item details
     const itemData = await Item.findOne({ where: { name: item } });
