@@ -30,6 +30,9 @@ header {
 nav {
     background-color: var(--secondary);
 }
+nav ul li {
+  display: inline;
+}
 main {
     width: 100%;
     display: flex;
