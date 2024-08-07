@@ -163,6 +163,15 @@ a:hover {
   color: #FFCC00;
 }
 
+.page-title {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #29396A;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 #image-left {
   left: 0;
 }
@@ -190,7 +199,10 @@ a:hover {
 }
 
 #home-color {
-  color: var(--error);
-  text-shadow: 1px 1px 2px black;
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #29396A;
   font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
