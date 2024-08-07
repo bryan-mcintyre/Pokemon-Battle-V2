@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
 class User extends Model {
-    // Checks the password against the encrypted password in the database.
     checkPassword(loginPw) {
         return bcrypt.compareSync(loginPw, this.password);
     }
@@ -20,36 +19,41 @@ User.init(
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
             unique: true,
+            validate: {
+                isEmail: true,
+            },
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: {
-                    args: [8],
-                    msg: 'Password len min 8 characters'
-                }
-            },
-            is: {
-                args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\S).{8,}$/],
-                msg: 'Password must include an uppercase letter, a lowercase letter, a number, and no spaces.',
+                len: [8],
             },
         },
-        created_at: {
+        createdAt: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
             allowNull: false,
+            defaultValue: DataTypes.NOW,
+            field: 'created_at'  // Ensures the correct field name
         },
     },
     {
         // Hooks are used so that if a user is created or updated, the password is encrypted before being stored in the database.
         hooks: {
-            beforeSave: async (newUserData) => {
-                if (newUserData.changed('password')) {
-                    newUserData.password = await bcrypt.hash(newUserData.password, 10);
-                    return newUserData;
+            beforeCreate: async (newUserData) => {
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                return newUserData;
+            },
+            beforeUpdate: async (updatedUserData) => {
+                if (updatedUserData.changed('password')) {
+                    updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
                 }
+                return updatedUserData;
             },
         },
         sequelize,
