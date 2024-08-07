@@ -1,0 +1,30 @@
+<header>
+    <nav>
+      <ul>
+        <li><a href='/dashboard'>Dashboard</a></li>
+        <li><a href='/store'>Store</a></li>
+        <li><a href='/backpack'>Backpack</a></li>
+        <li><a href='#' id="logout">Logout</a></li>
+    </ul>
+    </nav>
+  </header>
+
+<section>
+    <h2>Select a Pokemon</h2>
+    <div>
+        {{!-- Show your Pokemons from storage --}}
+      {{!-- {{gallery}} --}}
+
+    </div>
+
+    {{!-- Battle Box --}}
+    <div>
+        <div> Selected Pokemon</div>
+        <div> VS</div>
+        <button id="generate-opponent-button" type="button" class="button">Generate Opponent
+            Pokémon!</button>
+        <button id="battle-button" type="button" class="button" disabled>Click here to battle!</button>
+    </div>
+</section>
+
+<script src="/js/logout.js"></script>

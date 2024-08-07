@@ -5,38 +5,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Battle Simulator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Concert+One&family=Marcellus&family=Oswald:wght@200..700&family=Permanent+Marker&family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <img id="logo" src="C:\bootcamp\Pokemon-battle-sim-V2\assets\Pokemon battle simulator.png" alt="logo" style="height:50px;">
+        <img id="logo" src="/images/header.png" alt="header-image"
+            style="height:115px;">
     </header>
-    <nav>
-        <ul>
-            <li><a href='/'>Home</a></li>
-            <li>Backpack</li>
-            <li>Store</li>
-            <li>Login</li>
-        </ul>
-    </nav>
+    
     <main>
         {{{body}}}
     </main>
-    <footer> Made with &#x1F49C by Aleksandr Polbennikov, Colin Taaffe, Bryan McIntyre and Leena Cruz</footer>
+    <footer>
+        Made with &#x1F49C by Aleksandr Polbennikov, Colin Taaffe, Bryan McIntyre and Leena Cruz
+    </footer>
+
+    <div id="popup-container">
+        <img id="popup-image" src="/images/snorlax.png" alt="Popup Image" />
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <script>
         gsap.to("#logo", {
             skewX: -15,
             skewY: -2,
-            duration: 2,
+            duration: 5,
             repeat: -1,
             yoyo: true,
             ease: "power1.inOut"
         });
+
+        const tl = gsap.timeline({ repeat: -1, delay: 1 });
+        tl.fromTo("#popup-image", 
+          { y: "100%", opacity: 0 }, // Start position (off-screen bottom)
+          { y: "27%", opacity: 1, duration: 3, ease: "power1.inOut" }) // Move up, not too high
+          .to("#popup-image", { duration: 1 }) // Pause for 1 second
+          .to("#popup-image", { y: "100%", opacity: 0, duration: 3, ease: "power1.inOut" });
     </script>
 </body>
 
