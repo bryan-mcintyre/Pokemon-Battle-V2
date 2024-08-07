@@ -39,9 +39,28 @@ router.get('/battle', async (req, res) => {
 // }else{
 //     res.redirect("/login");
 // }
+
+
+res.render('battle');
 });
-
-
+//Backpack route
+router.get('/backpack', async (req, res) => {
+    res.render('backpack');
+});
+//Store route
+router.get('/store', async (req, res) => {
+    res.render('store');
+});
+// Login route
+router.get('/login', (req, res) => {
+    // If the user is already logged in, redirect to the homepage
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+    // Otherwise, render the 'login' template
+    res.render('login');
+});
 
 
 
