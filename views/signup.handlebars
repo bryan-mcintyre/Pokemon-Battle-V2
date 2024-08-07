@@ -1,0 +1,30 @@
+<main>
+    <div class="field">
+      <div class="control">
+        <h2 class="page-title">Sign Up</h2>
+        <form id="signup-form" class="signup-form" action="/api/users" method="POST">
+          <div class="control">
+            <label for="name-signup">Name:</label>
+            <input class="input" type="text" id="name-signup" name="name" />
+          </div>
+          <div class="control">
+            <label for="email-signup">Email:</label>
+            <input class="input" type="email" id="email-signup" name="email" />
+          </div>
+          <div class="control">
+            <label for="password-signup">Password:</label>
+            <input class="input" type="password" id="password-signup" name="password" />
+          </div>
+          <div class="control">
+            <label for="confirm-password-signup">Confirm Password:</label>
+            <input class="input" type="password" id="confirm-password-signup" name="confirm-password" />
+          </div>
+          <div class="control">
+            <button class="button is-primary" type="submit">Sign Up</button>
+          </div>
+        </form>
+        <p id="login-link">Already have an account? <a href="/login">Click here to login!</a></p>
+      </div>
+    </div>
+  </main>
+  <script src="/js/signup.js"></script>

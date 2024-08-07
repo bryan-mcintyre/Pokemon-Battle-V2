@@ -1,5 +1,26 @@
 const router = require('express').Router();
 const {Pokemon, PokemonStats} = require('../models');
+const dashboardRoutes = require('./api/dashboard');
+
+// Renders the login page
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/dashboard');
+      return;
+    }
+    res.render('login');
+  });
+  
+  // Renders the signup page
+  router.get('/signup', (req, res) => {
+    if (req.session.logged_in) {
+      res.redirect('/dashboard');
+      return;
+    }
+    res.render('signup');
+  });
+
+  router.use('/dashboard', dashboardRoutes);
 
 //Get Home route
 router.get('/', (req,res) =>{
@@ -51,22 +72,6 @@ router.get('/backpack', async (req, res) => {
 router.get('/store', async (req, res) => {
     res.render('store');
 });
-// Login route
-router.get('/login', (req, res) => {
-    // If the user is already logged in, redirect to the homepage
-    if (req.session.loggedIn) {
-        res.redirect('/');
-        return;
-    }
-    // Otherwise, render the 'login' template
-    res.render('login');
-});
-
-
-
-
-
-
 
 
 
