@@ -26,7 +26,7 @@ body {
   min-height: 100vh;
   justify-content: flex-start;
   align-items: center;
-  background-color: var(--tertiary);
+  background-color: var(--primary);
 }
 
 header {
@@ -74,6 +74,16 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+footer {
+  font-size: 20px;
+  color: var(--light);
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
 }
 
 .container {
