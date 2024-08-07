@@ -16,7 +16,6 @@ const pokemonLevelData = [
 const seedPokemonLevels = async () => {
     try {
         await PokemonLevel.bulkCreate(pokemonLevelData);
-        console.log('Pokemon levels seeded successfully');
     } catch (error) {
         console.error('Error seeding Pokemon levels:', error);
     }
