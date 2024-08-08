@@ -27,10 +27,9 @@ const userData = [
 
 const seedUsers = async () => {
     for (const user of userData) {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
         await User.create({
             ...user,
-            password: hashedPassword,
+            password: user.password,
         });
     }
 };
