@@ -304,6 +304,55 @@ label {
   background-color: var(--dark);
 }
 
+.starter-container {
+  display: flex;
+  justify-content: space-around; /* Evenly space the cards horizontally */
+  align-items: flex-start; /* Align items at the start */
+  flex-wrap: wrap; /* Allow wrapping to the next line if needed */
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.starter-card {
+  background-color: #f8f9fa; 
+  border: 1px solid #FFCC00; 
+  border-radius: 10px; 
+  padding: 20px;
+  text-align: center;
+  width: 250px; /* Fixed width for each card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.2s; /* Smooth hover effect */
+  margin: 10px;
+}
+
+.starter-card:hover {
+  transform: scale(1.05); /* Slightly enlarge card on hover */
+}
+
+.starter-card img {
+  width: 100px; /* Fixed size for images */
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.starter-card p {
+  margin: 5px 0;
+}
+
+.starter-card button {
+  background-color: #007bff; /* Blue button */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.starter-card button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
 #image-left {
   left: 0;
 }

@@ -44,6 +44,10 @@ User.init(
                 msg: 'Password must include at least one special character and be at least 8 characters long.'
             },
         },
+        starter_selected: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+          },
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
