@@ -4,9 +4,10 @@ const withAuth = require('../../utils/auth');
 
 router.get('/', withAuth, async (req,res) => {
 try {
+    const user_id = req.session.user_id;
 console.log(req.session.id)
     const wallet = await Wallet.findOne( {
-        where: {user_id: User.session.id}}
+        where: {user_id: user_id}}
     );
 
 res.status(200).json(wallet);
