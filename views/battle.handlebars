@@ -13,8 +13,12 @@
     <h2>Select a Pokemon</h2>
     <div>
         {{!-- Show your Pokemons from storage --}}
-      {{!-- {{gallery}} --}}
 
+      
+      {{!-- {{gallery}} --}}
+      {{#each pokemon }}
+      {{name}}
+{{/each}}
     </div>
 
     {{!-- Battle Box --}}
@@ -23,7 +27,7 @@
         <div> VS</div>
         <button id="generate-opponent-button" type="button" class="button">Generate Opponent
             Pokémon!</button>
-        <button id="battle-button" type="button" class="button" disabled>Click here to battle!</button>
+        <button id="battle-button" type="button" class="button">Click here to battle!</button>
     </div>
 </section>
 

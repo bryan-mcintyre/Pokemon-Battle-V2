@@ -18,7 +18,7 @@ Wallet.init(
         value: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 0,
+            defaultValue: 500,
             validate: {
                 min: 0,
             },

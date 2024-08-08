@@ -87,6 +87,9 @@ a:hover {
   color: #FFCC00;
 }
 
+label {
+  color: var(--light)
+}
 .container {
   width: 85%;
   max-width: 1200px;
