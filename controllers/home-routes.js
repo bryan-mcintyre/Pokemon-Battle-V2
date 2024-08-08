@@ -71,9 +71,7 @@ router.get('/backpack', withAuth, async (req, res) => {
 });
 //Store route
 router.get('/store', withAuth,async (req, res) => {
-    try{
-        const itemData = await Item
-    }
+   
     res.render('store');
 });
 
