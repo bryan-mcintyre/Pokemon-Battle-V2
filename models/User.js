@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
+const Wallet = require('./Wallet');
 
 class User extends Model {
     checkPassword(loginPw) {
@@ -71,6 +72,12 @@ User.init(
                 }
                 return updatedUserData;
             },
+            afterCreate: async (newUserData) => {
+                await Wallet.create({
+                    value: 500,
+                    user_id: newUserData.id
+                })
+            }
         },
         sequelize,
         timestamps: false,
