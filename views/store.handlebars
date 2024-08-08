@@ -2,7 +2,7 @@
     <nav>
       <ul>
         <li><a href='/dashboard'>Dashboard</a></li>
-        <li><a href='/battle'>Battle</a></li>
+        <li><a href='/battle/{{id}}'>Battle</a></li>
         <li><a href='/backpack'>Backpack</a></li>
         <li><a href='#' id="logout">Logout</a></li>
     </ul>
@@ -11,9 +11,10 @@
 
 <main>
   <h2 id="home-color">PokéStore 🏪</h2>
+  <div id="wallet"></div>
   <div class="bg-container" id="store-items"></div>
 </main>
-
+<script src="/js/wallet.js"></script>
 <script src="/js/store.js"></script>
 <script src="/js/logout.js"></script>
 
