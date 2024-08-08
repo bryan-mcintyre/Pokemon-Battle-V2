@@ -39,7 +39,7 @@ User.init(
                 }
             },
             is: {
-                args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\S).{8,}$/],
+                args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9\s]).{8,}$/],
                 msg: 'Password must include an uppercase letter, a lowercase letter, a number, and no spaces.',
             },
         },
@@ -55,9 +55,13 @@ User.init(
         hooks: {
             beforeCreate: async (newUserData) => {
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                newUserData.name = newUserData.name.toLowerCase();
+                newUserData.email = newUserData.email.toLowerCase();
                 return newUserData;
             },
             beforeUpdate: async (updatedUserData) => {
+                newUserData.name = newUserData.name.toLowerCase();
+                newUserData.email = newUserData.email.toLowerCase();
                 if (updatedUserData.changed('password')) {
                     updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
                 }
