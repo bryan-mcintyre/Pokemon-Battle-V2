@@ -314,14 +314,15 @@ label {
 }
 
 .starter-card {
-  background-color: #f8f9fa; /* Light grey background */
-  border: 1px solid #ccc; /* Light border */
-  border-radius: 10px; /* Rounded corners */
+  background-color: #f8f9fa; 
+  border: 1px solid #FFCC00; 
+  border-radius: 10px; 
   padding: 20px;
   text-align: center;
   width: 250px; /* Fixed width for each card */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   transition: transform 0.2s; /* Smooth hover effect */
+  margin: 10px;
 }
 
 .starter-card:hover {
