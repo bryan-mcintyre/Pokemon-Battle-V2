@@ -1,20 +1,20 @@
 const router = require('express').Router();
-const {Wallet} = require('../../models');
+const {Wallet, User} = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.get('/', async (req,res) => {
+router.get('/', withAuth, async (req,res) => {
 try {
-    const userId = req.session.user_id;
-console.log(userId);
-    const wallet = await Wallet.findByPk(1);
+console.log(req.session.id)
+    const wallet = await Wallet.findOne( {
+        where: {user_id: User.session.id}}
+    );
 
 res.status(200).json(wallet);
-
 
 }catch(err) {
     console.log(err);
     res.status(500).json({message: 'Server Error'});
 }
-
 
 });
 
