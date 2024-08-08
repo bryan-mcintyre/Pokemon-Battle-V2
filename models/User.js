@@ -40,8 +40,8 @@ User.init(
                 }
             },
             is: {
-                args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9\s]).{8,}$/],
-                msg: 'Password must include an uppercase letter, a lowercase letter, a number, and no spaces.',
+                args: [/^(?=.*[^a-zA-Z0-9\s]).{8,}$/],
+                msg: 'Password must include at least one special character and be at least 8 characters long.'
             },
         },
         createdAt: {

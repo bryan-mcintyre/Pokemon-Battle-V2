@@ -2,7 +2,7 @@
     <nav>
       <ul>
         <li><a href='/dashboard'>Dashboard</a></li>
-        <li><a href='/battle'>Battle</a></li>
+        <li><a href='/battle/{{id}}'>Battle</a></li>
         <li><a href='/store'>Store</a></li>
         <li><a href='#' id="logout">Logout</a></li>
     </ul>
@@ -12,12 +12,9 @@
 <div>
     <h2 id="home-color">Backpack 🎒</h2>
 </div>
-{{!-- {{#each items}} --}}
-    {{!-- This should call the object {{item}} partials?--}}
-<div class="bg-container">
-<div id="backpack-items"></div>
-{{!-- {{/each}} --}}
-</div>
 
+<div id="backpack-items"></div>
+<div id="wallet"></div>
+<script src="/js/wallet.js"></script>
 <script src="/js/backpack.js"></script>
 <script src="/js/logout.js"></script>
