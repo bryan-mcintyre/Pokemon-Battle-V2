@@ -176,14 +176,12 @@ label {
   align-items: center;
   width: 50%;
   height: 500px;
-  /* Adjust as needed */
   position: relative;
   padding: 15px;
 }
 
 .battle-container img {
   width: 250px;
-  /* Adjust as needed */
   position: absolute;
 }
 
@@ -393,7 +391,7 @@ label {
 }
 
 .pokemon-card img {
-  width: 125px; /* Fixed size for images */
+  width: 125px; 
   height: auto;
   margin-bottom: 10px;
 }
@@ -556,9 +554,7 @@ label {
   bottom: 0;
   left: 0;
   width: 150px;
-  /* Increased size */
   height: 150px;
-  /* Increased size */
   overflow: hidden;
   z-index: 9999;
 }
