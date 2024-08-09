@@ -17,7 +17,6 @@
   /* Border radius */
 }
 
-
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
@@ -72,6 +71,16 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #29396A;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  padding-top: 40px;
 }
 
 footer {
@@ -238,10 +247,14 @@ label {
 .storage-pokemon {
   display: flex;
   align-content: center;
-  color: var(--light);
   padding: 10px;
   font-size: 25px;
+  color: #FFCC00;
   text-shadow: 2px 2px 2px #29396A;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .store-item {
@@ -315,7 +328,7 @@ label {
 
 .starter-card {
   background-color: #f8f9fa; 
-  border: 1px solid #FFCC00; 
+  border: 4px solid #FFCC00; 
   border-radius: 10px; 
   padding: 20px;
   text-align: center;
@@ -337,12 +350,21 @@ label {
 
 .starter-card p {
   margin: 5px 0;
+  color: rgb(20, 20, 20);
+}
+
+.starter-card strong {
+  color:#FFCC00;
+  text-shadow: 2px 2px 1px #1D2951;
+  font-size: 20px;
 }
 
 .starter-card button {
-  background-color: #007bff; /* Blue button */
+  background-color: #FFCC00; /* Blue button */
   color: white;
-  border: none;
+  text-shadow: 2px 2px 1px #6A2020;
+  border-style: outset;
+  border-color: #1C3AA9;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -350,7 +372,8 @@ label {
 }
 
 .starter-card button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #3B4CCA; /* Darker blue on hover */
+  text-shadow:1px 1px 2px #FFCC00;
 }
 
 #image-left {

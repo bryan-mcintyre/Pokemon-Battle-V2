@@ -23,7 +23,6 @@ router.get('/', withAuth, async (req, res) => {
         });
 
         const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }))
-
         res.render('battle', {
             gallery: convertPokemonData,
         });

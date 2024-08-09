@@ -10,15 +10,27 @@
 </header>
 
 <section>
-
-    <h2>Select a Pokemon</h2>
+    <h2>Select a Pokemon SIIII</h2>
     <div>
         {{!-- Show your Pokemons from storage --}}
-
-      
       {{!-- {{gallery}} --}}
-      {{#each pokemon }}
+      {{#each gallery }}
+      <div class="card">
+      <img src="{{picture}}">
       {{name}}
+      <p> Level: {{level}}</p>
+      <p>Current HP:</p>
+      {{pokemon_stat.current_hp}}
+      <p>Attack:</p>
+      {{pokemon_stat.attack}}
+      <p>Defense:</p>
+      {{pokemon_stat.defense}}
+      <p>Abilities:</p>
+      {{#each abilities as |ability|}}
+      {{ability.name}}
+      {{/each}}
+      </div>
+      
 {{/each}}
     </div>
 
