@@ -34,13 +34,21 @@ Wallet.init(
     },
     {
         hooks: {
-            beforeSave: async (newWalletData) => {
-                if (newWalletData.value < 0) {
-                    throw new Error('The value cannot be less than 0')
-                } else if (newWalletData.changed('value') && newWalletData._previousDataValues.value) {
-                    throw new Error('There are not enough funds to purchase');
+            beforeSave: async (wallet) => {
+                // Ensure the wallet's value doesn't go negative
+                if (wallet.value < 0) {
+                    throw new Error('The value cannot be less than 0');
                 }
-                return newWalletData;
+                
+                // Ensures that the wallet has enough funds to cover the purchase
+                if (wallet.changed('value') && wallet.value < wallet._previousDataValues.value) {
+                    const deduction = wallet._previousDataValues.value - wallet.value;
+                    if (deduction > wallet._previousDataValues.value) {
+                        throw new Error('There are not enough funds to purchase');
+                    }
+                }
+                
+                return wallet;
             },
         },
         sequelize,

@@ -207,7 +207,7 @@ label {
   border-color: #FFCC00;
   box-sizing:border-box;
   width: 80%; 
-  margin: auto; /* Center the container */
+  margin: auto; 
 }
 
 .item-card {
@@ -259,7 +259,7 @@ label {
 
 .store-item {
   background-color: var(--light);
-  border: 2px solid var(--primary);
+  border: 2px inset #FFCC00;
   border-radius: 10px;
   width: 200px;
   padding: 15px;
@@ -306,8 +306,8 @@ label {
   cursor: pointer;
   margin-top: 10px;
   width: 100%;
-  text-align: center; /* Ensure text is centered */
-  font-size: 16px; /* Adjust font size as needed */
+  text-align: center; 
+  font-size: 16px; 
   font-weight: bold; /* Make text bold */
   display: inline-block; /* Make the button inline-block */
   transition: background-color 0.3s; /* Smooth transition for hover effect */
@@ -321,7 +321,7 @@ label {
   display: flex;
   justify-content: space-around; /* Evenly space the cards horizontally */
   align-items: flex-start; /* Align items at the start */
-  flex-wrap: wrap; /* Allow wrapping to the next line if needed */
+  flex-wrap: wrap; 
   padding: 20px;
   margin-top: 20px;
 }
@@ -376,6 +376,173 @@ label {
   text-shadow:1px 1px 2px #FFCC00;
 }
 
+.pokemon-card {
+  background-color: #f8f9fa; 
+  border: 4px solid #FFCC00; 
+  border-radius: 10px; 
+  padding: 20px;
+  text-align: center;
+  width: 250px; /* Fixed width for each card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.2s; /* Smooth hover effect */
+  margin: 10px;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05); /* Slightly enlarge card on hover */
+}
+
+.pokemon-card img {
+  width: 125px; /* Fixed size for images */
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.pokemon-card h2 {
+  color: #FFCC00; /* Text color */
+  text-shadow: 2px 2px 1px #1D2951;
+  font-size: 20px;
+}
+
+.pokemon-card p {
+  margin: 5px 0;
+  color: rgb(20, 20, 20);
+}
+
+.backpack-item {
+  background-color: #f8f9fa; 
+  border: 4px solid #FFCC00; 
+  border-radius: 10px; 
+  padding: 20px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
+
+.backpack-item img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.backpack-item h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 1px #1D2951;
+  font-size: 20px;
+}
+
+.backpack-item p {
+  margin: 5px 0;
+  color: rgb(20, 20, 20);
+}
+
+.use-button {
+  background-color: #3B4CCA;
+  color: var(--light);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.use-button:hover {
+  background-color: var(--dark);
+}
+
+.wallet {
+    background-image: url('/images/IMG_6644.png');
+    background-size: contain;
+    background-position: left center; 
+    background-repeat: no-repeat;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 375px; 
+    height: 150px; 
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.wallet-value {
+    padding: 0; 
+    font-size: 24px;
+    color: #FFD700; 
+    text-shadow: 2px 2px 1px black;
+    position: absolute;
+    top: 50%;
+    left: 175px; 
+    transform: translateY(-50%); 
+    z-index: 1;
+    background-color: transparent; 
+    border: none; 
+}
+
+.wallet {
+    padding-top: 25px; 
+}
+
+.quantity-select {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.quantity-label {
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+  color: #000000; 
+  text-shadow: 1px 1px 1px #FFD700;
+}
+
+.backpack-item .quantity-select {
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  background-color: #f8f9fa; 
+  color: #000000;
+}
+
+.backpack-item .quantity-label {
+  font-size: 16px;
+  margin-top: 10px;
+  display: block;
+  color: black;
+  text-shadow: 1px 1px 1px #FFCC00;
+}
+
+.delete-button {
+  background-color: #6A2020;
+  color: var(--light);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: red;
+}
+
 #image-left {
   left: 0;
 }
@@ -412,3 +579,4 @@ label {
   padding-top: 25px;
   padding-bottom: 20px;
 }
+

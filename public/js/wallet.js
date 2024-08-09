@@ -1,17 +1,31 @@
-document.addEventListener('DOMContentLoaded',async () => {
-    const response = await fetch('/api/wallet');
-    const wallet = await response.json();
+// Function to update the wallet amount
+async function updateWallet() {
+    try {
+        const walletResponse = await fetch('/api/wallet');
+        if (!walletResponse.ok) {
+            throw new Error('Failed to fetch wallet data');
+        }
+  
+        const wallet = await walletResponse.json();
 
-    const walletContainer = document.getElementById('wallet');
+        
+        const walletContainers = document.querySelectorAll('.wallet');
+        walletContainers.forEach(container => {
+            
+            let walletValue = container.querySelector('.wallet-value');
+            if (!walletValue) {
+                
+                walletValue = document.createElement('p');
+                walletValue.classList.add('wallet-value', 'store-item'); 
+                container.appendChild(walletValue);
+            }
+    
+            walletValue.textContent = `Your gold: ¥${wallet.value}`;
+        });
+    } catch (error) {
+        console.error('Error fetching wallet data:', error);
+    }
+}
 
-const walletValue = document.createElement('p');
-walletValue.textContent = `Money: ¥${wallet.value}`;
-
-walletValue.classList.add('store-item');
-
-
-
-walletContainer.appendChild(walletValue);
-
-
-});
+// Initial wallet update on page load
+document.addEventListener('DOMContentLoaded', updateWallet);

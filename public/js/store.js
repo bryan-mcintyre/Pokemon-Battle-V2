@@ -3,47 +3,48 @@ const storeItems = [
         name: 'Potion',
         effect: 'Heals half HP',
         cost: 25,
-        max: 3,
+        max: 10,
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png'
     },
     {
         name: 'Hyper Potion',
         effect: 'Heals full HP',
         cost: 100,
-        max: 3,
+        max: 10,
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/hyper-potion.png'
     },
     {
         name: 'Revive',
         effect: 'Revives pokemon back to half HP',
         cost: 125,
-        max: 3,
+        max: 10,
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/revive.png'
     },
     {
         name: 'Pokeball',
         effect: '25% chance to catch',
         cost: 25,
-        max: 3,
+        max: 10,
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'
     },
     {
         name: 'Ultra Ball',
         effect: '65% chance to catch',
         cost: 300,
-        max: 3,
+        max: 5,
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png'
     },
     {
         name: 'Master Ball',
         effect: '100% chance to catch',
-        cost: 1000,
-        max: 3,
+        cost: 1500,
+        max: 1,
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png'
     },
 ];
 
 const storeContainer = document.getElementById('store-items');
+
 
 storeItems.forEach(item => {
   const itemDiv = document.createElement('div');
@@ -87,6 +88,8 @@ storeItems.forEach(item => {
 
     if (response.ok) {
       alert(`Purchased ${quantity} ${item.name}(s)`);
+
+      await updateWallet(); 
     } else {
       alert('Failed to purchase item.');
     }
