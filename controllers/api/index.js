@@ -3,11 +3,13 @@ const router = require('express').Router();
 const userRoutes = require('./userRoutes');
 const pokemonRoutes = require('./pokemonRoutes');
 const walletRoutes = require('./walletRoutes');
+const starterRoutes = require('./starterRoutes');
 
 // When a request is made to the /users or /projects path, it will be directed to the index.js in the /users or /projects folder.
 router.use('/users', userRoutes);
 router.use('/pokemon', pokemonRoutes);
 router.use('/wallet', walletRoutes);
+router.use('/starters', starterRoutes);
 
 
 module.exports = router;
