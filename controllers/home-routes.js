@@ -29,9 +29,10 @@ router.get('/', (req,res) =>{
     res.render('home');
 } );
 
-router.get('/battle', async (req, res) => {
-res.render('battle');
-});
+// router.get('/battle', async (req, res) => {
+// res.render('battle');
+// });
+
 //Backpack route
 router.get('/backpack', withAuth, async (req, res) => {
     res.render('backpack');
