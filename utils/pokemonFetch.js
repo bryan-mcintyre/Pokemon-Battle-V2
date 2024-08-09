@@ -39,7 +39,8 @@ class PokemonData {
 
 // find pokemon by name
 const fetchPokemonByName = async (name) => {
-    const pokeApi = `https://pokeapi.co/api/v2/pokemon/${name}`;
+    const nameLowerCase = name.toLowerCase();
+    const pokeApi = `https://pokeapi.co/api/v2/pokemon/${nameLowerCase}`;
 
     try {
         const response = await fetch(pokeApi);

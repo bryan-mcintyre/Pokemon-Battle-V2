@@ -8,4 +8,12 @@ const withAuth = (req, res, next) => {
   }
 };
 
-module.exports = withAuth;
+const hasPokemon = (req, res, next) => {
+  if (req.session.starter_selected) {
+    return res.redirect('/dashboard');
+  } else {
+    next();
+  }
+}
+
+module.exports = { withAuth, hasPokemon };

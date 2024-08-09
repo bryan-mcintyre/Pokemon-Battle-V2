@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const withAuth = require('../utils/auth');
+const { withAuth } = require('../utils/auth');
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability } = require('../models');
 
 // TODO: Add auth check and save session
@@ -23,7 +23,6 @@ router.get('/', withAuth, async (req, res) => {
         });
 
         const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }))
-console.log(convertPokemonData);
         res.render('battle', {
             gallery: convertPokemonData,
         });

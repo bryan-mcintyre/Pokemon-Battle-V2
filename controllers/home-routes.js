@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { Pokemon, PokemonStats, Item, User } = require('../models');
-const withAuth = require('../utils/auth');
+const { Pokemon, PokemonStats, User } = require('../models');
+const { withAuth, hasPokemon } = require('../utils/auth');
 const sequelize = require('../config/connection');
 const { fetchRandomPokemon } = require('../utils/pokemonFetch');
 
@@ -44,7 +44,7 @@ router.use('/dashboard', withAuth, async (req, res) => {
   }
 });
 
-router.get('/choose-starter', withAuth, async (req, res) => {
+router.get('/choose-starter', withAuth, hasPokemon, async (req, res) => {
   try {
     const starterPokemon = [];
 
@@ -64,7 +64,11 @@ router.get('/choose-starter', withAuth, async (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.render('home');
+  if (req.session.logged_in) {
+    res.render('dashboard');
+  } else {
+    res.render('home');
+  }
 });
 
 router.get('/backpack', (req, res) => {

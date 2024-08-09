@@ -1,47 +1,39 @@
 const router = require('express').Router();
-const { User, Pokemon, PokemonStats } = require('../../models');
-const withAuth = require('../../utils/auth');
+const { Ability } = require('../../models');
+const { withAuth, hasPokemon } = require('../../utils/auth');
 const sequelize = require('../../config/connection');
+const { fetchPokemonByName } = require('../../utils/pokemonFetch');
+const { createPokemonForUser, createAbilityForPokemon } = require('../../service/pokemonService');
 
-router.get('/', withAuth, async (req, res) => {
+
+router.post('/choose-starter', withAuth, hasPokemon, async (req, res) => {
   try {
-    const starterPokemon = await Pokemon.findAll({
-      order: sequelize.random(),
-      limit: 3,
-      include: [PokemonStats]
-    });
-    res.render('choose-starter', {
-      starters: starterPokemon.map(pokemon => pokemon.get({ plain: true })),
-      logged_in: req.session.logged_in
-    });
-  } catch (err) {
-    console.error('Error in /choose-starter route:', err);
-    res.status(500).json({ message: 'Internal server error', error: err.message });
-  }
-});
 
-router.post('/choose-starter', withAuth, async (req, res) => {
-  try {
-    const { pokemonId } = req.body;
+    // find pokemon by name from API poke
+    const pokemonData = await fetchPokemonByName(req.body.name);
 
-    const pokemon = await Pokemon.findByPk(pokemonId, {
-      include: [PokemonStats]
-    });
-
-    if (!pokemon) {
+    if (!pokemonData) {
       return res.status(404).json({ message: 'Pokémon not found' });
     }
 
-    await pokemon.update({ user_id: req.session.user_id });
+    // get all ability
+    const abilityData = await Ability.findAll();
+    // find random index
+    const randomIndex = Math.floor(Math.random() * abilityData.length)
 
-    await User.update(
-      { starter_selected: true },
-      { where: { id: req.session.user_id } }
-    );
+    // create pokemon for user
+    const { pokemon } = await createPokemonForUser(req.session.user_id, pokemonData);
 
-    req.session.starter_selected = true;
+    // create random ability for pokemon
+    await createAbilityForPokemon(pokemon.id, abilityData[randomIndex].id)
 
-    res.status(200).json({ message: 'Starter Pokémon chosen successfully' });
+    // save starter_selected
+    req.session.save(() => {
+      req.session.starter_selected = true;
+
+      res.status(200).json({ message: 'Starter Pokémon chosen successfully' });
+    });
+
   } catch (err) {
     console.error('Error in /choose-starter route:', err);
     res.status(500).json({ message: 'Internal server error', error: err.message });
