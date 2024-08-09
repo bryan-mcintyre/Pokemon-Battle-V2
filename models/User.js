@@ -33,16 +33,6 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: {
-                    args: [8],
-                    msg: 'Password len min 8 characters'
-                }
-            },
-            is: {
-                args: [/^(?=.*[^a-zA-Z0-9\s]).{8,}$/],
-                msg: 'Password must include at least one special character and be at least 8 characters long.'
-            },
         },
         createdAt: {
             type: DataTypes.DATE,

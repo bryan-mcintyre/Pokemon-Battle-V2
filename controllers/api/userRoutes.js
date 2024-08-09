@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Pokemon } = require('../../models');
 
 // Route to log in an existing user
 router.post('/login', async (req, res) => {
@@ -19,9 +19,16 @@ router.post('/login', async (req, res) => {
       return;
     }
 
+    let hasPokemon = false;
+    const pokemonData = await Pokemon.findOne({ where: { user_id: userData.id } }) || null;
+    if (pokemonData) {
+      hasPokemon = true;
+    }
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
+      req.session.starter_selected = hasPokemon;
       req.session.user = {
         name: userData.name,
         email: userData.email
@@ -51,6 +58,7 @@ router.post('/', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
+      req.session.starter_selected = false;
       req.session.user = {
         name: userData.name,
         email: userData.email

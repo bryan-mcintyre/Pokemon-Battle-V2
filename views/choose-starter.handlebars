@@ -1,0 +1,17 @@
+<main>
+  <h2>Choose your starter Pokémon!</h2>
+  <div class="starter-container">
+    {{#each starters}}
+    <div class="starter-card">
+      <img src="{{picture}}" alt="{{name}}">
+      <p><strong>{{name}}</strong></p>
+      <p>HP: {{current_hp}} / {{max_hp}}</p>
+      <p>Attack: {{attack}}</p>
+      <p>Defense: {{defense}}</p>
+      <p>Speed: {{speed}}</p>
+      <button class="choose-starter-button" data-id="{{id}}">Choose!</button>
+    </div>
+    {{/each}}
+  </div>
+  <script src="/js/choose-starter.js"></script>
+</main>
