@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Backpack, Item, Wallet } = require('../../models');
-const withAuth = require('../../utils/auth')
+const { withAuth } = require('../../utils/auth')
 
 router.post('/purchase', withAuth, async (req, res) => {
   try {
@@ -8,7 +8,7 @@ router.post('/purchase', withAuth, async (req, res) => {
     const user_id = req.session.user_id;
 
     if (!user_id) {
-        return res.status(400).json({ message: 'Not logged in!' });
+      return res.status(400).json({ message: 'Not logged in!' });
     }
 
     // Fetch the item details

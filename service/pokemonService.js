@@ -9,6 +9,7 @@ async function createPokemonForUser(userId, pokemonData) {
         if (!user) {
             throw new Error('User not found');
         }
+
         // create first level for pokemon
         const level = await PokemonLevel.findOne({
             where: { level: pokemonData.level || 1 },
