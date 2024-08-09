@@ -10,13 +10,25 @@
 </header>
 <main>
     <h1 class="dashboard">Welcome to your dashboard!</h1>
-
-<div class="storage-pokemon">Pokémon storage</div>
-   <div class="bg-container">
-    
-   </div>
-
-    
+    <div class="wallet"></div> 
+    <div class="storage-pokemon">Pokémon Storage</div>
+    <div class="bg-container">
+        {{#each pokemons}}
+        <div class="pokemon-card">
+            <img src="{{this.picture}}" alt="{{this.name}}">
+            <h2>{{this.name}}</h2>
+            <p>Level: {{this.level}}</p>
+            <p>HP: {{this.pokemon_stat.max_hp}}</p>
+            <p>Attack: {{this.pokemon_stat.attack}}</p>
+            <p>Defense: {{this.pokemon_stat.defense}}</p>
+            <p>Speed: {{this.pokemon_stat.speed}}</p>
+            {{#if this.favorite}}
+            <p>⭐ Favorite</p>
+            {{/if}}
+        </div>
+        {{/each}}
+    </div>
 </main>
 
+<script src="/js/wallet.js"></script>
 <script src="/js/logout.js"></script>
