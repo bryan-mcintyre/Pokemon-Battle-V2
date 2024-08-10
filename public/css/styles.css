@@ -263,6 +263,10 @@ label {
   box-sizing: border-box;
 }
 
+.store-item:hover {
+  background-color: rgb(240, 232, 161);
+}
+
 .store-item img {
   width: 100px;
   height: 100px;
@@ -380,10 +384,12 @@ label {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   transition: transform 0.2s; /* Smooth hover effect */
   margin: 10px;
+  cursor: pointer;
 }
 
 .pokemon-card:hover {
   transform: scale(1.05); /* Slightly enlarge card on hover */
+  background-color: #ece8b2;
 }
 
 .pokemon-card img {
@@ -416,6 +422,9 @@ label {
   align-content: space-around;
 }
 
+.backpack-item:hover {
+  background-color: rgb(240, 232, 161);
+}
 
 .backpack-item img {
   width: 100px;
