@@ -1,8 +1,50 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const PokemonLevel = require('./PokemonLevel');
+const PokemonStats = require('./PokemonStats');
 
-class Pokemon extends Model { }
+class Pokemon extends Model {
+
+
+
+    async getBattleData() {
+
+        // get stats pokemon
+        const pokemonStats = await PokemonStats.findOne({ where: { pokemon_id: this.id } });
+
+        // get abilities
+        const abilities = await this.getAbilities({
+            attributes: ['name', 'description', 'effect_type', 'effect_amount'],
+            joinTableAttributes: [],
+        });
+
+        // get format ability array object
+        const formattedAbilities = abilities.map(ability => {
+            return {
+                id: ability.id,
+                name: ability.name,
+                description: ability.description,
+                effect_type: ability.effect_type,
+                effect_amount: ability.effect_amount,
+            };
+        });
+
+        return {
+            name: this.name,
+            picture: this.picture,
+            alive: this.alive,
+            favorite: this.favorite,
+            level: this.level,
+            experience: this.experience,
+            attack: pokemonStats.attack,
+            current_hp: pokemonStats.current_hp,
+            max_hp: pokemonStats.max_hp,
+            defense: pokemonStats.defense,
+            speed: pokemonStats.speed,
+            abilities: formattedAbilities,
+        };
+    }
+}
 
 Pokemon.init(
     {
@@ -99,6 +141,13 @@ Pokemon.init(
                     }
                 }
             },
+            beforeCreate: async (pokemon) => {
+                if (pokemon.level > 1) {
+                    const levelData = await PokemonLevel.findOne({ where: { level: pokemon.level } });
+                    pokemon.experience = levelData.experience;
+                    pokemon.pokemon_level_id = levelData.id;
+                }
+            }
         },
         sequelize,
         timestamps: false,
