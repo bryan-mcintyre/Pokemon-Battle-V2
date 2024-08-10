@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select all the Pokémon images inside the Pokémon storage
-    const pokemonImages = document.querySelectorAll('.pokemon-card img');
+    // Select all the Pokémon cards
+    const pokemonCards = document.querySelectorAll('.pokemon-card');
 
-    // Loop through each image and add animation using GSAP
-    pokemonImages.forEach((img) => {
+    // Loop through each card and add animation using GSAP
+    pokemonCards.forEach((card) => {
         let hoverAnimation;
+        const img = card.querySelector('img'); 
 
-        img.addEventListener('mouseover', () => {
+        card.addEventListener('mouseover', () => {
             hoverAnimation = gsap.to(img, { y: -10, duration: 0.6, ease: "power1.inOut", repeat: -1, yoyo: true });
         });
 
-        img.addEventListener('mouseout', () => {
+        card.addEventListener('mouseout', () => {
             hoverAnimation.kill();
             gsap.to(img, { y: 0, duration: 0.6, ease: "power1.inOut" });
         });

@@ -493,6 +493,7 @@ label {
     z-index: 1;
     background-color: transparent; 
     border: none; 
+    cursor:grab;
 }
 
 .wallet {
