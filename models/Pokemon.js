@@ -14,7 +14,7 @@ class Pokemon extends Model {
 
         // get abilities
         const abilities = await this.getAbilities({
-            attributes: ['name', 'description', 'effect_type', 'effect_amount'],
+            attributes: ['id', 'name', 'description', 'effect_type', 'effect_amount'],
             joinTableAttributes: [],
         });
 
