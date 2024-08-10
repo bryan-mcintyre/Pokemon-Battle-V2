@@ -1,20 +1,12 @@
 :root {
   --primary: #3B4CCA;
-  /* Dark blue from the image */
   --secondary: #29396A;
-  /* Medium blue */
   --tertiary: #d2d7f7;
-  /* Light blue */
   --quaternary: #6A2020;
-  /* Keeping as is */
   --light: #d2d7f7;
-  /* Light blue */
   --dark: #202941;
-  /* Dark shade */
   --error: rgb(228, 46, 1);
-  /* Error color */
   --border-radius: 0.3rem;
-  /* Border radius */
 }
 
 body {
@@ -31,7 +23,6 @@ body {
 header {
   display: flex;
   justify-content: space-around;
-  /* Distribute space between logo and nav */
   align-items: center;
   width: 100%;
   padding: 10px 20px;
@@ -44,11 +35,8 @@ nav {
 
 nav ul {
   list-style: none;
-  /* Remove list bullets */
   display: flex;
-  /* Display items in a row */
   gap: 25px;
-  /* Space between items */
 }
 
 nav ul li {
@@ -58,9 +46,7 @@ nav ul li {
 
 nav ul li a {
   color: var(--light);
-  /* Light blue text */
   text-decoration: none;
-  /* Remove underline */
   font-weight: bold;
   font-size: 25px;
   text-shadow: 1px 1px 2px black;
@@ -97,8 +83,9 @@ a:hover {
 }
 
 label {
-  color: var(--light)
+  color: var(--light);
 }
+
 .container {
   width: 85%;
   max-width: 1200px;
@@ -198,19 +185,19 @@ label {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 10px; /* Space between items */
+  gap: 10px;
   padding: 20px;
   background-color: var(--secondary);
   border-radius: 10px;
   border-style: inset;
   border-color: #FFCC00;
-  box-sizing:border-box;
-  width: 80%; 
-  margin: auto; 
+  box-sizing: border-box;
+  width: 80%;
+  margin: auto;
 }
 
 .link {
-  color:rgb(228, 46, 1);
+  color: rgb(228, 46, 1);
   text-decoration: underline;
 }
 
@@ -274,7 +261,7 @@ label {
 }
 
 .store-item h2 {
-  color:#FFCC00;
+  color: #FFCC00;
   text-shadow: 2px 2px 1px #1C3AA9;
   text-decoration: underline;
   font-size: 20px;
@@ -283,7 +270,7 @@ label {
 
 .store-item p {
   margin: 5px 0;
-  color:#1C3AA9;
+  color: #1C3AA9;
   text-shadow: 1px 1px 1px #FFCC00;
   padding: 10px;
 }
@@ -304,11 +291,11 @@ label {
   cursor: pointer;
   margin-top: 10px;
   width: 100%;
-  text-align: center; 
-  font-size: 16px; 
-  font-weight: bold; /* Make text bold */
-  display: inline-block; /* Make the button inline-block */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.3s;
 }
 
 .purchase-button:hover {
@@ -317,31 +304,31 @@ label {
 
 .starter-container {
   display: flex;
-  justify-content: space-around; /* Evenly space the cards horizontally */
-  align-items: flex-start; /* Align items at the start */
-  flex-wrap: wrap; 
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
   padding: 20px;
   margin-top: 20px;
 }
 
 .starter-card {
-  background-color: #f8f9fa; 
-  border: 4px solid #FFCC00; 
-  border-radius: 10px; 
+  background-color: #f8f9fa;
+  border: 4px solid #FFCC00;
+  border-radius: 10px;
   padding: 20px;
   text-align: center;
-  width: 250px; /* Fixed width for each card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: transform 0.2s; /* Smooth hover effect */
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
   margin: 10px;
 }
 
 .starter-card:hover {
-  transform: scale(1.05); /* Slightly enlarge card on hover */
+  transform: scale(1.05);
 }
 
 .starter-card img {
-  width: 100px; /* Fixed size for images */
+  width: 100px;
   height: auto;
   margin-bottom: 10px;
 }
@@ -352,13 +339,13 @@ label {
 }
 
 .starter-card strong {
-  color:#FFCC00;
+  color: #FFCC00;
   text-shadow: 2px 2px 1px #1D2951;
   font-size: 20px;
 }
 
 .starter-card button {
-  background-color: #FFCC00; /* Blue button */
+  background-color: #FFCC00;
   color: white;
   text-shadow: 2px 2px 1px #6A2020;
   border-style: outset;
@@ -370,36 +357,36 @@ label {
 }
 
 .starter-card button:hover {
-  background-color: #3B4CCA; /* Darker blue on hover */
-  text-shadow:1px 1px 2px #FFCC00;
+  background-color: #3B4CCA;
+  text-shadow: 1px 1px 2px #FFCC00;
 }
 
 .pokemon-card {
-  background-color: #f8f9fa; 
-  border: 2px solid #FFCC00; 
-  border-radius: 10px; 
+  background-color: #f8f9fa;
+  border: 2px solid #FFCC00;
+  border-radius: 10px;
   padding: 20px;
   text-align: center;
-  width: 250px; /* Fixed width for each card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: transform 0.2s; /* Smooth hover effect */
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
   margin: 10px;
   cursor: pointer;
 }
 
 .pokemon-card:hover {
-  transform: scale(1.05); /* Slightly enlarge card on hover */
+  transform: scale(1.05);
   background-color: #ece8b2;
 }
 
 .pokemon-card img {
-  width: 125px; 
+  width: 125px;
   height: auto;
   margin-bottom: 10px;
 }
 
 .pokemon-card h2 {
-  color: #FFCC00; /* Text color */
+  color: #FFCC00;
   text-shadow: 2px 2px 1px #1D2951;
   font-size: 20px;
 }
@@ -410,9 +397,9 @@ label {
 }
 
 .backpack-item {
-  background-color: #f8f9fa; 
-  border: 2px solid #FFCC00; 
-  border-radius: 10px; 
+  background-color: #f8f9fa;
+  border: 2px solid #FFCC00;
+  border-radius: 10px;
   padding: 20px;
   text-align: center;
   width: 250px;
@@ -466,38 +453,108 @@ label {
 }
 
 .wallet {
-    background-image: url('/images/IMG_6644.png');
-    background-size: contain;
-    background-position: left center; 
-    background-repeat: no-repeat;
-    border: none;
-    padding: 15px;
-    font-size: 18px;
-    color: #FFFFFF;
-    display: inline-block;
-    width: 375px; 
-    height: 150px; 
-    position: relative;
-    margin-bottom: 20px;
+  background-image: url('/images/IMG_6644.png');
+  background-size: contain;
+  background-position: left center;
+  background-repeat: no-repeat;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  color: #FFFFFF;
+  display: inline-block;
+  width: 375px;
+  height: 150px;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .wallet-value {
-    padding: 0; 
-    font-size: 24px;
-    color: #FFD700; 
-    text-shadow: 2px 2px 1px black;
-    position: absolute;
-    top: 50%;
-    left: 175px; 
-    transform: translateY(-50%); 
-    z-index: 1;
-    background-color: transparent; 
-    border: none; 
-    cursor:grab;
+  padding: 0; 
+  font-size: 24px;
+  color: rgb(9, 184, 9); 
+  text-shadow: .8px 1.5px 2px black;
+  position: absolute;
+  top: 50%;
+  left: 175px; 
+  transform: translateY(-50%); 
+  z-index: 1;
+  background-color: transparent; 
+  border: none; 
+  cursor: grab;
+  display: flex; 
+  align-items: center;
+}
+
+.wallet-value img {
+  margin-right: 8px;
 }
 
 .wallet {
-    padding-top: 25px; 
+  padding-top: 25px;
+}
+
+/* Tooltip container */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip-text {
+  visibility: hidden;
+  width: 250px;
+  height: 250px;
+  background-image: url('/images/eeveemoney.jpg'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  color: black;
+  text-shadow: 2px 2px 1px rgb(9, 184, 9);
+  text-align: right;
+  border-radius: 15px;
+  border: 6px inset green;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -70px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: "Teko", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 30px;
+  padding-right: 12px;
+}
+
+/* Tooltip arrow */
+.tooltip-text::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent;
+}
+
+.wallet-value:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.wallet:hover .wallet-value {
+  transform: none;
+}
+
+.store-item:hover img, .backpack-item:hover img {
+  transform: scale(1.05);
 }
 
 .quantity-select {
@@ -511,7 +568,7 @@ label {
   font-size: 14px;
   margin-top: 10px;
   display: block;
-  color: #000000; 
+  color: #000000;
   text-shadow: 1px 1px 1px #FFD700;
 }
 
@@ -520,7 +577,7 @@ label {
   padding: 8px;
   font-size: 14px;
   border-radius: 5px;
-  background-color: #f8f9fa; 
+  background-color: #f8f9fa;
   color: #000000;
 }
 
@@ -554,27 +611,27 @@ label {
 
 /* Modal container for purchases */
 .store-modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1000; 
+  display: none;
+  position: fixed;
+  z-index: 1000;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4); 
-  color:#000000;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #000000;
   text-shadow: 1px 1px 1px #FFCC00;
 }
 
 /* Modal content for purchases */
 .store-modal-content {
   background-color: var(--light);
-  margin: 15% auto; 
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid var(--dark);
-  width: 80%; 
+  width: 80%;
   max-width: 400px;
   text-align: center;
   border-radius: 10px;

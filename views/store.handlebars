@@ -10,17 +10,25 @@
   </header>
 
 <main>
-  <h2 id="home-color">PokéStore 🏪</h2>
-  <div class="wallet"></div>
-  <div class="bg-container" id="store-items"></div>
+    <h2 id="home-color">PokéStore 🏪</h2>
+    <div class="wallet">
+        <div class="tooltip-container">
+            <p class="wallet-value">
+                <img src="/images/pokedollar.png" alt="Pokedollar" />
+                <span id="walletAmount">500</span>
+                <span class="tooltip-text">Your current balance</span>
+            </p>
+        </div>
+    </div>
+    <div class="bg-container" id="store-items"></div>
 </main>
 
 <div id="purchaseModal" class="store-modal">
-  <div class="store-modal-content">
-    <span class="close-button">&times;</span>
-    <h2>Purchase Confirmation</h2>
-    <p id="purchaseMessage"></p>
-  </div>
+    <div class="store-modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Purchase Confirmation</h2>
+        <p id="purchaseMessage"></p>
+    </div>
 </div>
 
 <script src="/js/itemAnimations.js"></script>
