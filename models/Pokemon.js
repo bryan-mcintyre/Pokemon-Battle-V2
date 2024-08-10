@@ -30,6 +30,7 @@ class Pokemon extends Model {
         });
 
         return {
+            id: this.id,
             name: this.name,
             picture: this.picture,
             alive: this.alive,

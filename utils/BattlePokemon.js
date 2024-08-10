@@ -1,5 +1,6 @@
 class BattlePokemon {
     constructor(pokemonData) {
+        this.id = pokemonData.id || null;
         this.name = pokemonData.name;
         this.picture = pokemonData.picture;
         this.alive = pokemonData.alive;
@@ -19,9 +20,22 @@ class BattlePokemon {
             const randomChange = Math.floor(Math.random() * 3) - 1; // random -1 0 1
             const newLevel = pokemonLevel + randomChange
             for (let i = 1; i < newLevel; i++) {
-                this.levelUp()
+                this.levelUp();
             }
         }
+    }
+
+    attackOpponent(opponent) {
+        const damage = Math.max(this.attack - (opponent.defense / 2), 1);
+        opponent.current_hp -= damage;
+
+
+        if (opponent.current_hp <= 0) {
+            opponent.current_hp = 0;
+            opponent.alive = false;
+        }
+
+        console.log(`${this.name} attacked ${opponent.name} for ${damage} damage!`);
     }
 
     levelUp() {
@@ -42,6 +56,7 @@ class BattlePokemon {
             }
         })
         return {
+            id: this.id,
             name: this.name,
             picture: this.picture,
             alive: this.alivepicture,
