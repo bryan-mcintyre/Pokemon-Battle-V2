@@ -11,9 +11,18 @@
 
 <main>
     <h2 id="home-color">Backpack 🎒</h2>
-    <div class="wallet"></div> 
+    <div class="wallet">
+        <div class="tooltip-container">
+            <p class="wallet-value">
+                <img src="/images/pokedollar.png" alt="Pokedollar" />
+                <span id="walletAmount">500</span>
+                <span class="tooltip-text">Your current balance</span>
+            </p>
+        </div>
+    </div> 
     <div class="bg-container" id="backpack-items"></div>
 </main>
+
 <script src="/js/itemAnimations.js"></script>
 <script src="/js/wallet.js"></script>
 <script src="/js/backpack.js"></script>
