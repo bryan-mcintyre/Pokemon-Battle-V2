@@ -9,39 +9,34 @@
   </nav>
 </header>
 
-<section>
-    <h2>Select a Pokemon SIIII</h2>
-    <div>
-        {{!-- Show your Pokemons from storage --}}
-      {{!-- {{gallery}} --}}
-      {{#each gallery }}
-      <div class="card">
-      <img src="{{picture}}">
-      {{name}}
+<main>
+  <h2>Select a Pokémon</h2>
+  <div class="bg-container">
+    {{#each gallery }}
+    <div class="pokemon-card">
+      <img src="{{picture}}" alt="{{name}}">
+      <h2>{{name}}</h2>
       <p> Level: {{level}}</p>
-      <p>Current HP:</p>
-      {{pokemon_stat.current_hp}}
-      <p>Attack:</p>
-      {{pokemon_stat.attack}}
-      <p>Defense:</p>
-      {{pokemon_stat.defense}}
+      <p>HP: {{pokemon_stat.current_hp}}</p>
+      <p>Attack: {{pokemon_stat.attack}}</p>
+      <p>Defense: {{pokemon_stat.defense}}</p>
       <p>Abilities:</p>
       {{#each abilities as |ability|}}
-      {{ability.name}}
+      <strong>{{ability.name}} </strong>
       {{/each}}
-      </div>
-      
-{{/each}}
+      <button class="use-button"> Select </button>
     </div>
+    {{/each}}
+  </div>
 
-    {{!-- Battle Box --}}
-    <div>
-        <div> Selected Pokemon</div>
-        <div> VS</div>
-        <button id="generate-opponent-button" type="button" class="button">Generate Opponent
-            Pokémon!</button>
-        <button id="battle-button" type="button" class="button">Click here to battle!</button>
-    </div>
-</section>
+  {{!-- Battle Box --}}
+  <div class="starter-container">
+    <div> Selected Pokemon</div>
+    <div> VS</div>
+    <button id="generate-opponent-button" type="button" class="button">Generate Opponent
+      Pokémon!</button>
+    <button id="battle-button" type="button" class="button">Click here to battle!</button>
+  </div>
+</main>
 
 <script src="/js/logout.js"></script>
