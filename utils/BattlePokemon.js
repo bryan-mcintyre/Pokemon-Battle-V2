@@ -14,25 +14,25 @@ class BattlePokemon {
         this.abilities = pokemonData.abilities || [];
     }
 
-    balanceStats(pokemonLevel, pokemonExp) {
+    balanceStats(pokemonLevel) {
         if (pokemonLevel > 1) {
             const randomChange = Math.floor(Math.random() * 3) - 1; // random -1 0 1
-            this.level = pokemonLevel + randomChange;
-            this.experience = pokemonExp + (this.level * 500);
-            this.attack += this.level * 7;
-            this.current_hp += this.level * 10;
-            this.max_hp += this.level * 10;
-            this.defense += this.level * 5;
-            this.speed += this.level * 3;
+            const newLevel = pokemonLevel + randomChange
+            for (let i = 1; i < newLevel; i++) {
+                this.levelUp()
+            }
         }
     }
 
     levelUp() {
-        this.attack += 7;
-        this.current_hp += 10;
-        this.max_hp += 10;
-        this.defense += 5;
-        this.speed += 3;
+        if (this.level < 10) {
+            this.level += 1;
+            this.attack += 7;
+            this.current_hp += 10;
+            this.max_hp += 10;
+            this.defense += 5;
+            this.speed += 3;
+        }
     }
 
     toModelFormat() {
