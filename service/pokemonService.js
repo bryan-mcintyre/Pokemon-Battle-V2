@@ -59,7 +59,55 @@ async function createAbilityForPokemon(pokemonId, abilityId) {
     }
 }
 
+async function updatePokemonForUser(userId, pokemonId, pokemonData) {
+    try {
+        // find user by id
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        // find pokemon user_id and id pokemon
+        const pokemon = await Pokemon.findOne({
+            where: {
+                id: pokemonId,
+                user_id: userId // check this pokemon for current user
+            }
+        });
+
+        if (!pokemon) {
+            throw new Error('Pokemon not found or does not belong to this user');
+        }
+
+        // find level from db
+        const level = await PokemonLevel.findOne({
+            where: { level: pokemonData.level || 1 },
+        });
+
+        if (!level) {
+            throw new Error('Pokemon level not found');
+        }
+
+        // update pokemon
+        await pokemon.update({
+            ...pokemonData,
+            pokemon_level_id: level.id,
+        });
+
+        // update or create stats for pokemon
+        const [stats, created] = await PokemonStats.upsert({
+            ...pokemonData,
+            pokemon_id: pokemon.id,
+        });
+
+        return { pokemon, stats };
+    } catch (e) {
+        throw new Error(e.message);
+    }
+}
+
 module.exports = {
     createPokemonForUser,
-    createAbilityForPokemon
+    createAbilityForPokemon,
+    updatePokemonForUser
 };
