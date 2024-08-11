@@ -104,7 +104,8 @@ router.post('/startBattle', withAuth, async (req, res) => {
         res.render('startBattle', {
             userPokemon: userPokemon,
             opponentPokemon: opponentPokemon,
-            levelData: levelData
+            levelData: levelData,
+            userTurn: userTurn
         });
     } catch (err) {
         console.error('Error in /battle/startBattle:', err);
