@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { withAuth } = require('../utils/auth');
-const { fetchPokemonByName } = require('../utils/pokemonFetch')
+const { fetchPokemonByName, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability, PokemonLevel } = require('../models');
 
 // TODO: Add auth check and save session
@@ -48,7 +48,7 @@ router.post('/', withAuth, async (req, res) => {
         const userPokemon = await userPokemonData.getBattleData();
 
         // fetch pokemon enemy
-        const enemyPokemon = await fetchPokemonByName(req.body.opponent_pokemon);
+        const enemyPokemon = await fetchBalancedPokemonByName(req.body.opponent_pokemon, userPokemon.level);
 
         // get all data from ability
         const abilitiesData = await Ability.findAll();
@@ -62,8 +62,17 @@ router.post('/', withAuth, async (req, res) => {
         // add enemyPokemon random ability
         enemyPokemon.abilities = [randomAbility.dataValues];
 
+        const userTurn = userPokemon.speed >= enemyPokemon.speed;
+
         //get lvlData
         const levelData = await PokemonLevel.findAll({ raw: true });
+
+        req.session.battleState = {
+            userPokemon: userPokemon,
+            enemyPokemon: enemyPokemon,
+            levelData: levelData,
+            userTurn: userTurn
+        };
 
         res.render('start-battle', {
             userPokemon: userPokemon,
