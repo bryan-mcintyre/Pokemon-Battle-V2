@@ -20,6 +20,8 @@ router.get('/', async (req, res) => {
               name: b.item.name,
               count: b.count, 
               image: b.item.image,
+              effect_type: b.item.effect_type,
+              effect_amount: b.item.effect_amount,
           };
       });
 

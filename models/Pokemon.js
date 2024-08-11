@@ -4,8 +4,17 @@ const PokemonLevel = require('./PokemonLevel');
 const PokemonStats = require('./PokemonStats');
 
 class Pokemon extends Model {
+//Search for which item is using, check for type and effect amount, and check for user id
+    async useItem(effect, effect_amount) {
+     
+        const pokemonStats = await PokemonStats.findOne({ where: { pokemon_id: this.id } });
+       
+         await PokemonStats.update( 
+            { current_hp: pokemonStats.current_hp + effect_amount }, 
+            { where: { id: this.id } }
+            );  
 
-
+    };
 
     async getBattleData() {
 
