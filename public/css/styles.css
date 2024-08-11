@@ -105,6 +105,39 @@ label {
   width: 92%;
 }
 
+#image-left-pika {
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+}
+
+#image-right-char {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+}
+
+.home-battle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 75px;
+}
+
+.home-battle-container .image-row {
+  display: flex;
+  justify-content: space-between;;
+  width: 100%;
+  max-width: 750px;
+  padding: 0;
+  margin-bottom: 50px;
+}
+
+.home-battle-container img {
+  max-width: 250px;
+  height: auto;
+}
+
 .login-card {
   margin: 20px 0px 0px 20px;
   flex: 0 0 50%;
@@ -842,14 +875,6 @@ label {
   cursor: pointer;
 }
 
-#image-left {
-  left: 0;
-}
-
-#image-right {
-  right: 0;
-}
-
 #popup-container {
   position: fixed;
   bottom: 0;
@@ -875,4 +900,6 @@ label {
   font-style: normal;
   padding-top: 25px;
   padding-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
 }
