@@ -30,7 +30,7 @@ header {
 }
 
 nav {
-  padding: 25px;
+  padding: 15px;
 }
 
 nav ul {
@@ -174,7 +174,7 @@ label {
 }
 
 .battlefield-enemy-pokemon-card {
-  background-color: #f8f9fa;
+  background: radial-gradient(circle, white, gray, black);
   border: 2px solid #FFCC00;
   border-radius: 10px;
   padding: 20px;
@@ -299,7 +299,7 @@ label {
 }
 
 .battle-pokemon-card {
-  background-color: #f8f9fa;
+  background: radial-gradient(circle, white, gray, black);
   border: 2px solid #FFCC00;
   border-radius: 10px;
   padding: 20px;
@@ -316,12 +316,24 @@ label {
 
 .user-pokemon-card {
   position: absolute;
-  left: 50px; /* Adjust as needed */
+  left: 200px; 
 }
 
 .opponent-pokemon-card {
   position: absolute;
-  right: 50px; /* Adjust as needed */
+  right: 200px; 
+}
+
+.user-pokemon-card p {
+  color: #FFCC00;
+  text-shadow: 2px 2px 1px black;
+  font-weight: bold;
+}
+
+.opponent-pokemon-card p {
+  color: #FFCC00;
+  text-shadow: 2px 2px 1px black;
+  font-weight: bold;
 }
 
 .vs-text {
@@ -329,9 +341,10 @@ label {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 30px;
+  font-size: 35px;
   color: #FFCC00;
-  text-shadow: 2px 2px 4px #000;
+  text-shadow: 2px 2px 2px #000;
+  margin-top: 127px;
 }
 
 .bg-container {

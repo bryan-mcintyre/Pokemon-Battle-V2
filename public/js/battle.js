@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const opponentPokemon = JSON.parse(document.getElementById('opponent-pokemon-data').value);
 
             // Save selected Pokémon and redirect to start-battle
-            const response = await fetch('/battle/start', {
+            const response = await fetch('/battle/startBattle', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,10 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }),
             });
 
+            console.log(response);
+
+            // Check if the response is ok, then redirect
             if (response.ok) {
-                window.location.href = '/battle/start';
+                window.location.href = '/battle/startBattle';
             } else {
-                alert('Failed to start the battle.');
+                alert('Failed to start the battle. Please try again.');
             }
         });
     });
