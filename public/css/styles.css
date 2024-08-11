@@ -69,6 +69,14 @@ h2 {
   padding-top: 40px;
 }
 
+h3 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 footer {
   font-size: 20px;
   color: var(--light);
