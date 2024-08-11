@@ -4,8 +4,22 @@ const sequelize = require('../config/connection');
 class Backpack extends Model {
     checkValue(price) {
         return price < this.value;
-    }
+    };
+
+    async deleteUsedItem(item_id) {
+        const item = await Backpack.findOne({ where: { user_id: this.user_id, item_id: this.item_id } });
+
+        if (item.count <= 1) {
+            await Backpack.destroy(
+                { where: { id: item_id } });
+        } else {
+            item.count -= 1;
+            await item.save();
+        }
+
+    };
 }
+
 
 Backpack.init(
     {
