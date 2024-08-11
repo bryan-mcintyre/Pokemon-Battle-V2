@@ -23,10 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBattleButton = document.getElementById('start-battle-button');
     const userPokemonCard = document.querySelector('.user-pokemon-card');
     const attackButton = document.createElement('button');
+    const quitBattleButton = document.getElementById('quit-battle-button');
 
     attackButton.textContent = "Attack!";
     attackButton.className = 'attack-button';
     userPokemonCard.appendChild(attackButton);
+
+    quitBattleButton.addEventListener('click', () => {
+        window.location.href = '/dashboard';
+    });
+
+    gsap.to(quitBattleButton, {
+        scale: 1.1,
+        yoyo: true,
+        repeat: -1,
+        duration: 1,
+        ease: "power1.inOut"
+    })
 
     // GSAP Pulse Animation for Start Battle Button
     gsap.to(startBattleButton, {

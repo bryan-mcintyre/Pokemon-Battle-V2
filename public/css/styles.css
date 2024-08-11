@@ -902,6 +902,30 @@ label {
   transform: scale(1.1);
 }
 
+.quit-battle-button {
+  background: radial-gradient(circle, #800000, #4b0000, #200000);
+  color: #FFCC00;
+  font-family: "Press Start 2P", system-ui;
+  font-size: 20px;
+  padding: 10px 30px;
+  border: 2px solid #FFCC00;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  position: absolute;
+  transform: translate(-50%);
+  z-index: 1000; 
+  text-shadow: 2px 2px 2px #000000;
+  bottom: 10px;
+  left: 50%;
+}
+
+.quit-battle-button:hover {
+  color: #ff0000;
+  border: 2px solid #ff0000;
+  transform: scale(1.1);
+}
+
 .attack-button {
   background: radial-gradient(circle, #800000, #4b0000, #200000);
   color: #FFCC00;
