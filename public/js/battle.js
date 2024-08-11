@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle the No button click
     noButton.addEventListener('click', () => {
-        window.location.href = '/dashboard';
+        window.location.href = '/battle';
     });
 
     // Handle the Yes button click
