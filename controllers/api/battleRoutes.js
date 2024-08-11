@@ -26,8 +26,8 @@ router.post('/user/attack', withAuth, async (req, res) => {
                 userBattlePokemon.levelUp();
             }
             return res.json({
-                userPokemon: userBattlePokemon.toModelFormat(),
-                enemyPokemon: enemyBattlePokemon.toModelFormat(),
+                userPokemon: userBattlePokemon,
+                enemyPokemon: enemyBattlePokemon,
                 message: "You win!"
             });
         }
@@ -57,7 +57,8 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
 
         enemyBattlePokemon.attackOpponent(userBattlePokemon);
 
-        req.session.battleState.userBattlePokemon.current_hp = userBattlePokemon.current_hp;
+
+        req.session.battleState.userPokemon.current_hp = userBattlePokemon.current_hp;
         req.session.battleState.currentTurn = !req.session.battleState.currentTurn;
 
         if (!userBattlePokemon.isAlive()) {
@@ -67,8 +68,8 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
                 userBattlePokemon.levelUp();
             }
             return res.json({
-                userPokemon: userBattlePokemon.toModelFormat(),
-                enemyPokemon: enemyBattlePokemon.toModelFormat(),
+                userPokemon: userBattlePokemon,
+                enemyPokemon: enemyBattlePokemon,
                 message: "You lost!"
             });
         }
