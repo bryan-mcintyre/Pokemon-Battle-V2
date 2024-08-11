@@ -1,9 +1,23 @@
 const router = require('express').Router();
 const { withAuth } = require('../utils/auth');
-const { fetchPokemonByName, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
+const { fetchPokemonByName, fetchRandomPokemon, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability, PokemonLevel } = require('../models');
 
-// TODO: Add auth check and save session
+router.get('/', withAuth, async (req, res) => {
+    try {
+        const randomPokemon = await fetchRandomPokemon();
+
+        // Log the fetched random Pokémon
+        console.log('Random Pokémon fetched:', randomPokemon);
+
+        res.render('battle', {
+            randomPokemon: randomPokemon
+        });
+    } catch (err) {
+        console.error('Error fetching random Pokémon:', err);
+        res.status(500).json(err);
+    }
+});
 
 router.get('/', withAuth, async (req, res) => {
     try {
