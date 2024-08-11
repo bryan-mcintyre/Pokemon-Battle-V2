@@ -11,15 +11,15 @@ router.post('/user/attack', withAuth, async (req, res) => {
         }
 
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
-        const enemyBattlePokemon = new BattlePokemon(battleState.enemyPokemon);
+        const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
 
 
-        userBattlePokemon.attackOpponent(enemyBattlePokemon);
+        userBattlePokemon.attackOpponent(opponentBattlePokemon);
 
-        req.session.battleState.enemyPokemon.current_hp = enemyBattlePokemon.current_hp;
+        req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
         req.session.battleState.currentTurn = !req.session.battleState.currentTurn;
 
-        if (!enemyBattlePokemon.isAlive()) {
+        if (!opponentBattlePokemon.isAlive()) {
             userBattlePokemon.experience += 100;
             const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level);
             if (userBattlePokemon.experience > currentLevelData.experience) {
@@ -27,7 +27,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
             }
             return res.json({
                 userPokemon: userBattlePokemon,
-                enemyPokemon: enemyBattlePokemon,
+                opponentPokemon: opponentBattlePokemon,
                 message: "You win!"
             });
         }
@@ -35,7 +35,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
 
         res.json({
             userPokemon: req.session.battleState.userPokemon,
-            enemyPokemon: req.session.battleState.enemyPokemon,
+            opponentPokemon: req.session.battleState.opponentPokemon,
             message: "Waiting for opponent's move..."
         });
     } catch (err) {
@@ -52,10 +52,10 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
         }
 
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
-        const enemyBattlePokemon = new BattlePokemon(battleState.enemyPokemon);
+        const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
 
 
-        enemyBattlePokemon.attackOpponent(userBattlePokemon);
+        opponentBattlePokemon.attackOpponent(userBattlePokemon);
 
 
         req.session.battleState.userPokemon.current_hp = userBattlePokemon.current_hp;
@@ -69,7 +69,7 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
             }
             return res.json({
                 userPokemon: userBattlePokemon,
-                enemyPokemon: enemyBattlePokemon,
+                opponentPokemon: opponentBattlePokemon,
                 message: "You lost!"
             });
         }
@@ -77,7 +77,7 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
 
         res.json({
             userPokemon: req.session.battleState.userPokemon,
-            enemyPokemon: req.session.battleState.enemyPokemon,
+            opponentPokemon: req.session.battleState.opponentPokemon,
             message: "Waiting for opponent's move..."
         });
     } catch (err) {

@@ -1,88 +1,116 @@
 const router = require('express').Router();
 const { withAuth } = require('../utils/auth');
-const { fetchPokemonByName, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
+const { fetchPokemonByName, fetchRandomPokemon, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability, PokemonLevel } = require('../models');
 
-// TODO: Add auth check and save session
-
+// Fetch and display a random Pokémon when the battle starts
 router.get('/', withAuth, async (req, res) => {
     try {
+        const randomPokemon = await fetchRandomPokemon();
 
+        // Fetch user Pokémon
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] },
             raw: true
-        })
+        });
 
         const pokemonData = await Pokemon.findAll({
-            where: {
-                user_id: userData.id
-            },
+            where: { user_id: userData.id },
             include: [
                 { model: PokemonStats },
                 { model: Ability, through: PokemonAbility }
             ],
         });
 
-        const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }))
+        const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }));
+
         res.render('battle', {
-            gallery: convertPokemonData,
+            randomPokemon: randomPokemon,
+            gallery: convertPokemonData
         });
     } catch (err) {
+        console.error('Error fetching random Pokémon:', err);
         res.status(500).json(err);
     }
 });
 
-router.post('/', withAuth, async (req, res) => {
+router.get('/startBattle', withAuth, (req, res) => {
+    if (req.session.battleState) {
+        const { userPokemon, opponentPokemon, levelData } = req.session.battleState;
+        res.render('startBattle', {
+            userPokemon,
+            opponentPokemon,
+            levelData
+        });
+    } else {
+        res.redirect('/battle');
+    }
+});
+
+
+// Handle starting the battle with the selected Pokémon
+router.post('/startBattle', withAuth, async (req, res) => {
     try {
+        const { pokemon_id, opponent_pokemon } = req.body;
+
+        // Fetch the selected user Pokémon from the database
         const userPokemonData = await Pokemon.findOne({
-            where: {
-                id: req.body.pokemon_id,
-                user_id: req.session.user_id
-            },
+            where: { id: pokemon_id, user_id: req.session.user_id },
             include: [
                 { model: PokemonStats },
-                { model: Ability, through: PokemonAbility }
+                { model: Ability, through: PokemonAbility },
+                { model: PokemonLevel }
             ],
         });
-        //get Battledata
-        const userPokemon = await userPokemonData.getBattleData();
 
-        // fetch pokemon enemy
-        const enemyPokemon = await fetchBalancedPokemonByName(req.body.opponent_pokemon, userPokemon.level);
+        if (!userPokemonData) {
+            throw new Error('User Pokémon not found.');
+        }
 
-        // get all data from ability
+        // Extract the user's Pokémon level
+        const userPokemon = userPokemonData.get({ plain: true });
+        const userPokemonLevel = userPokemon.pokemon_level.level;
+
+        // Fetch the opponent Pokémon using the name (unbalanced)
+        const opponentPokemonRaw = await fetchPokemonByName(opponent_pokemon.name);
+
+        // Balance the opponent Pokémon stats based on the user's Pokémon level
+        const opponentPokemon = await fetchBalancedPokemonByName(opponent_pokemon.name, userPokemonLevel);
+
+        // Randomly assign an ability to the opponent Pokémon
         const abilitiesData = await Ability.findAll();
-
-        //for take random ability
         const randomIndex = Math.floor(Math.random() * abilitiesData.length);
-
-        // create random ability for enemy
         const randomAbility = abilitiesData[randomIndex];
 
-        // add enemyPokemon random ability
-        enemyPokemon.abilities = [randomAbility.dataValues];
+        // Add the random ability to the opponent Pokémon
+        opponentPokemon.abilities = [randomAbility.dataValues];
 
-        const userTurn = userPokemon.speed >= enemyPokemon.speed;
+        // Determine who goes first based on speed
+        const userTurn = userPokemon.pokemon_stat.speed >= opponentPokemon.speed;
 
-        //get lvlData
+        // Fetch all level data (for potential future use)
         const levelData = await PokemonLevel.findAll({ raw: true });
 
+        // Store the battle state in the session (for use during the battle)
         req.session.battleState = {
             userPokemon: userPokemon,
-            enemyPokemon: enemyPokemon,
+            opponentPokemon: opponentPokemon,
+            opponentPokemonRaw: opponentPokemonRaw,  // Store raw data for future reference
             levelData: levelData,
             userTurn: userTurn
         };
 
-        res.render('start-battle', {
+        // Render the start-battle view with both Pokémon
+        res.render('startBattle', {
             userPokemon: userPokemon,
-            enemyPokemon: enemyPokemon,
+            opponentPokemon: opponentPokemon,
             levelData: levelData,
             userTurn: userTurn
         });
     } catch (err) {
-        res.status(400).json(err);
+        console.error('Error in /battle/startBattle:', err);
+        res.status(500).json(err);
     }
-})
+});
 
 module.exports = router;

@@ -1,8 +1,32 @@
+// const { PokemonStats } = require("../../models");
+
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/api/backpack');
     const backpackItems = await response.json();
     const backpackContainer = document.getElementById('backpack-items');
+
+    // const modal = document.querySelector('.pokemon-modal');
+    // const modalMessage = document.getElementById('pokemonMessage');
+    // const closeButton = document.querySelector('.close-button');
+
+    // // Function to open the modal
+    // function openModal(message) {
+    //     modalMessage.textContent = message;
+    //     modal.style.display = 'block';
+    // }
+
+    // // Function to close the modal
+    // closeButton.addEventListener('click', () => {
+    //     modal.style.display = 'none';
+    // });
+
+    // Close the modal when clicking outside of the modal content
+    // window.addEventListener('click', (event) => {
+    //     if (event.target === modal) {
+    //         modal.style.display = 'none';
+    //     }
+    // });
 
     if (!Array.isArray(backpackItems)) {
       throw new Error('Expected an array but received something else');
@@ -27,10 +51,62 @@ document.addEventListener('DOMContentLoaded', async () => {
       const useButton = document.createElement('button');
       useButton.textContent = 'Use';
       useButton.classList.add('use-button');
-      useButton.addEventListener('click', () => {
-        alert(`Using ${item.name}`);
+      useButton.addEventListener('click', async () => {
+
+        // alert(`Using ${item.name} and ${item.effect_type} and ${item.effect_amount}`);
+        console.log(item.name + " | " + item.effect_type)
         // logic to use the item goes here
+
+      // Fetch users Pokemon and show them
+        const pokemonData = await fetch(`/api/pokemon/team`);
+        console.log(pokemonData);
+        const pokemons = await pokemonData.json();
+        console.log(pokemons)
+        const pokemonContainer = document.getElementById('pokemon-container');
+
+        pokemons.forEach(pokemon => {
+          const pokemonDiv = document.createElement('div');
+          pokemonDiv.classList.add('backpack-item');
+          const pokemonName = document.createElement('button');
+          pokemonName.classList.add('use-button');
+          pokemonName.textContent = pokemon.name;
+          pokemonName.value = pokemon.name;
+
+          pokemonContainer.appendChild(pokemonName);
+
+          console.log(pokemonName)
+
+          pokemonName.addEventListener('click', async (event) => {
+            const selectedPokemon = event.target.value;
+            console.log("Selected:" + " " + selectedPokemon)
+
+            // send info of pokemon in body
+            const useOnPokemon = await fetch(`api/pokemon/item`, {
+              method: 'POST',
+              body: JSON.stringify({ effect_amount: item.effect_amount, item_id: item.id, id: pokemon.id }), //item.id remove 1 from backpack,
+              headers: { 'Content-Type': 'application/json' }
+            })
+
+            if (useOnPokemon.ok) {
+            // alert('Item used.')
+          
+            console.log('Pokemon CURED')
+            } else {
+              // alert('Failed to use item.');
+              console.log('Failed to apply effect')
+            }
+
+
+          })
+
+        });
+
+
+        // Modal with Pokemons to choose from
+        // openModal(`Select a Pokemon${pokemonData}`) // Show pokemon on message
+
       });
+
 
       // Quantity dropdown for deletion
       const quantityLabel = document.createElement('label');
