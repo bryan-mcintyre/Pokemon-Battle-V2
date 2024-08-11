@@ -1,43 +1,59 @@
 <header>
-  <nav>
-    <ul>
-      <li><a href='/dashboard'>Dashboard</a></li>
-      <li><a href='/store'>Store</a></li>
-      <li><a href='/backpack'>Backpack</a></li>
-      <li><a href='#' id="logout">Logout</a></li>
+    <nav>
+      <ul>
+        <li><a href='/dashboard'>Dashboard</a></li>
+        <li><a href='#' id="logout">Logout</a></li>
     </ul>
-  </nav>
-</header>
+    </nav>
+  </header>
 
 <main>
-  <h2>Select a Pokémon</h2>
-  <div class="bg-container">
+  <h2>A wild Pokémon appeared!</h2>
+
+  <div class="battlefield-background">
+    <div class="battlefield-enemy-pokemon-card">
+      <img src="{{randomPokemon.picture}}" alt="{{randomPokemon.name}}">
+      <h2>{{randomPokemon.name}}</h2>
+    </div>
+
+    <div class="battlefield-question">
+      <h3>Do you want to battle this Pokémon?</h3>
+      <div class="battlefield-options">
+        <button id="yes-button" type="button" class="battlefield-button">Yes</button>
+        <button id="no-button" type="button" class="battlefield-button">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="pokemon-storage" class="bg-container" style="display: none;">
+    <h2>Select a Pokémon</h2>
     {{#each gallery }}
-    <div class="pokemon-card">
+    <div class="pokemon-card" data-id="{{id}}">
       <img src="{{picture}}" alt="{{name}}">
       <h2>{{name}}</h2>
-      <p> Level: {{level}}</p>
+      <p>Level: {{level}}</p>
       <p>HP: {{pokemon_stat.current_hp}}</p>
       <p>Attack: {{pokemon_stat.attack}}</p>
       <p>Defense: {{pokemon_stat.defense}}</p>
       <p>Speed: {{this.pokemon_stat.speed}}</p>
       <p>Abilities:</p>
       {{#each abilities as |ability|}}
-      <strong>{{ability.name}} </strong>
+      <strong>{{ability.name}}</strong>
       {{/each}}
-      <button class="use-button"> Select </button>
+      <button class="select-button">Select</button>
     </div>
     {{/each}}
   </div>
 
-  {{!-- Battle Box --}}
-  <div class="starter-container">
-    <div> Selected Pokemon</div>
-    <div> VS</div>
-    <button id="generate-opponent-button" type="button" class="button">Generate Opponent
-      Pokémon!</button>
-    <button id="battle-button" type="button" class="button">Click here to battle!</button>
-  </div>
+  <input type="hidden" id="opponent-pokemon-data" value='{{{json randomPokemon}}}' />
+
+  <div id="battle-modal" class="battle-modal" style="display: none;">
+    <div class="battle-modal-content">
+        <h2>Please select your Pokémon for battle!</h2>
+        <button id="battle-modal-ok-button" class="battle-modal-ok-button">Okay</button>
+    </div>
+</div>
 </main>
 
+<script src="/js/battle.js"></script>
 <script src="/js/logout.js"></script>

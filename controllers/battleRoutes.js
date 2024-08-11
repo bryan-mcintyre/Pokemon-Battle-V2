@@ -1,78 +1,84 @@
 const router = require('express').Router();
 const { withAuth } = require('../utils/auth');
-const { fetchPokemonByName } = require('../utils/pokemonFetch')
+const { fetchPokemonByName, fetchRandomPokemon } = require('../utils/pokemonFetch')
+const BattlePokemon = require('../utils/BattlePokemon');
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability, PokemonLevel } = require('../models');
-
-// TODO: Add auth check and save session
 
 router.get('/', withAuth, async (req, res) => {
     try {
+        const randomPokemon = await fetchRandomPokemon(); 
+        console.log('Random Pokemon:', randomPokemon); 
 
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] },
             raw: true
-        })
+        });
 
         const pokemonData = await Pokemon.findAll({
             where: {
                 user_id: userData.id
             },
             include: [
-                { model: PokemonStats },
+                { model: PokemonStats },  // Ensure this is correctly joined
                 { model: Ability, through: PokemonAbility }
             ],
         });
 
-        const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }))
-        res.render('battle', {
+        const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }));
+
+        res.render('start-battle', {
             gallery: convertPokemonData,
+            randomPokemon: randomPokemon, 
         });
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
-router.post('/', withAuth, async (req, res) => {
+router.post('/start', withAuth, async (req, res) => {
     try {
+        const { pokemon_id, opponent_pokemon } = req.body;
+
+        // Detailed logging
+        console.log('Received data:', req.body);
+
+        // Fetch the selected user Pokémon from the database
         const userPokemonData = await Pokemon.findOne({
             where: {
-                id: req.body.pokemon_id,
-                user_id: req.session.user_id
+                id: pokemon_id,
+                user_id: req.session.user_id,
             },
             include: [
-                { model: PokemonStats },
-                { model: Ability, through: PokemonAbility }
+                { model: PokemonStats },  // Ensure stats are included
+                { model: Ability, through: PokemonAbility },
             ],
         });
-        //get Battledata
-        const userPokemon = await userPokemonData.getBattleData();
 
-        // fetch pokemon enemy
-        const enemyPokemon = await fetchPokemonByName(req.body.opponent_pokemon);
+        if (!userPokemonData) {
+            throw new Error('User Pokémon not found.');
+        }
 
-        // get all data from ability
-        const abilitiesData = await Ability.findAll();
+        // Create BattlePokemon instances
+        const userPokemon = new BattlePokemon(userPokemonData.get({ plain: true }));
+        console.log('User Pokémon:', userPokemon);
 
-        //for take random ability
-        const randomIndex = Math.floor(Math.random() * abilitiesData.length);
+        // Use opponent_pokemon directly as it's passed from the previous view
+        const opponentPokemonData = opponent_pokemon; 
+        const opponentPokemon = new BattlePokemon(opponentPokemonData);
+        console.log('Opponent Pokémon:', opponentPokemon);
 
-        // create random ability for enemy
-        const randomAbility = abilitiesData[randomIndex];
+        // Balance opponent Pokémon stats based on user Pokémon level
+        opponentPokemon.balanceStats(userPokemon.level);
 
-        // add enemyPokemon random ability
-        enemyPokemon.abilities = [randomAbility.dataValues];
-
-        //get lvlData
-        const levelData = await PokemonLevel.findAll({ raw: true });
-
+        // Render the start-battle view with both Pokémon
         res.render('start-battle', {
             userPokemon: userPokemon,
-            enemyPokemon: enemyPokemon,
-            levelData: levelData
+            opponentPokemon: opponentPokemon,
         });
     } catch (err) {
-        res.status(400).json(err);
+        console.error('Error in /battle/start:', err);
+        res.status(500).json({ error: err.message });
     }
-})
+});
 
 module.exports = router;
