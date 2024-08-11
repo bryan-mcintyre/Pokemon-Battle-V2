@@ -54,3 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+
+    // User Pokémon Animation
+    gsap.to('.battlefield-enemy-pokemon-card img', {
+        y: 4,  
+        scale: 1.05,  
+        yoyo: true,  
+        repeat: -1,  
+        duration: 0.7,  
+        ease: "power1.inOut",  
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.battlefield-button');
+
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            gsap.to(button, {
+                backgroundColor: '#6A2020',
+                scale: 1.5,  
+                duration: 0.3,  
+                ease: 'power2.out',  
+            });
+        });
+
+        button.addEventListener('mouseleave', () => {
+            gsap.to(button, {
+                backgroundColor: '#000000',
+                scale: 1,  
+                duration: 0.3,  
+                ease: 'power2.out',  
+            });
+        });
+    });
+});

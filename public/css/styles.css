@@ -169,8 +169,8 @@ label {
   background-image: url('/images/battlefield.jpg');
   background-size: cover;
   background-position: center;
-  width: 50%;
-  height: 500px;
+  width: 60%;
+  height: 600px;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
@@ -187,8 +187,8 @@ label {
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  width: 225px;
-  height: 500px;
+  width: 235px;
+  height: 375px;
   min-height: 150px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -226,8 +226,9 @@ label {
 }
 
 .battlefield-button {
-  background-color: #3B4CCA;
+  background-color: #000000;
   color: white;
+  text-shadow: 1px 1px 2px #FFCC00;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -236,7 +237,7 @@ label {
 }
 
 .battlefield-button:hover {
-  background-color: #29396A;
+  background-color: #6A2020;
 }
 
 .battle-modal {
@@ -312,8 +313,8 @@ label {
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  width: 225px;
-  height: 400px;
+  width: 250px;
+  height: 425px;
   min-height: 150px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -324,12 +325,20 @@ label {
 
 .user-pokemon-card {
   position: absolute;
-  left: 200px; 
+  left: 100px; 
 }
 
 .opponent-pokemon-card {
   position: absolute;
-  right: 200px; 
+  right: 100px; 
+}
+
+.opponent-pokemon-card h2 {
+  font-size: 20px;
+}
+
+.user-pokemon-card h2 {
+  font-size: 25px;
 }
 
 .user-pokemon-card p {
@@ -352,7 +361,7 @@ label {
   font-size: 35px;
   color: #FFCC00;
   text-shadow: 2px 2px 2px #000;
-  margin-top: 127px;
+  margin-top: 177px;
 }
 
 .bg-container {
