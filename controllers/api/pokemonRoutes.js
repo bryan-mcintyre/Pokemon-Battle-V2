@@ -1,26 +1,22 @@
 const router = require('express').Router();
-// Import the User model from the models folder
 const { User } = require('../../models');
-const { createPokemonForUser } = require('../../service/pokemonService');
-const { fetchRandomPokemon } = require('../../utils/pokemonFetch');
+const { createPokemonForUser, createAbilityForPokemon } = require('../../service/pokemonService');
+const { withAuth } = require('../../utils/auth');
+
 
 // TODO: post for current user, if he catch or choose pokemon
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
-        const pokemon = await fetchRandomPokemon();
+        const pokemonData = req.body.pokemon
+        const user = await User.findByPk(req.session.user_id);
+        const { pokemon } = await createPokemonForUser(user.id, pokemonData);
+        for (let i = 0; i < pokemonData.abilities.length; i++) {
+            await createAbilityForPokemon(pokemon.id, pokemonData.abilities[i])
+        }
 
-        const user = await User.findByPk(1);
-        const data = await createPokemonForUser(user.id, pokemon);
 
+        res.status(200).json(pokemon);
 
-        res.status(200).json(data);
-
-        //   req.session.save(() => {
-        //     req.session.user_id = userData.id;
-        //     req.session.logged_in = true;
-
-        //     res.status(200).json(userData);
-        //   });
     } catch (err) {
         res.status(400).json(err);
     }
