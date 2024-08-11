@@ -1,0 +1,25 @@
+{{#if userPokemon}}
+<h1>User: {{userPokemon.name}}</h1>
+{{#each userPokemon.abilities as |ability|}}
+<h1>AbilityName: {{ability.name}}</h1>
+<h1>Ability: {{ability.description}}</h1>
+{{/each}}
+{{/if}}
+{{#if enemyPokemon}}
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<h1>Enemy: {{enemyPokemon.name}}</h1>
+{{#each enemyPokemon.abilities as |ability|}}
+<h1>AbilityName: {{ability.name}}</h1>
+<h1>Ability: {{ability.description}}</h1>
+{{/each}}
+{{/if}}
+{{#if levelData}}
+{{#each levelData as |level|}}
+<p></p>
+<p>{{level.level}}</p>
+<p>{{level.experience}}</p>
+{{/each}}
+{{/if}}
