@@ -377,6 +377,11 @@ label {
   align-items: center;
 }
 
+.user-main-pokemon-img {
+  width: 175px;
+  height: auto;
+}
+
 .user-pokemon-card {
   position: absolute;
   left: 100px;
@@ -397,9 +402,15 @@ label {
   font-size: 20px;
 }
 
+.opponent-pokemon-card img {
+  height: 175px;
+  width: 175px;
+  padding-bottom: 30px;
+}
+
 .user-pokemon-card h2 {
   font-size: 22px;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .user-pokemon-card p {
@@ -407,7 +418,6 @@ label {
   text-shadow: 2px 2px 1px black;
   font-weight: bold;
   margin: 4px 0;
-  font-size: 14px;
   display: flex;
   justify-content: space-evenly;
 }
