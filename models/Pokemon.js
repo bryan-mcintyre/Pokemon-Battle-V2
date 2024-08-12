@@ -4,15 +4,57 @@ const PokemonLevel = require('./PokemonLevel');
 const PokemonStats = require('./PokemonStats');
 
 class Pokemon extends Model {
-//Search for which item is using, check for type and effect amount, and check for user id
-    async useItem(effect, effect_amount) {
-     
+    //Search for which item is using, check for type and effect amount, and check for user id
+    async useItem(effect_type, effect_amount) {
+
         const pokemonStats = await PokemonStats.findOne({ where: { pokemon_id: this.id } });
-       
-         await PokemonStats.update( 
-            { current_hp: pokemonStats.current_hp + effect_amount }, 
-            { where: { id: this.id } }
-            );  
+
+        // Define item effect 
+        const effectType = effect_type;
+        const effectAmount = effect_amount;
+        console.log(`Tipo de efecto: ${effectType} Cantidad: ${effectAmount}`)
+        // Call itemeffect actions
+
+        switch (effectType) {
+            case "heal":
+                await PokemonStats.update(
+                    { current_hp: pokemonStats.current_hp + effect_amount },
+                    { where: { id: this.id } }
+                );
+                console.log("heal funciona")
+                break;
+            case "revive":
+                await PokemonStats.update(
+                    { current_hp: pokemonStats.max_hp/2 },
+                    { where: { id: this.id } }
+                );
+                console.log("revive funciona")
+                break;
+                case "catch":
+                    await PokemonStats.update(
+                        { current_hp: 10 },
+                        { where: { id: this.id } }
+                    );
+                    console.log("catch funciona")
+                    break;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //  await PokemonStats.update( 
+        //     { current_hp: pokemonStats.current_hp + effect_amount }, 
+        //     { where: { id: this.id } }
+        //     );  
 
     };
 
