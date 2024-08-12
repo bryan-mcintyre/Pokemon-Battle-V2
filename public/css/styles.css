@@ -141,7 +141,6 @@ label {
 .home-battle-container .image-row {
   display: flex;
   justify-content: space-between;
-  ;
   width: 100%;
   max-width: 750px;
   padding: 0;
