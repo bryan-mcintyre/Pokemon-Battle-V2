@@ -1,9 +1,11 @@
-// const { PokemonStats } = require("../../models");
+
+// const { use } = require("../../controllers/api/pokemonRoutes");
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/api/backpack');
     const backpackItems = await response.json();
+    console.log(response);
     const backpackContainer = document.getElementById('backpack-items');
 
     if (!Array.isArray(backpackItems)) {
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Declare modal
         const modal = document.querySelector('.pokemon-modal');
+        const errorModal = document.querySelector('.error-modal');
         const closeButton = document.querySelector('.close-button');
 
         // Function to open the modal
@@ -85,18 +88,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("Selected:" + " " + selectedPokemon)
             modal.style.display = 'none';
             // Send info of pokemon in body
-            const useOnPokemon = await fetch(`api/pokemon/item`, {
+            const useOnPokemonResponse = await fetch(`api/pokemon/item`, {
               method: 'POST',
               body: JSON.stringify({ effect_type: item.effect_type, effect_amount: item.effect_amount, item_id: item.id, id: pokemon.id }),
               headers: { 'Content-Type': 'application/json' }
             });
-
-            if (useOnPokemon.ok) {
-              window.location.reload();
+            const useOnPokemon = await useOnPokemonResponse.json();
+            if (useOnPokemon.status) {
+              // Change item count 
+              itemCount.textContent = `Owned: ${useOnPokemon.item.count - 1}`;
+              // alert user why they cant used the item
               console.log('Request Works!')
-            } else { 
-              alert(`Error: ${useOnPokemon.status}, ${useOnPokemon.statusText}`)
-              console.log('Error:', useOnPokemon.status, useOnPokemon.statusText);
+            } else {
+              alert(`Error: ${useOnPokemon.status}, ${useOnPokemon.message}`)
+              console.log('Error:', useOnPokemon.status, useOnPokemon.message);
             }
           });
         });

@@ -25,7 +25,7 @@ class Pokemon extends Model {
                 } else {
                     await PokemonStats.update(
                         { current_hp: healing },
-                        { where: { id: this.id } }
+                        { where: { pokemon_id: this.id } }
                     );
                     console.log("Heal works");
                 }
@@ -34,7 +34,7 @@ class Pokemon extends Model {
                 if (!this.alive) {
                     await PokemonStats.update(
                         { current_hp: pokemonStats.max_hp / 2 },
-                        { where: { id: this.id } }
+                        { where: { pokemon_id: this.id } }
                     );
                     await Pokemon.update(
                         { alive: true },

@@ -98,7 +98,7 @@ label {
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 30px;
   padding: 20px;
   background-color: var(--secondary);
   border-radius: 10px;
@@ -107,6 +107,28 @@ label {
   box-sizing: border-box;
   width: 80%;
   margin: auto;
+}
+
+.toggle-storage-button {
+  background: radial-gradient(circle, #264bd3, #44509e, #d2d7f7);
+  color: #FFCC00;
+  text-shadow: 1px 1px 1px black;
+  padding: 5px 15px;
+  border: 3px inset #FFCC00;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight:lighter;
+  margin-left: 25px;
+}
+
+.toggle-storage-button:hover {
+  transform: scale(1.1);
+  background: radial-gradient(circle, #FF0000, #B22222, #8B0000);
+}
+
+.hidden {
+  display: none;
 }
 
 .select-title {
@@ -307,10 +329,10 @@ label {
 }
 
 .battle-modal-content {
-  background-color: var(--light);
+  background: radial-gradient(circle, #FFFFFF, #FFFF99); 
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid var(--dark);
+  border: 5px inset #FFCC00;
   width: 80%;
   max-width: 400px;
   text-align: center;
@@ -323,17 +345,17 @@ label {
 }
 
 .battle-modal-ok-button {
-  background-color: var(--primary);
+  background-color: black;
   color: white;
   padding: 10px 20px;
-  border: none;
+  border: 3px inset #FFCC00;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .battle-modal-ok-button:hover {
-  background-color: var(--dark);
+  background-color: #FFCC00;
 }
 
 .select-button {
@@ -489,7 +511,7 @@ label {
   background-color: var(--light);
   border: 2px inset #FFCC00;
   border-radius: 10px;
-  width: 230px;
+  width: 220px;
   padding: 15px;
   text-align: center;
   display: flex;
@@ -1104,19 +1126,20 @@ label {
 
 /* Unique modal for waiting for opponent's move */
 .waiting-opponent-modal {
-  display: none;
   position: absolute;
-  top: 50%;
+  bottom: 100px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  background: radial-gradient(circle, var(--tertiary), var(--light));
-  padding: 20px;
-  border: 2px solid var(--primary);
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px 25px;
   border-radius: 10px;
-  text-align: center;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  display: none;
 }
+
 
 .waiting-opponent-modal h2 {
   color: #FFCC00;
@@ -1125,6 +1148,193 @@ label {
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
+}
+
+.your-move-modal {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  display: none;
+}
+
+.your-move-modal h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+}
+
+.you-lose-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.you-lose-modal-content {
+  background: radial-gradient(circle, #FF4500, #FF6347, #FF0000);
+  color: white;
+  padding: 20px;
+  border: 5px inset #4b0000;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+}
+
+.you-lose-modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.you-lose-modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.you-lose-modal-buttons button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: 2px inset #4b0000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.you-lose-modal-buttons button:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+.you-lose-modal h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+}
+
+.you-win-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.you-win-modal h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+}
+
+.you-win-modal-content {
+  background: radial-gradient(circle, #FFFFE0, #FFFACD, #FFD700);
+  color: white;
+  padding: 20px;
+  border: 5px inset #FFCC00;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+}
+
+.you-win-modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.you-win-modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.you-win-modal-buttons button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: 2px inset #FFCC00;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.you-win-modal-buttons button:hover {
+  background-color: #FFCC00;
+  color: black;
+}
+
+.enemy-dead-modal {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  display: none;
+}
+
+.enemy-dead-modal h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+}
+
+.user-pokemon-dead-modal {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  display: none;
+}
+
+.user-pokemon-dead-modal h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
 }
 
 #popup-container {
