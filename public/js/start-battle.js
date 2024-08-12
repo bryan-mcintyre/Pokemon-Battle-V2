@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Attack animation for the user's Pokémon
-    function userAttackAnimation() {
+    function userAttackAnimation(onComplete) {
         gsap.to('.user-main-pokemon-img', {
-            zIndex: 10, 
+            zIndex: 10,
             x: 1380,
             duration: 0.5,
             onComplete: () => {
@@ -77,7 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     duration: 0.1,
                     onComplete: () => {
                         gsap.to('.user-main-pokemon-img', { x: 0, duration: 0.5 });
-                        gsap.set('.user-main-pokemon-img', { zIndex: 1 });  
+                        gsap.set('.user-main-pokemon-img', { zIndex: 1 });
+                        if (typeof onComplete === "function") {
+                            onComplete();
+                        }
                     }
                 });
             }
@@ -85,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Attack animation for the opponent's Pokémon
-    function opponentAttackAnimation() {
+    function opponentAttackAnimation(onComplete) {
         gsap.to('.opponent-pokemon-card img', {
-            zIndex: 10, 
+            zIndex: 10,
             x: -1380,
             duration: 0.5,
             onComplete: () => {
@@ -98,7 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     duration: 0.1,
                     onComplete: () => {
                         gsap.to('.opponent-pokemon-card img', { x: 0, duration: 0.5 });
-                        gsap.set('.opponent-pokemon-card img', { zIndex: 1 });  
+                        gsap.set('.opponent-pokemon-card img', { zIndex: 1 });
+                        if (typeof onComplete === "function") {
+                            onComplete();
+                        }
                     }
                 });
             }
@@ -126,72 +132,103 @@ document.addEventListener('DOMContentLoaded', () => {
     // logic attack
     attackButton.addEventListener('click', () => {
         attackButton.disabled = true;
-        fetch('/api/battle/user/attack', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then(response => response.json())
-            .then(data => {
 
-                console.log(data.userPokemon)
-                if (!data.userPokemon.alive) {
-                    // TODO ---------------------------------
-                    alert("your pokemon is dead");
-                    return;
-                } else if (!data.opponentPokemon.alive) {
-                    // TODO ---------------------------------
-                    alert("enemy pokemon is dead");
-                }
-
-                userAttackAnimation();
-
-                // update UI after attack user
-                updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
-
-                if (data.message === "You win!") {
-                    // TODO ---------------------------------
-                    alert('You win!');
-                } else {
-                    // TODO ---------------------------------
-                    alert('Waiting for opponent\'s move...');
-                    // start attack after 3 seconds
-                    setTimeout(() => {
-                        opponentAttackAnimation();
-                        fetch('/api/battle/opponent/attack', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                        })
-                            .then(response => response.json())
-                            .then(opponentData => {
-                                // update ui after attack
-
-
-                                updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
-
-
-                                if (opponentData.message === "You lost!") {
-                                    updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
-                                    // TODO ---------------------------------
-                                    alert('You lose!');
-                                } else {
-                                    attackButton.disabled = false;
-                                    // TODO ---------------------------------
-                                    alert('Your move!');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error during opponent\'s attack:', error);
-                            });
-                    }, 3000); // 3 second timer
-                }
+        userAttackAnimation(() => {
+            fetch('/api/battle/user/attack', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+
+                    data.userPokemon.current_hp = Math.round(data.userPokemon.current_hp);
+                    data.opponentPokemon.current_hp = Math.round(data.opponentPokemon.current_hp);
+
+                    updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
+
+                    console.log(data.userPokemon)
+                    if (!data.userPokemon.alive || data.userPokemon.current_hp <= 0) {
+                        // TODO ---------------------------------
+                        alert("your pokemon is dead");
+                        return;
+                    } else if (!data.opponentPokemon.alive || data.opponentPokemon.current_hp <= 0) {
+                        // TODO ---------------------------------
+                        alert("enemy pokemon is dead");
+                        return;
+                    }
+
+                    // update UI after attack user
+                    updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
+
+                    if (data.message === "You win!") {
+                        // TODO ---------------------------------
+                        alert('You win!');
+                    } else {
+                        showWaitingOpponentModal();
+                        setTimeout(() => {
+                            opponentAttackAnimation();
+                            fetch('/api/battle/opponent/attack', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                            })
+                                .then(response => response.json())
+                                .then(opponentData => {
+                                    opponentData.userPokemon.current_hp = Math.round(opponentData.userPokemon.current_hp);
+                                    opponentData.opponentPokemon.current_hp = Math.round(opponentData.opponentPokemon.current_hp);
+
+                                    // update ui after attack
+                                    updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
+
+
+                                    if (opponentData.message === "You lost!") {
+                                        updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
+                                        // TODO ---------------------------------
+                                        alert('You lose!');
+                                    } else {
+                                        attackButton.disabled = false;
+                                        // TODO ---------------------------------
+                                        alert('Your move!');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error during opponent\'s attack:', error);
+                                });
+                        }, 1000); // 1 second timer
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
     });
+
+    function showWaitingOpponentModal(onComplete) {
+        const modal = document.createElement('div');
+        modal.className = 'waiting-opponent-modal';
+        modal.innerHTML = `<h2>Waiting for opponent's move...</h2>`;
+
+        document.body.appendChild(modal);
+
+        gsap.to(modal, { display: 'block', opacity: 1, duration: 0.5 });
+
+        setTimeout(() => {
+            gsap.to(modal, {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    document.body.removeChild(modal);
+                    if (typeof onComplete === "function") {
+                        onComplete();
+                    }
+                }
+            });
+        }, 2000); // Auto-close after 2 seconds
+    }
 
     // update ui hp
     function updateUI(userPokemonHP, opponentPokemonHP) {
+        userPokemonHP = Math.round(userPokemonHP);
+        opponentPokemonHP = Math.round(opponentPokemonHP);
         // Update HP for user's Pokemon
         const userPokemonHPElement = document.querySelector('.user-pokemon-card .pokemon-stat p');
         userPokemonHPElement.textContent = userPokemonHPElement.textContent.replace(/(\d+) \//, `${userPokemonHP} /`);
