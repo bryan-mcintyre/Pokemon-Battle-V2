@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { withAuth } = require('../../utils/auth');
 const BattlePokemon = require('../../utils/BattlePokemon')
 
+
 router.post('/user/attack', withAuth, async (req, res) => {
     try {
         const battleState = req.session.battleState;
@@ -34,7 +35,8 @@ router.post('/user/attack', withAuth, async (req, res) => {
             return res.json({
                 userPokemon: userBattlePokemon,
                 opponentPokemon: opponentBattlePokemon,
-                message: "You win!"
+                message: "You win!",
+                userTurn: req.session.battleState.currentTurn
             });
         }
 
@@ -82,7 +84,8 @@ router.post('/opponent/attack', withAuth, async (req, res) => {
             return res.json({
                 userPokemon: userBattlePokemon,
                 opponentPokemon: opponentBattlePokemon,
-                message: "You lost!"
+                message: "You lost!",
+                userTurn: req.session.battleState.currentTurn
             });
         }
 
