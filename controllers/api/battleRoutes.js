@@ -23,10 +23,11 @@ router.post('/user/attack', withAuth, async (req, res) => {
         userBattlePokemon.attackOpponent(opponentBattlePokemon);
 
 
-        req.session.battleState.opponentPokemon = opponentBattlePokemon;
+        req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
         req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
-        console.log(req.session.battleState.opponentPokemon.current_hp)
+        console.log('Updated Opponent HP:', req.session.battleState.opponentPokemon.current_hp);
+
         if (!opponentBattlePokemon.isAlive()) {
             req.session.battleState.opponentPokemon.alive = false;
             userBattlePokemon.experience += 100;
