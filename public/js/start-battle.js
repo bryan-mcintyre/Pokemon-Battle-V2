@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // User Pokémon Animation
-    gsap.to('.user-pokemon-card img', {
+    gsap.to('.user-main-pokemon-img', {
         y: 4,
         scale: 1.05,
         yoyo: true,
@@ -65,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attack animation for the user's Pokémon
     function userAttackAnimation() {
-        gsap.to('.user-pokemon-card img', {
+        gsap.to('.user-main-pokemon-img', {
+            zIndex: 10, 
             x: 1380,
             duration: 0.5,
             onComplete: () => {
@@ -75,7 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     repeat: 5,
                     duration: 0.1,
                     onComplete: () => {
-                        gsap.to('.user-pokemon-card img', { x: 0, duration: 0.5 });
+                        gsap.to('.user-main-pokemon-img', { x: 0, duration: 0.5 });
+                        gsap.set('.user-main-pokemon-img', { zIndex: 1 });  
                     }
                 });
             }
@@ -85,22 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attack animation for the opponent's Pokémon
     function opponentAttackAnimation() {
         gsap.to('.opponent-pokemon-card img', {
+            zIndex: 10, 
             x: -1380,
             duration: 0.5,
             onComplete: () => {
-                gsap.to('.user-pokemon-card img', {
+                gsap.to('.user-main-pokemon-img', {
                     opacity: 0,
                     yoyo: true,
                     repeat: 5,
                     duration: 0.1,
                     onComplete: () => {
                         gsap.to('.opponent-pokemon-card img', { x: 0, duration: 0.5 });
+                        gsap.set('.opponent-pokemon-card img', { zIndex: 1 });  
                     }
                 });
             }
         });
     }
-
     // Hover animation for the Attack button using GSAP
     attackButton.addEventListener('mouseenter', () => {
         gsap.to(attackButton, {
