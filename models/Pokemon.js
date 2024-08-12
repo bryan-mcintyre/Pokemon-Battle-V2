@@ -17,15 +17,14 @@ class Pokemon extends Model {
                 const currentHP = pokemonStats.current_hp;
                 const maxHP = pokemonStats.max_hp;
                 const restoreHP = currentHP + effectAmount;
-                const exceed = restoreHP - maxHP;
-                const healing = effectAmount - exceed;
+                const healing = Math.min(restoreHP,maxHP)
 
                 if (pokemonStats.current_hp >= maxHP) {
                     console.log('Cannot exceed Max HP');
+                    return { status: false, message: 'Cannot exceed Max HP'};
                 } else {
-
                     await PokemonStats.update(
-                        { current_hp: pokemonStats.current_hp + healing },
+                        { current_hp: healing },
                         { where: { id: this.id } }
                     );
                     console.log("Heal works");
@@ -42,7 +41,8 @@ class Pokemon extends Model {
                         { where: { id: this.id } }
                     );
                     console.log("Revive Works")
-                } else { console.log('Cannot apply revive to alive Pokemon'); } //send a message to user
+                } else { 
+                    return { status: false, message: 'Cannot apply to alive Pokemon'}; }
                 break;
             case "catch":
                 await Pokemon.update(
@@ -51,7 +51,10 @@ class Pokemon extends Model {
                 );
                 console.log("Catch works")
                 break;
+
         }
+       
+        return { status: true, message: 'Item used' };
     };
 
     async getBattleData() {
