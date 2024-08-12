@@ -48,67 +48,118 @@ router.get('/startBattle', withAuth, (req, res) => {
 });
 
 
-// Handle starting the battle with the selected Pokémon
+// // Handle starting the battle with the selected Pokémon
+// router.post('/startBattle', withAuth, async (req, res) => {
+//     try {
+//         const { pokemon_id, opponent_pokemon } = req.body;
+
+//         // Fetch the selected user Pokémon from the database
+//         const userPokemonData = await Pokemon.findOne({
+//             where: { id: pokemon_id, user_id: req.session.user_id },
+//             include: [
+//                 { model: PokemonStats },
+//                 { model: Ability, through: PokemonAbility },
+//             ],
+//         });
+
+//         if (!userPokemonData) {
+//             throw new Error('User Pokémon not found.');
+//         }
+
+//         // Extract the user's Pokémon level
+//         const userPokemon = userPokemonData.get({ plain: true });
+
+//         // Fetch the opponent Pokémon using the name (unbalanced)
+//         const opponentPokemonRaw = await fetchPokemonByName(opponent_pokemon.name);
+
+//         // Balance the opponent Pokémon stats based on the user's Pokémon level
+//         const opponentPokemon = await fetchBalancedPokemonByName(opponent_pokemon.name, userPokemon.level);
+
+//         // Randomly assign an ability to the opponent Pokémon
+//         const abilitiesData = await Ability.findAll();
+//         const randomIndex = Math.floor(Math.random() * abilitiesData.length);
+//         const randomAbility = abilitiesData[randomIndex];
+
+//         // Add the random ability to the opponent Pokémon
+//         opponentPokemon.abilities = [randomAbility.dataValues];
+
+//         // Determine who goes first based on speed
+//         const userTurn = userPokemon.pokemon_stat.speed >= opponentPokemon.speed;
+
+//         // Fetch all level data (for potential future use)
+//         const levelData = await PokemonLevel.findAll({ raw: true });
+
+//         // Store the battle state in the session (for use during the battle)
+//         req.session.battleState = {
+//             userPokemon: userPokemon,
+//             opponentPokemon: opponentPokemon,
+//             opponentPokemonRaw: opponentPokemonRaw,  // Store raw data for future reference
+//             levelData: levelData,
+//             userTurn: userTurn
+//         };
+
+//         // Render the start-battle view with both Pokémon
+//         res.render('startBattle', {
+//             userPokemon: userPokemon,
+//             opponentPokemon: opponentPokemon,
+//             levelData: levelData,
+//             userTurn: userTurn
+//         });
+//     } catch (err) {
+//         console.error('Error in /battle/startBattle:', err);
+//         res.status(500).json(err);
+//     }
+// });
+
+// module.exports = router;
+
 router.post('/startBattle', withAuth, async (req, res) => {
     try {
-        const { pokemon_id, opponent_pokemon } = req.body;
-
-        // Fetch the selected user Pokémon from the database
         const userPokemonData = await Pokemon.findOne({
-            where: { id: pokemon_id, user_id: req.session.user_id },
+            where: {
+                id: req.body.pokemon_id,
+                user_id: req.session.user_id
+            },
             include: [
                 { model: PokemonStats },
-                { model: Ability, through: PokemonAbility },
+                { model: Ability, through: PokemonAbility }
             ],
         });
 
-        if (!userPokemonData) {
-            throw new Error('User Pokémon not found.');
-        }
+        //get Battledata
+        const userPokemon = await userPokemonData.getBattleData();
 
-        // Extract the user's Pokémon level
-        const userPokemon = userPokemonData.get({ plain: true });
+        // fetch pokemon enemy
+        const opponentPokemon = await fetchBalancedPokemonByName(req.body.opponent_pokemon.name, userPokemon.level);
 
-        // Fetch the opponent Pokémon using the name (unbalanced)
-        const opponentPokemonRaw = await fetchPokemonByName(opponent_pokemon.name);
-
-        // Balance the opponent Pokémon stats based on the user's Pokémon level
-        const opponentPokemon = await fetchBalancedPokemonByName(opponent_pokemon.name, userPokemon.level);
-
-        // Randomly assign an ability to the opponent Pokémon
+        // get all data from ability
         const abilitiesData = await Ability.findAll();
+        //for take random ability
         const randomIndex = Math.floor(Math.random() * abilitiesData.length);
+        // create random ability for enemy
         const randomAbility = abilitiesData[randomIndex];
-
-        // Add the random ability to the opponent Pokémon
+        // add opponentPokemon random ability
         opponentPokemon.abilities = [randomAbility.dataValues];
 
-        // Determine who goes first based on speed
-        const userTurn = userPokemon.pokemon_stat.speed >= opponentPokemon.speed;
+        const userTurn = userPokemon.speed >= opponentPokemon.speed;
 
-        // Fetch all level data (for potential future use)
+        //get lvlData
         const levelData = await PokemonLevel.findAll({ raw: true });
 
-        // Store the battle state in the session (for use during the battle)
         req.session.battleState = {
             userPokemon: userPokemon,
             opponentPokemon: opponentPokemon,
-            opponentPokemonRaw: opponentPokemonRaw,  // Store raw data for future reference
             levelData: levelData,
             userTurn: userTurn
         };
 
-        // Render the start-battle view with both Pokémon
         res.render('startBattle', {
             userPokemon: userPokemon,
             opponentPokemon: opponentPokemon,
-            levelData: levelData,
-            userTurn: userTurn
+            levelData: levelData
         });
     } catch (err) {
-        console.error('Error in /battle/startBattle:', err);
-        res.status(500).json(err);
+        res.status(400).json(err);
     }
-});
-
+})
 module.exports = router;

@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // logic attack
     attackButton.addEventListener('click', () => {
-        console.log("ASDAWDWADAWDAWDAW-----------------------")
         attackButton.disabled = true;
         fetch('/api/battle/user/attack', {
             method: 'POST',
@@ -130,26 +129,27 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
-                const userTurn = data.userTurn;
 
-                // If it's the user's turn, animate the user's Pokémon attack
-                if (userTurn) {
-                    userAttackAnimation();
-                } else {
-                    opponentAttackAnimation(); // If it's the opponent's turn, animate their attack
+                console.log(data.userPokemon)
+                if (!data.userPokemon.alive) {
+                    alert("your pokemon is dead");
+                    return;
+                } else if (!data.opponentPokemon.alive) {
+                    alert("enemy pokemon is dead");
                 }
+
+                userAttackAnimation();
+
+                // update UI after attack user
+                updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
 
                 if (data.message === "You win!") {
                     alert('You win!');
                 } else {
-                    // update UI after attack user
-                    console.log(data)
-                    updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
-
                     alert('Waiting for opponent\'s move...');
-
                     // start attack after 3 seconds
                     setTimeout(() => {
+                        opponentAttackAnimation();
                         fetch('/api/battle/opponent/attack', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -157,11 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             .then(response => response.json())
                             .then(opponentData => {
                                 // update ui after attack
-                                console.log(opponentData)
+
 
                                 updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
 
-                                if (opponentData.message === "You lose!") {
+
+                                if (opponentData.message === "You lost!") {
+                                    updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
                                     alert('You lose!');
                                 } else {
                                     attackButton.disabled = false;
@@ -182,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // update ui hp
     function updateUI(userPokemonHP, opponentPokemonHP) {
         // Update HP for user's Pokemon
-        const userPokemonHPElement = document.querySelector('.user-pokemon-card p:first-of-type');
+        const userPokemonHPElement = document.querySelector('.user-pokemon-card .pokemon-stat p');
         userPokemonHPElement.textContent = userPokemonHPElement.textContent.replace(/(\d+) \//, `${userPokemonHP} /`);
 
         // Update HP for opponent's Pokemon

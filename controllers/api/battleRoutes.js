@@ -7,7 +7,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
     try {
         const battleState = req.session.battleState;
 
-        console.log(0, battleState)
+
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
         const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
         if (!battleState.userTurn) {
@@ -19,14 +19,15 @@ router.post('/user/attack', withAuth, async (req, res) => {
             });
         }
 
-        console.log(1, opponentBattlePokemon)
+
         userBattlePokemon.attackOpponent(opponentBattlePokemon);
-        console.log(2, opponentBattlePokemon)
+
 
         req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
         req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
         if (!opponentBattlePokemon.isAlive()) {
+            req.session.battleState.opponentBattlePokemon.alive = false;
             userBattlePokemon.experience += 100;
             const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level);
             if (userBattlePokemon.experience > currentLevelData.experience) {
@@ -75,11 +76,18 @@ router.post('/opponent/attack', withAuth, async (req, res) => {
         req.session.battleState.userPokemon.current_hp = userBattlePokemon.current_hp;
         req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
+        console.log(req.session.battleState.userPokemon.current_hp)
         if (!userBattlePokemon.isAlive()) {
+
+            req.session.battleState.userPokemon.alive = false;
+
             userBattlePokemon.experience += 25;
-            const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level);
-            if (userBattlePokemon.experience > currentLevelData.experience) {
-                userBattlePokemon.levelUp();
+            const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level + 1);
+            if (currentLevelData) {
+                if (userBattlePokemon.experience > currentLevelData.experience) {
+                    req.session.battleState.userPokemon.current_hp = 0;
+                    userBattlePokemon.levelUp();
+                }
             }
             return res.json({
                 userPokemon: userBattlePokemon,
