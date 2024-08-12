@@ -132,9 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log(data.userPokemon)
                 if (!data.userPokemon.alive) {
+                    // TODO ---------------------------------
                     alert("your pokemon is dead");
                     return;
                 } else if (!data.opponentPokemon.alive) {
+                    // TODO ---------------------------------
                     alert("enemy pokemon is dead");
                 }
 
@@ -144,8 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
 
                 if (data.message === "You win!") {
+                    // TODO ---------------------------------
                     alert('You win!');
                 } else {
+                    // TODO ---------------------------------
                     alert('Waiting for opponent\'s move...');
                     // start attack after 3 seconds
                     setTimeout(() => {
@@ -164,9 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                 if (opponentData.message === "You lost!") {
                                     updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
+                                    // TODO ---------------------------------
                                     alert('You lose!');
                                 } else {
                                     attackButton.disabled = false;
+                                    // TODO ---------------------------------
                                     alert('Your move!');
                                 }
                             })
