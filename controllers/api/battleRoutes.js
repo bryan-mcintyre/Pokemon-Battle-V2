@@ -23,11 +23,12 @@ router.post('/user/attack', withAuth, async (req, res) => {
         userBattlePokemon.attackOpponent(opponentBattlePokemon);
 
 
-        req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
+        req.session.battleState.opponentPokemon = opponentBattlePokemon;
         req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
+        console.log(req.session.battleState.opponentPokemon.current_hp)
         if (!opponentBattlePokemon.isAlive()) {
-            req.session.battleState.opponentBattlePokemon.alive = false;
+            req.session.battleState.opponentPokemon.alive = false;
             userBattlePokemon.experience += 100;
             const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level);
             if (userBattlePokemon.experience > currentLevelData.experience) {
@@ -37,7 +38,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
                 userPokemon: userBattlePokemon,
                 opponentPokemon: opponentBattlePokemon,
                 message: "You win!",
-                userTurn: req.session.battleState.currentTurn
+                userTurn: req.session.battleState.userTurn
             });
         }
 
@@ -73,7 +74,7 @@ router.post('/opponent/attack', withAuth, async (req, res) => {
         opponentBattlePokemon.attackOpponent(userBattlePokemon);
 
 
-        req.session.battleState.userPokemon.current_hp = userBattlePokemon.current_hp;
+        req.session.battleState.userPokemon = userBattlePokemon;
         req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
         console.log(req.session.battleState.userPokemon.current_hp)
