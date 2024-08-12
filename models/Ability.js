@@ -25,6 +25,13 @@ Ability.init(
         },
         effect_amount: {
             type: DataTypes.INTEGER,
+        },
+        rarity: {
+            type: DataTypes.ENUM('common', 'rare', 'legendary'),
+            allowNull: false,
+            validate: {
+                isIn: [['common', 'rare', 'legendary']]
+            }
         }
     },
     {

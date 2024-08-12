@@ -66,14 +66,13 @@ try {
         where: { user_id: req.session.user_id, id: req.body.id},
         include: [{ model: PokemonStats }],
     });
-
-pokemonData.useItem(req.body.effect, req.body.effect_amount, req.body.item_id,req.session.user_id); //create this function in pokemon model
-
+//Calls this function from Pokemon Model
+pokemonData.useItem(req.body.effect, req.body.effect_amount, req.body.item_id,req.session.user_id); 
 const itemData = await Backpack.findOne({ where: { user_id: req.session.user_id }});
-
+//Calls this function form Backpack Model
 itemData.deleteUsedItem(req.body.item_id);
-
-
+console.log('Item Used')
+res.status(200).json(pokemonData)
 }  catch (err) {
     console.error(err);
     res.status(500).json(err);
