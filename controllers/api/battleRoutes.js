@@ -6,18 +6,24 @@ router.post('/user/attack', withAuth, async (req, res) => {
     try {
         const battleState = req.session.battleState;
 
-        if (!battleState.currentTurn) {
-            return res.status(400).json({ error: 'Not your turn' });
-        }
-
+        console.log(0, battleState)
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
         const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
+        if (!battleState.userTurn) {
+            return res.status(400).json({
+                error: 'Not your turn',
+                userTurn: req.session.battleState.userTurn,
+                userPokemon: userBattlePokemon,
+                opponentPokemon: opponentBattlePokemon,
+            });
+        }
 
-
+        console.log(1, opponentBattlePokemon)
         userBattlePokemon.attackOpponent(opponentBattlePokemon);
+        console.log(2, opponentBattlePokemon)
 
         req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
-        req.session.battleState.currentTurn = !req.session.battleState.currentTurn;
+        req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
         if (!opponentBattlePokemon.isAlive()) {
             userBattlePokemon.experience += 100;
@@ -36,6 +42,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
         res.json({
             userPokemon: req.session.battleState.userPokemon,
             opponentPokemon: req.session.battleState.opponentPokemon,
+            userTurn: req.session.battleState.userTurn,
             message: "Waiting for opponent's move..."
         });
     } catch (err) {
@@ -43,23 +50,28 @@ router.post('/user/attack', withAuth, async (req, res) => {
     }
 });
 
-router.post('/enemy/attack', withAuth, async (req, res) => {
+router.post('/opponent/attack', withAuth, async (req, res) => {
     try {
         const battleState = req.session.battleState;
 
-        if (battleState.currentTurn) {
-            return res.status(400).json({ error: 'Not your turn' });
-        }
 
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
         const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
 
+        if (battleState.userTurn) {
+            return res.status(400).json({
+                error: 'Not your turn',
+                userTurn: req.session.battleState.userTurn,
+                userPokemon: userBattlePokemon,
+                opponentPokemon: opponentBattlePokemon,
+            });
+        }
 
         opponentBattlePokemon.attackOpponent(userBattlePokemon);
 
 
         req.session.battleState.userPokemon.current_hp = userBattlePokemon.current_hp;
-        req.session.battleState.currentTurn = !req.session.battleState.currentTurn;
+        req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
         if (!userBattlePokemon.isAlive()) {
             userBattlePokemon.experience += 25;
@@ -78,6 +90,7 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
         res.json({
             userPokemon: req.session.battleState.userPokemon,
             opponentPokemon: req.session.battleState.opponentPokemon,
+            userTurn: req.session.battleState.userTurn,
             message: "Waiting for opponent's move..."
         });
     } catch (err) {

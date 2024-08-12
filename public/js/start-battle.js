@@ -79,8 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
+
+    // logic attack
     attackButton.addEventListener('click', () => {
-        fetch('/api/battleRoutes/user/attack', {
+        console.log("ASDAWDWADAWDAWDAW-----------------------")
+        attackButton.disabled = true;
+        fetch('/api/battle/user/attack', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -89,11 +94,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.message === "You win!") {
                     alert('You win!');
                 } else {
+                    // update UI after attack user
+                    console.log(data)
+                    updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
+
                     alert('Waiting for opponent\'s move...');
+
+                    // start attack after 3 seconds
+                    setTimeout(() => {
+                        fetch('/api/battle/opponent/attack', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                        })
+                            .then(response => response.json())
+                            .then(opponentData => {
+                                // update ui after attack
+                                console.log(opponentData)
+
+                                updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
+
+                                if (opponentData.message === "You lose!") {
+                                    alert('You lose!');
+                                } else {
+                                    attackButton.disabled = false;
+                                    alert('Your move!');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error during opponent\'s attack:', error);
+                            });
+                    }, 3000); // 3 second timer
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     });
+
+    // update ui hp
+    function updateUI(userPokemonHP, opponentPokemonHP) {
+        // Update HP for user's Pokemon
+        const userPokemonHPElement = document.querySelector('.user-pokemon-card p:first-of-type');
+        userPokemonHPElement.textContent = userPokemonHPElement.textContent.replace(/(\d+) \//, `${userPokemonHP} /`);
+
+        // Update HP for opponent's Pokemon
+        const opponentPokemonHPElement = document.querySelector('.opponent-pokemon-card p:first-of-type');
+        opponentPokemonHPElement.textContent = opponentPokemonHPElement.textContent.replace(/(\d+) \//, `${opponentPokemonHP} /`);
+    }
 });

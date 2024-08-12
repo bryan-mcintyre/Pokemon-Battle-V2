@@ -59,7 +59,6 @@ router.post('/startBattle', withAuth, async (req, res) => {
             include: [
                 { model: PokemonStats },
                 { model: Ability, through: PokemonAbility },
-                { model: PokemonLevel }
             ],
         });
 
@@ -69,13 +68,12 @@ router.post('/startBattle', withAuth, async (req, res) => {
 
         // Extract the user's Pokémon level
         const userPokemon = userPokemonData.get({ plain: true });
-        const userPokemonLevel = userPokemon.pokemon_level.level;
 
         // Fetch the opponent Pokémon using the name (unbalanced)
         const opponentPokemonRaw = await fetchPokemonByName(opponent_pokemon.name);
 
         // Balance the opponent Pokémon stats based on the user's Pokémon level
-        const opponentPokemon = await fetchBalancedPokemonByName(opponent_pokemon.name, userPokemonLevel);
+        const opponentPokemon = await fetchBalancedPokemonByName(opponent_pokemon.name, userPokemon.level);
 
         // Randomly assign an ability to the opponent Pokémon
         const abilitiesData = await Ability.findAll();
