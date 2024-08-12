@@ -98,7 +98,7 @@ label {
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 30px;
   padding: 20px;
   background-color: var(--secondary);
   border-radius: 10px;
@@ -107,6 +107,28 @@ label {
   box-sizing: border-box;
   width: 80%;
   margin: auto;
+}
+
+.toggle-storage-button {
+  background: radial-gradient(circle, #264bd3, #44509e, #d2d7f7);
+  color: #FFCC00;
+  text-shadow: 1px 1px 1px black;
+  padding: 5px 15px;
+  border: 3px inset #FFCC00;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight:lighter;
+  margin-left: 25px;
+}
+
+.toggle-storage-button:hover {
+  transform: scale(1.1);
+  background: radial-gradient(circle, #FF0000, #B22222, #8B0000);
+}
+
+.hidden {
+  display: none;
 }
 
 .select-title {

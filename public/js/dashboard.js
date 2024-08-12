@@ -17,3 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('toggle-storage');
+    const storageContainer = document.querySelector('.bg-container');
+
+    toggleButton.addEventListener('click', () => {
+        storageContainer.classList.toggle('hidden');
+
+        // Toggle button text
+        if (storageContainer.classList.contains('hidden')) {
+            toggleButton.textContent = 'Show Pokémon Storage';
+        } else {
+            toggleButton.textContent = 'Hide Pokémon Storage';
+        }
+    });
+});
