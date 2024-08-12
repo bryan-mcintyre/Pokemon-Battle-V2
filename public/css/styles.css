@@ -97,6 +97,7 @@ label {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 20px;
   background-color: var(--secondary);
@@ -106,6 +107,12 @@ label {
   box-sizing: border-box;
   width: 80%;
   margin: auto;
+}
+
+.select-title {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
 }
 
 .container {
@@ -593,6 +600,10 @@ label {
   text-shadow: 1px 1px 2px #FFCC00;
 }
 
+.show-storage {
+  display: flex;
+}
+
 .pokemon-card {
   background: radial-gradient(circle, white, gray, black);
   border: 2px solid #FFCC00;
@@ -600,6 +611,7 @@ label {
   padding: 20px;
   text-align: center;
   width: 250px;
+  height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   margin: 10px;
