@@ -7,16 +7,15 @@ class Backpack extends Model {
     };
 
     async deleteUsedItem(item_id) {
-        const item = await Backpack.findOne({ where: { user_id: this.user_id, item_id: this.item_id } });
-
-        if (item.count <= 1) {
-            await Backpack.destroy(
-                { where: { id: item_id } });
-        } else {
+        const item = await Backpack.findOne({ where: { item_id: this.item_id } });
+        if (item.count > 1) {
             item.count -= 1;
             await item.save();
+        } else {
+            await Backpack.destroy(
+                { where: { user_id: this.user_id, id: item_id } });
+                console.log(`You used all your items`)
         }
-
     };
 }
 
