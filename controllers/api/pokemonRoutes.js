@@ -67,13 +67,11 @@ try {
         include: [{ model: PokemonStats }],
     });
 //Calls this function from Pokemon Model
-pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id,req.session.user_id); 
+pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id, req.session.user_id); 
 const itemData = await Backpack.findOne({ where: { user_id: req.session.user_id }});
 //Calls this function form Backpack Model
-if (itemData.ok){ 
 itemData.deleteUsedItem(req.body.item_id);
-console.log('Item Used')
-} else { console.log("Cannot use item on Pokemon");}  // Need to send an alert to user
+
 res.status(200).json(pokemonData)
 }  catch (err) {
     console.error(err);

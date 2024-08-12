@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', async () => {
               setTimeout(() => {
                 window.location.reload();
               }, 500);
-              console.log('Item used succesfully!')
-            } else {
+              console.log('Request Works!')
+            } else { 
               console.log('Error:', useOnPokemon.status, useOnPokemon.statusText);
             }
           });
