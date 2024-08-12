@@ -1102,6 +1102,31 @@ label {
   padding-bottom: 15px;
 }
 
+/* Unique modal for waiting for opponent's move */
+.waiting-opponent-modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: radial-gradient(circle, var(--tertiary), var(--light));
+  padding: 20px;
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.waiting-opponent-modal h2 {
+  color: #FFCC00;
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 30px;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 #popup-container {
   position: fixed;
   bottom: 0;
