@@ -35,43 +35,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(item.name + " | " + item.effect_type)
         // logic to use the item goes here
 
-      // Fetch users Pokemon and show them
+        // Fetch users Pokemon and show them
         const pokemonData = await fetch(`/api/pokemon/team`);
         console.log(pokemonData);
         const pokemons = await pokemonData.json();
         console.log(pokemons)
         const pokemonContainer = document.getElementById('pokemon-container');
 
-// Clear modal 
-pokemonContainer.innerHTML = " ";
+        // Clear modal 
+        pokemonContainer.innerHTML = " ";
 
-// Declare modal
+        // Declare modal
+        const modal = document.querySelector('.pokemon-modal');
+        const closeButton = document.querySelector('.close-button');
 
-const modal = document.querySelector('.pokemon-modal');
-const closeButton = document.querySelector('.close-button');
+        // Function to open the modal
+        function openModal(pokemon) {
+          // modalMessage.textContent = pokemon;
+          pokemonContainer.appendChild(pokemon);
+          modal.style.display = 'block';
+        }
 
-// Function to open the modal
-function openModal(pokemon) {
-    // modalMessage.textContent = pokemon;
-    pokemonContainer.appendChild(pokemon);
-    modal.style.display = 'block';
-}
+        // Function to close the modal
+        closeButton.addEventListener('click', () => {
+          modal.style.display = 'none';
+        });
 
-// Function to close the modal
-closeButton.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
+        // Close the modal when clicking outside of the modal content
+        window.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            modal.style.display = 'none';
+          }
+        });
 
-// Close the modal when clicking outside of the modal content
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
-
-
-// Renders each pokemon
+        // Renders each pokemon
         pokemons.forEach(pokemon => {
           const pokemonDiv = document.createElement('div');
           pokemonDiv.classList.add('backpack-item');
@@ -80,42 +77,31 @@ window.addEventListener('click', (event) => {
           pokemonName.textContent = pokemon.name;
           pokemonName.value = pokemon.name;
 
-          // pokemonContainer.appendChild(pokemonName);
           openModal(pokemonName);
           console.log(pokemonName)
-        
+
           pokemonName.addEventListener('click', async (event) => {
             const selectedPokemon = event.target.value;
             console.log("Selected:" + " " + selectedPokemon)
             modal.style.display = 'none';
-            // send info of pokemon in body
+            // Send info of pokemon in body
             const useOnPokemon = await fetch(`api/pokemon/item`, {
               method: 'POST',
-              body: JSON.stringify({ effect_amount: item.effect_amount, item_id: item.id, id: pokemon.id }), 
+              body: JSON.stringify({ effect_type: item.effect_type, effect_amount: item.effect_amount, item_id: item.id, id: pokemon.id }),
               headers: { 'Content-Type': 'application/json' }
             });
 
             if (useOnPokemon.ok) {
-            setTimeout(() => {
-              window.location.reload();
-          }, 500);
-            console.log('Pokemon CURED')
-            } else {
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+              console.log('Request Works!')
+            } else { 
               console.log('Error:', useOnPokemon.status, useOnPokemon.statusText);
             }
-
-       
           });
-       
-       
-
-
         });
-
- 
-
       });
-
 
       // Quantity dropdown for deletion
       const quantityLabel = document.createElement('label');

@@ -4,16 +4,54 @@ const PokemonLevel = require('./PokemonLevel');
 const PokemonStats = require('./PokemonStats');
 
 class Pokemon extends Model {
-//Search for which item is using, check for type and effect amount, and check for user id
-    async useItem(effect, effect_amount) {
-     
+    //Search for which item is using, check for type and effect amount, and check for user id
+    async useItem(effect_type, effect_amount) {
         const pokemonStats = await PokemonStats.findOne({ where: { pokemon_id: this.id } });
-       
-         await PokemonStats.update( 
-            { current_hp: pokemonStats.current_hp + effect_amount }, 
-            { where: { id: this.id } }
-            );  
-
+        // Define item effect 
+        const effectType = effect_type;
+        const effectAmount = effect_amount;
+        console.log(`Tipo de efecto: ${effectType} Cantidad: ${effectAmount}`)
+        // Call item_effect 
+        switch (effectType) {
+            case "heal":
+const currentHP = pokemonStats.current_hp;
+const maxHP = pokemonStats.max_hp;
+const restoreHP = currentHP + effectAmount;
+                if (restoreHP >= maxHP) {
+                    await PokemonStats.update(
+                        { current_hp: pokemonStats.max_hp },
+                        { where: { id: this.id } }
+                    );
+                    console.log("Pokemon Fully Healed!!")
+                } else {
+                    await PokemonStats.update(
+                        { current_hp: pokemonStats.current_hp + effectAmount },
+                        { where: { id: this.id } }
+                    );
+                    console.log("Heal works")
+                }
+                break;
+            case "revive":
+                if (!this.alive) {
+                    await PokemonStats.update(
+                        { current_hp: pokemonStats.max_hp / 2 },
+                        { where: { id: this.id } }
+                    );
+                    await Pokemon.update(
+                        { alive: true },
+                        { where: { id: this.id } }
+                    );
+                    console.log("Revive Works")
+                } else { console.log('Cannot apply revive to alive Pokemon'); } //send a message to user
+                break;
+            case "catch":
+                await Pokemon.update(
+                    { user_id: this.user_id },
+                    { where: { id: this.id } }
+                );
+                console.log("Catch works")
+                break;
+        }
     };
 
     async getBattleData() {
