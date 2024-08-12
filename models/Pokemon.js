@@ -22,7 +22,7 @@ const restoreHP = currentHP + effectAmount;
                         { current_hp: pokemonStats.max_hp },
                         { where: { id: this.id } }
                     );
-                    console.log("Pokemon Fully Healed!")
+                    console.log("Pokemon Fully Healed!!")
                 } else {
                     await PokemonStats.update(
                         { current_hp: pokemonStats.current_hp + effectAmount },
