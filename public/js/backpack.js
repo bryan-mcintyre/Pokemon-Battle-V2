@@ -92,11 +92,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (useOnPokemon.ok) {
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
+              window.location.reload();
               console.log('Request Works!')
             } else { 
+              alert(`Error: ${useOnPokemon.status}, ${useOnPokemon.statusText}`)
               console.log('Error:', useOnPokemon.status, useOnPokemon.statusText);
             }
           });
