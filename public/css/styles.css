@@ -316,10 +316,10 @@ label {
 }
 
 .select-button {
-  background-color: #3B4CCA;
-  color: white;
+  background: radial-gradient(circle, #3B4CCA, #1C3AA9, #0B2545);
+  color: #FFCC00;
   padding: 10px;
-  border: none;
+  border: 2px solid #FFCC00;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -337,7 +337,8 @@ label {
 }
 
 .select-button:hover {
-  background-color: #29396A;
+  background: radial-gradient(circle, #3B4CCA, #1C3AA9, #0B2545);
+  color: #FFCC00;
 }
 
 .battle-pokemon-card {
@@ -578,7 +579,7 @@ label {
 }
 
 .pokemon-card {
-  background-color: #f8f9fa;
+  background: radial-gradient(circle, white, gray, black);
   border: 2px solid #FFCC00;
   border-radius: 10px;
   padding: 20px;
@@ -587,7 +588,7 @@ label {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   margin: 10px;
-  cursor: pointer;
+  cursor: grab;
   position: relative;
 }
 
@@ -611,6 +612,8 @@ label {
 .pokemon-card p {
   margin: 5px 0;
   color: rgb(20, 20, 20);
+  text-shadow: 1px 1px 1px white;
+  padding-bottom: 10px;
 }
 
 .backpack-item {
@@ -873,6 +876,74 @@ label {
   color: var(--primary);
   text-decoration: none;
   cursor: pointer;
+}
+
+.battle-action-button {
+  background: radial-gradient(circle, #dcdcdc, #a9a9a9, #696969, #2f2f2f);
+  color: #FFCC00;
+  font-family: "Press Start 2P", system-ui;
+  font-size: 20px;
+  padding: 10px 30px;
+  border: 2px solid #FFCC00;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  position: absolute;
+  top: 55%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; 
+  text-shadow: 2px 2px 2px #000000;
+}
+
+.battle-action-button:hover {
+  color: #ff0000;
+  border: 2px solid #ff0000;
+  transform: scale(1.1);
+}
+
+.quit-battle-button {
+  background: radial-gradient(circle, #800000, #4b0000, #200000);
+  color: #FFCC00;
+  font-family: "Press Start 2P", system-ui;
+  font-size: 20px;
+  padding: 10px 30px;
+  border: 2px solid #FFCC00;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  position: absolute;
+  transform: translate(-50%);
+  z-index: 1000; 
+  text-shadow: 2px 2px 2px #000000;
+  bottom: 10px;
+  left: 50%;
+}
+
+.quit-battle-button:hover {
+  color: #ff0000;
+  border: 2px solid #ff0000;
+  transform: scale(1.1);
+}
+
+.attack-button {
+  background: radial-gradient(circle, #800000, #4b0000, #200000);
+  color: #FFCC00;
+  font-family: "Press Start 2P", system-ui;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-top: 20px;
+  display: none; 
+}
+
+.attack-button:hover {
+  color: white;
+  border: 2px solid #ff0000;
+  transform: scale(1.1);
 }
 
 #popup-container {
