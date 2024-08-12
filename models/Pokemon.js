@@ -20,11 +20,16 @@ class Pokemon extends Model {
                 const exceed = restoreHP - maxHP;
                 const healing = effectAmount - exceed;
 
-                await PokemonStats.update(
-                    { current_hp: pokemonStats.current_hp + healing },
-                    { where: { id: this.id } }
-                );
-                console.log("Heal works")
+                if (pokemonStats.current_hp >= maxHP) {
+                    console.log('Cannot exceed Max HP');
+                } else {
+
+                    await PokemonStats.update(
+                        { current_hp: pokemonStats.current_hp + healing },
+                        { where: { id: this.id } }
+                    );
+                    console.log("Heal works");
+                }
                 break;
             case "revive":
                 if (!this.alive) {
