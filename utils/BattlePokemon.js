@@ -29,7 +29,6 @@ class BattlePokemon {
         const damage = Math.max(this.attack - (opponent.defense / 2), 1);
         opponent.current_hp = Math.max(opponent.current_hp - damage, 0);
 
-
         if (opponent.current_hp <= 0) {
             opponent.current_hp = 0;
             opponent.alive = false;
@@ -59,15 +58,15 @@ class BattlePokemon {
             id: this.id,
             name: this.name,
             picture: this.picture,
-            alive: this.alivepicture,
-            favorite: this.favoritepicture,
-            level: this.levelpicture,
-            experience: this.experiencepicture,
-            attack: this.attackpicture,
-            current_hp: this.current_hppicture,
-            max_hp: this.max_hppicture,
-            defense: this.defensepicture,
-            speed: this.speedpicture,
+            alive: this.alive,
+            favorite: this.favorite,
+            level: this.level,
+            experience: this.experience,
+            attack: this.attack,
+            current_hp: this.current_hp,
+            max_hp: this.max_hp,
+            defense: this.defense,
+            speed: this.speed,
             abilityId: formattedAbilitiesId
         };
     }

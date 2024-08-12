@@ -107,7 +107,6 @@ const fetchRandomPokemon = async () => {
         const data = await response.json();
 
         const pokemonName = data.results[randomId].name;
-
         const pokemonData = await fetchPokemonByName(pokemonName);
         return pokemonData;
     } catch (error) {

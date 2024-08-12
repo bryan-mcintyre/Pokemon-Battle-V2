@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, PokemonStats, Pokemon, Backpack, Item} = require('../../models');
+const { User, PokemonStats, Pokemon, Backpack, Item } = require('../../models');
 const { createPokemonForUser, createAbilityForPokemon, updatePokemonForUser } = require('../../service/pokemonService');
 const { withAuth } = require('../../utils/auth');
 
@@ -38,19 +38,19 @@ router.post('/update', withAuth, async (req, res) => {
 });
 
 // Fetches User's Pokemon Team
-router.get('/team', async (req,res) => {
+router.get('/team', withAuth, async (req, res) => {
     try {
         // Fetch the user's Pokémon from the database
         const pokemonData = await Pokemon.findAll({
             where: { user_id: req.session.user_id },
             include: [{ model: PokemonStats }],
         });
-  
+
         // Serialize data for Handlebars
         const pokemons = pokemonData.map((pokemon) => pokemon.get({ plain: true }));
-  
+
         // Return json with the user's Pokémon
-       res.json(pokemons);
+        res.json(pokemons);
 
     } catch (err) {
         console.error(err);
@@ -59,23 +59,23 @@ router.get('/team', async (req,res) => {
 });
 
 //Post item on pokemon stats 
-router.post('/item', async (req,res) => {
-try {
- 
-    const pokemonData = await Pokemon.findOne({
-        where: { user_id: req.session.user_id, id: req.body.id},
-        include: [{ model: PokemonStats }],
-    });
-//Calls this function from Pokemon Model
-pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id, req.session.user_id); 
-const itemData = await Backpack.findOne({ where: { user_id: req.session.user_id }});
-//Calls this function form Backpack Model
-itemData.deleteUsedItem(req.body.item_id);
-res.status(200).json(pokemonData)
-}  catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-}
+router.post('/item', async (req, res) => {
+    try {
+
+        const pokemonData = await Pokemon.findOne({
+            where: { user_id: req.session.user_id, id: req.body.id },
+            include: [{ model: PokemonStats }],
+        });
+        //Calls this function from Pokemon Model
+        pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id, req.session.user_id);
+        const itemData = await Backpack.findOne({ where: { user_id: req.session.user_id } });
+        //Calls this function form Backpack Model
+        itemData.deleteUsedItem(req.body.item_id);
+        res.status(200).json(pokemonData)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 module.exports = router;

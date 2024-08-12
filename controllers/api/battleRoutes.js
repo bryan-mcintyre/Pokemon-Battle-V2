@@ -7,20 +7,27 @@ router.post('/user/attack', withAuth, async (req, res) => {
     try {
         const battleState = req.session.battleState;
 
-        if (!battleState.currentTurn) {
-            return res.status(400).json({ error: 'Not your turn' });
-        }
 
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
         const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
+        if (!battleState.userTurn) {
+            return res.status(400).json({
+                error: 'Not your turn',
+                userTurn: req.session.battleState.userTurn,
+                userPokemon: userBattlePokemon,
+                opponentPokemon: opponentBattlePokemon,
+            });
+        }
 
 
         userBattlePokemon.attackOpponent(opponentBattlePokemon);
 
+
         req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
-        req.session.battleState.currentTurn = !req.session.battleState.currentTurn;
+        req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
         if (!opponentBattlePokemon.isAlive()) {
+            req.session.battleState.opponentBattlePokemon.alive = false;
             userBattlePokemon.experience += 100;
             const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level);
             if (userBattlePokemon.experience > currentLevelData.experience) {
@@ -38,37 +45,49 @@ router.post('/user/attack', withAuth, async (req, res) => {
         res.json({
             userPokemon: req.session.battleState.userPokemon,
             opponentPokemon: req.session.battleState.opponentPokemon,
-            message: "Waiting for opponent's move...",
-            userTurn: req.session.battleState.currentTurn
+            userTurn: req.session.battleState.userTurn,
+            message: "Waiting for opponent's move..."
         });
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
-router.post('/enemy/attack', withAuth, async (req, res) => {
+router.post('/opponent/attack', withAuth, async (req, res) => {
     try {
         const battleState = req.session.battleState;
 
-        if (battleState.currentTurn) {
-            return res.status(400).json({ error: 'Not your turn' });
-        }
 
         const userBattlePokemon = new BattlePokemon(battleState.userPokemon);
         const opponentBattlePokemon = new BattlePokemon(battleState.opponentPokemon);
 
+        if (battleState.userTurn) {
+            return res.status(400).json({
+                error: 'Not your turn',
+                userTurn: req.session.battleState.userTurn,
+                userPokemon: userBattlePokemon,
+                opponentPokemon: opponentBattlePokemon,
+            });
+        }
 
         opponentBattlePokemon.attackOpponent(userBattlePokemon);
 
 
         req.session.battleState.userPokemon.current_hp = userBattlePokemon.current_hp;
-        req.session.battleState.currentTurn = !req.session.battleState.currentTurn;
+        req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
+        console.log(req.session.battleState.userPokemon.current_hp)
         if (!userBattlePokemon.isAlive()) {
+
+            req.session.battleState.userPokemon.alive = false;
+
             userBattlePokemon.experience += 25;
-            const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level);
-            if (userBattlePokemon.experience > currentLevelData.experience) {
-                userBattlePokemon.levelUp();
+            const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level + 1);
+            if (currentLevelData) {
+                if (userBattlePokemon.experience > currentLevelData.experience) {
+                    req.session.battleState.userPokemon.current_hp = 0;
+                    userBattlePokemon.levelUp();
+                }
             }
             return res.json({
                 userPokemon: userBattlePokemon,
@@ -82,8 +101,8 @@ router.post('/enemy/attack', withAuth, async (req, res) => {
         res.json({
             userPokemon: req.session.battleState.userPokemon,
             opponentPokemon: req.session.battleState.opponentPokemon,
-            message: "Waiting for opponent's move...",
-            userTurn: req.session.battleState.currentTurn
+            userTurn: req.session.battleState.userTurn,
+            message: "Waiting for opponent's move..."
         });
     } catch (err) {
         res.status(500).json(err);
