@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle modal Okay button click
     battleModalOkButton.addEventListener('click', () => {
+        // Scroll to the Pokémon storage section
+        const storageSection = document.getElementById('pokemon-storage');
+        if (storageSection) {
+            storageSection.scrollIntoView({ behavior: 'smooth' });
+        }
         battleModal.style.display = 'none';
     });
 

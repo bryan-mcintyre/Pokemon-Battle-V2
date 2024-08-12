@@ -26,7 +26,7 @@ const seedPokemons = async () => {
 
         let index = 0
         // repeat 2 times
-        while (index < 2) {
+        while (index < 6) {
             for (let i = 0; i < users.length; i++) {
 
                 const user = users[i];
