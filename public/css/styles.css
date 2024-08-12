@@ -93,6 +93,28 @@ label {
   color: var(--light);
 }
 
+.bg-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  background-color: var(--secondary);
+  border-radius: 10px;
+  border-style: inset;
+  border-color: #FFCC00;
+  box-sizing: border-box;
+  width: 80%;
+  margin: auto;
+}
+
+.select-title {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
 .container {
   width: 85%;
   max-width: 1200px;
@@ -125,7 +147,7 @@ label {
 
 .home-battle-container .image-row {
   display: flex;
-  justify-content: space-between;;
+  justify-content: space-between;
   width: 100%;
   max-width: 750px;
   padding: 0;
@@ -357,7 +379,7 @@ label {
 
 .user-pokemon-card {
   position: absolute;
-  left: 100px; 
+  left: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -368,7 +390,7 @@ label {
 
 .opponent-pokemon-card {
   position: absolute;
-  right: 100px; 
+  right: 100px;
 }
 
 .opponent-pokemon-card h2 {
@@ -410,22 +432,7 @@ label {
   font-size: 35px;
   color: #FFCC00;
   text-shadow: 2px 2px 2px #000;
-  margin-top: 177px;
-}
-
-.bg-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 20px;
-  background-color: var(--secondary);
-  border-radius: 10px;
-  border-style: inset;
-  border-color: #FFCC00;
-  box-sizing: border-box;
-  width: 80%;
-  margin: auto;
+  margin-top: 140px;
 }
 
 .link {
@@ -593,6 +600,10 @@ label {
   text-shadow: 1px 1px 2px #FFCC00;
 }
 
+.show-storage {
+  display: flex;
+}
+
 .pokemon-card {
   background: radial-gradient(circle, white, gray, black);
   border: 2px solid #FFCC00;
@@ -600,6 +611,7 @@ label {
   padding: 20px;
   text-align: center;
   width: 250px;
+  height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   margin: 10px;
@@ -904,10 +916,10 @@ label {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   position: absolute;
-  top: 55%; 
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000; 
+  z-index: 1000;
   text-shadow: 2px 2px 2px #000000;
 }
 
@@ -929,7 +941,7 @@ label {
   transition: background-color 0.3s, transform 0.3s;
   position: absolute;
   transform: translate(-50%);
-  z-index: 1000; 
+  z-index: 1000;
   text-shadow: 2px 2px 2px #000000;
   bottom: 10px;
   left: 50%;
@@ -952,7 +964,7 @@ label {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   margin-top: 20px;
-  display: none; 
+  display: none;
 }
 
 .attack-button:hover {
@@ -970,9 +982,9 @@ label {
 }
 
 .pokemon-stat p {
-  margin: 0; 
+  margin: 0;
   padding-left: 7px;
-  font-size: 14px; 
+  font-size: 14px;
   text-align: center;
   color: #FFCC00;
   text-shadow: 2px 2px 1px black;
@@ -982,7 +994,7 @@ label {
 }
 
 .stat-icon {
-  width: 18px; 
+  width: 18px;
   height: 18px;
   margin: 0;
   padding: 0;
@@ -993,7 +1005,7 @@ label {
 
 /* Unique modal styles for Pokémon stats */
 .pokemon-stat-modal {
-  display: none; 
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;

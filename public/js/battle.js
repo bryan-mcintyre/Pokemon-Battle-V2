@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle the Yes button click
     yesButton.addEventListener('click', () => {
-        pokemonStorage.style.display = 'block';
+        pokemonStorage.classList.add('show-storage');
         battleModal.style.display = 'block';
     });
 
