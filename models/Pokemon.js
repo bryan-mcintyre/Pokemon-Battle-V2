@@ -14,22 +14,17 @@ class Pokemon extends Model {
         // Call item_effect 
         switch (effectType) {
             case "heal":
-const currentHP = pokemonStats.current_hp;
-const maxHP = pokemonStats.max_hp;
-const restoreHP = currentHP + effectAmount;
-                if (restoreHP >= maxHP) {
-                    await PokemonStats.update(
-                        { current_hp: pokemonStats.max_hp },
-                        { where: { id: this.id } }
-                    );
-                    console.log("Pokemon Fully Healed!!")
-                } else {
-                    await PokemonStats.update(
-                        { current_hp: pokemonStats.current_hp + effectAmount },
-                        { where: { id: this.id } }
-                    );
-                    console.log("Heal works")
-                }
+                const currentHP = pokemonStats.current_hp;
+                const maxHP = pokemonStats.max_hp;
+                const restoreHP = currentHP + effectAmount;
+                const exceed = restoreHP - maxHP;
+                const healing = effectAmount - exceed;
+
+                await PokemonStats.update(
+                    { current_hp: pokemonStats.current_hp + healing },
+                    { where: { id: this.id } }
+                );
+                console.log("Heal works")
                 break;
             case "revive":
                 if (!this.alive) {
