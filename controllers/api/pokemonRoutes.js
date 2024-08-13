@@ -77,8 +77,7 @@ router.post('/item', async (req, res) => {
             console.log(`itemUsed es: ${JSON.stringify(itemUsed)}`);
         return res.status(200).json({ status: itemUsed.status, message: 'Item Route Works', item: currentItem});
         } else { 
-            console.log("Cannot use item on this Pokemon");
-           return res.status(200).json({ status: itemUsed.status, message: 'YOU CANT' });
+           return res.status(200).json({ status: itemUsed.status, message: "Cannot use item on this Pokemon"});
         }
         // console.log(`itemUsed es: ${JSON.stringify(itemUsed)}`);
         // res.status(200).json({ status: itemUsed.status, message: 'Item Route Works', item: currentItem});

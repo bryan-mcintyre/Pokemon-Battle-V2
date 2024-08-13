@@ -46,38 +46,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Clear modal 
         pokemonContainer.innerHTML = " ";
-
         // Declare modal
         const modal = document.querySelector('.pokemon-modal');
-        const errorModal = document.querySelector('.error-modal');
+        // const errorModal = document.querySelector('.error-modal');
         const closeButton = document.querySelector('.close-button');
-
-        // Function to open the modal
+        // Function to open pokemon selection modal
         function openModal(pokemon) {
-          // modalMessage.textContent = pokemon;
           pokemonContainer.appendChild(pokemon);
           modal.style.display = 'block';
         }
-
         // Function to close the modal
         closeButton.addEventListener('click', () => {
           modal.style.display = 'none';
         });
-
         // Close the modal when clicking outside of the modal content
         window.addEventListener('click', (event) => {
           if (event.target === modal) {
             modal.style.display = 'none';
           }
         });
-
         // Renders each pokemon
         pokemons.forEach(pokemon => {
           const pokemonDiv = document.createElement('div');
           pokemonDiv.classList.add('backpack-item');
           const pokemonName = document.createElement('button');
           pokemonName.classList.add('use-button');
-          pokemonName.textContent = pokemon.name;
+          pokemonName.textContent = `${pokemon.name} ${pokemon.pokemon_stat.current_hp} / ${pokemon.pokemon_stat.max_hp}`;
           pokemonName.value = pokemon.name;
 
           openModal(pokemonName);
@@ -96,11 +90,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             const useOnPokemon = await useOnPokemonResponse.json();
             if (useOnPokemon.status) {
               // Change item count 
-              itemCount.textContent = `Owned: ${useOnPokemon.item.count - 1}`;
+              if (useOnPokemon.item.count > 1) {
+                itemCount.textContent = `Owned: ${useOnPokemon.item.count - 1}`;
+              }
+              else {
+                backpackContainer.removeChild(itemDiv);
+              }
               // alert user why they cant used the item
               console.log('Request Works!')
             } else {
-              alert(`Error: ${useOnPokemon.status}, ${useOnPokemon.message}`)
+              alert(`Error: ${useOnPokemon.message}`)
               console.log('Error:', useOnPokemon.status, useOnPokemon.message);
             }
           });
@@ -123,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Delete button
       const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
+      deleteButton.textContent = 'Sell';
       deleteButton.classList.add('delete-button');
       deleteButton.addEventListener('click', async () => {
         const quantityToDelete = parseInt(quantitySelect.value, 10);
