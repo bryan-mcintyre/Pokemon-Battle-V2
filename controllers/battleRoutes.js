@@ -79,15 +79,6 @@ router.post('/startBattle', withAuth, async (req, res) => {
 
         const userTurn = userPokemon.speed >= opponentPokemon.speed;
 
-        const userBattlePokemon = new BattlePokemon(userPokemon);
-        const opponentBattlePokemon = new BattlePokemon(opponentPokemon);
-
-
-        userBattlePokemon.triggerAbility();
-
-        opponentBattlePokemon.triggerAbility();
-
-
         //get lvlData
         const levelData = await PokemonLevel.findAll({ raw: true });
         req.session.battleState = {
