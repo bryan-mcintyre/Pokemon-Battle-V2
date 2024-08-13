@@ -5,6 +5,15 @@ class Wallet extends Model {
     checkValue(price) {
         return price < this.value;
     }
+
+    async increaseValue(value) {
+        const newValue = this.value + value;
+
+        await this.update({ value: newValue });
+
+        console.log(`pokeDollars increased to ${newValue}`);
+
+    }
 }
 
 Wallet.init(
@@ -39,7 +48,7 @@ Wallet.init(
                 if (wallet.value < 0) {
                     throw new Error('The value cannot be less than 0');
                 }
-                
+
                 // Ensures that the wallet has enough funds to cover the purchase
                 if (wallet.changed('value') && wallet.value < wallet._previousDataValues.value) {
                     const deduction = wallet._previousDataValues.value - wallet.value;
@@ -47,7 +56,7 @@ Wallet.init(
                         throw new Error('There are not enough funds to purchase');
                     }
                 }
-                
+
                 return wallet;
             },
         },
