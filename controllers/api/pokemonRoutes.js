@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, PokemonStats, Pokemon, Backpack, Item} = require('../../models');
+const { User, PokemonStats, Pokemon, Backpack, Item } = require('../../models');
 const { createPokemonForUser, createAbilityForPokemon, updatePokemonForUser } = require('../../service/pokemonService');
 const { withAuth } = require('../../utils/auth');
 
@@ -38,19 +38,19 @@ router.post('/update', withAuth, async (req, res) => {
 });
 
 // Fetches User's Pokemon Team
-router.get('/team', async (req,res) => {
+router.get('/team', withAuth, async (req, res) => {
     try {
         // Fetch the user's Pokémon from the database
         const pokemonData = await Pokemon.findAll({
             where: { user_id: req.session.user_id },
             include: [{ model: PokemonStats }],
         });
-  
+
         // Serialize data for Handlebars
         const pokemons = pokemonData.map((pokemon) => pokemon.get({ plain: true }));
-  
+
         // Return json with the user's Pokémon
-       res.json(pokemons);
+        res.json(pokemons);
 
     } catch (err) {
         console.error(err);
@@ -59,25 +59,27 @@ router.get('/team', async (req,res) => {
 });
 
 //Post item on pokemon stats 
-router.post('/item', async (req,res) => {
-try {
- 
-    const pokemonData = await Pokemon.findOne({
-        where: { user_id: req.session.user_id, id: req.body.id},
-        include: [{ model: PokemonStats }],
-    });
-
-pokemonData.useItem(req.body.effect, req.body.effect_amount, req.body.item_id,req.session.user_id); //create this function in pokemon model
-
-const itemData = await Backpack.findOne({ where: { user_id: req.session.user_id }});
-
-itemData.deleteUsedItem(req.body.item_id);
-
-
-}  catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-}
+router.post('/item', async (req, res) => {
+    try {
+        const pokemonData = await Pokemon.findOne({
+            where: { user_id: req.session.user_id, id: req.body.id },
+            include: [{ model: PokemonStats }],
+        });
+        //Calls this function from Pokemon Model
+        const itemUsed = await pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id, req.session.user_id);
+        if (itemUsed.status === true) {
+            const itemData = await Backpack.findAll({ where: { user_id: req.session.user_id } });
+            //Calls this function form Backpack Model
+            const currentItem = itemData.find(item => item.id === req.body.item_id);
+            currentItem.deleteUsedItem(req.body.item_id);
+        return res.status(200).json({ status: itemUsed.status, message: 'Item Route Works', item: currentItem});
+        } else { 
+           return res.status(200).json({ status: itemUsed.status, message: "Cannot use item on this Pokemon"});
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 module.exports = router;

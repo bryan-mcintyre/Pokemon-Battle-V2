@@ -7,17 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle the No button click
     noButton.addEventListener('click', () => {
-        window.location.href = '/dashboard';
+        window.location.href = '/battle';
     });
 
     // Handle the Yes button click
     yesButton.addEventListener('click', () => {
-        pokemonStorage.style.display = 'block';
+        pokemonStorage.classList.add('show-storage');
         battleModal.style.display = 'block';
     });
 
     // Handle modal Okay button click
     battleModalOkButton.addEventListener('click', () => {
+        // Scroll to the Pokémon storage section
+        const storageSection = document.getElementById('pokemon-storage');
+        if (storageSection) {
+            storageSection.scrollIntoView({ behavior: 'smooth' });
+        }
         battleModal.style.display = 'none';
     });
 

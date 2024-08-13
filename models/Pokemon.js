@@ -4,16 +4,52 @@ const PokemonLevel = require('./PokemonLevel');
 const PokemonStats = require('./PokemonStats');
 
 class Pokemon extends Model {
-//Search for which item is using, check for type and effect amount, and check for user id
-    async useItem(effect, effect_amount) {
-     
+    //Search for which item is using, check for type and effect amount, and check for user id
+    async useItem(effect_type, effect_amount) {
         const pokemonStats = await PokemonStats.findOne({ where: { pokemon_id: this.id } });
-       
-         await PokemonStats.update( 
-            { current_hp: pokemonStats.current_hp + effect_amount }, 
-            { where: { id: this.id } }
-            );  
+        // Define item effect 
+        const effectType = effect_type;
+        const effectAmount = effect_amount;
+        // Call item_effect 
+        switch (effectType) {
+            case "heal":
+                const currentHP = pokemonStats.current_hp;
+                const maxHP = pokemonStats.max_hp;
+                const restoreHP = currentHP + effectAmount;
+                const healing = Math.min(restoreHP,maxHP)
 
+                if (pokemonStats.current_hp >= maxHP) {
+                    return { status: false, message: 'Cannot exceed Max HP'};
+                } else {
+                    await PokemonStats.update(
+                        { current_hp: healing },
+                        { where: { pokemon_id: this.id } }
+                    );
+                }
+                break;
+            case "revive":
+                if (!this.alive) {
+                    await PokemonStats.update(
+                        { current_hp: pokemonStats.max_hp / 2 },
+                        { where: { pokemon_id: this.id } }
+                    );
+                    await Pokemon.update(
+                        { alive: true },
+                        { where: { id: this.id } }
+                    );
+                } else { 
+                    return { status: false, message: 'Cannot apply to alive Pokemon'}; }
+                break;
+            case "catch":
+                await Pokemon.update(
+                    { user_id: this.user_id },
+                    { where: { id: this.id } }
+                );
+                break;
+
+        }
+       
+        return { status: true, message: 'Item used' };
     };
 
     async getBattleData() {
