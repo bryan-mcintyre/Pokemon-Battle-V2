@@ -1,4 +1,3 @@
-// const { PokemonStats } = require("../../models");
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw new Error('Expected an array but received something else');
     }
 
-    backpackContainer.innerHTML = '';
+    backpackContainer.innerHTML ='';
 
     backpackItems.forEach(item => {
       const itemDiv = document.createElement('div');
@@ -31,10 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       useButton.classList.add('use-button');
       useButton.addEventListener('click', async () => {
 
-        // alert(`Using ${item.name} and ${item.effect_type} and ${item.effect_amount}`);
-        console.log(item.name + " | " + item.effect_type)
-        // logic to use the item goes here
-
         // Fetch users Pokemon and show them
         const pokemonData = await fetch(`/api/pokemon/team`);
         console.log(pokemonData);
@@ -44,60 +39,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Clear modal 
         pokemonContainer.innerHTML = " ";
-
         // Declare modal
         const modal = document.querySelector('.pokemon-modal');
+        // const errorModal = document.querySelector('.error-modal');
         const closeButton = document.querySelector('.close-button');
-
-        // Function to open the modal
+        // Function to open pokemon selection modal
         function openModal(pokemon) {
-          // modalMessage.textContent = pokemon;
           pokemonContainer.appendChild(pokemon);
           modal.style.display = 'block';
         }
-
         // Function to close the modal
         closeButton.addEventListener('click', () => {
           modal.style.display = 'none';
         });
-
         // Close the modal when clicking outside of the modal content
         window.addEventListener('click', (event) => {
           if (event.target === modal) {
             modal.style.display = 'none';
           }
         });
-
         // Renders each pokemon
         pokemons.forEach(pokemon => {
           const pokemonDiv = document.createElement('div');
           pokemonDiv.classList.add('backpack-item');
           const pokemonName = document.createElement('button');
           pokemonName.classList.add('use-button');
-          pokemonName.textContent = pokemon.name;
+          pokemonName.textContent = `${pokemon.name} ${pokemon.pokemon_stat.current_hp} / ${pokemon.pokemon_stat.max_hp}`;
           pokemonName.value = pokemon.name;
-
           openModal(pokemonName);
-          console.log(pokemonName)
-
           pokemonName.addEventListener('click', async (event) => {
             const selectedPokemon = event.target.value;
             console.log("Selected:" + " " + selectedPokemon)
             modal.style.display = 'none';
             // Send info of pokemon in body
-            const useOnPokemon = await fetch(`api/pokemon/item`, {
+            const useOnPokemonResponse = await fetch(`api/pokemon/item`, {
               method: 'POST',
               body: JSON.stringify({ effect_type: item.effect_type, effect_amount: item.effect_amount, item_id: item.id, id: pokemon.id }),
               headers: { 'Content-Type': 'application/json' }
             });
-
-            if (useOnPokemon.ok) {
-              setTimeout(() => {
-                window.location.reload();
-              }, 500);
-              console.log('Request Works!')
-            } else { 
-              console.log('Error:', useOnPokemon.status, useOnPokemon.statusText);
+            const useOnPokemon = await useOnPokemonResponse.json();
+            if (useOnPokemon.status) {
+              // Change item count 
+              if (useOnPokemon.item.count > 1) {
+                itemCount.textContent = `Owned: ${useOnPokemon.item.count - 1}`;
+              }
+              else {
+                backpackContainer.removeChild(itemDiv);
+              }
+            } else {
+              alert(`Error: ${useOnPokemon.message}`)
             }
           });
         });
@@ -119,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Delete button
       const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
+      deleteButton.textContent = 'Sell';
       deleteButton.classList.add('delete-button');
       deleteButton.addEventListener('click', async () => {
         const quantityToDelete = parseInt(quantitySelect.value, 10);

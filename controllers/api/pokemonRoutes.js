@@ -61,19 +61,21 @@ router.get('/team', withAuth, async (req, res) => {
 //Post item on pokemon stats 
 router.post('/item', async (req, res) => {
     try {
-
         const pokemonData = await Pokemon.findOne({
             where: { user_id: req.session.user_id, id: req.body.id },
             include: [{ model: PokemonStats }],
         });
         //Calls this function from Pokemon Model
-        pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id, req.session.user_id);
-        
-        const itemData = await Backpack.findOne({ where: { user_id: req.session.user_id } });
-        //Calls this function form Backpack Model
-        itemData.deleteUsedItem(req.body.item_id);
-        res.status(200).json(pokemonData)
-   
+        const itemUsed = await pokemonData.useItem(req.body.effect_type, req.body.effect_amount, req.body.item_id, req.session.user_id);
+        if (itemUsed.status === true) {
+            const itemData = await Backpack.findAll({ where: { user_id: req.session.user_id } });
+            //Calls this function form Backpack Model
+            const currentItem = itemData.find(item => item.id === req.body.item_id);
+            currentItem.deleteUsedItem(req.body.item_id);
+        return res.status(200).json({ status: itemUsed.status, message: 'Item Route Works', item: currentItem});
+        } else { 
+           return res.status(200).json({ status: itemUsed.status, message: "Cannot use item on this Pokemon"});
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json(err);

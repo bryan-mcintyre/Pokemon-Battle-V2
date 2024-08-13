@@ -2,14 +2,15 @@ const router = require('express').Router();
 const { Backpack, Item } = require('../../models');
 
 router.get('/', async (req, res) => {
+  console.log("1,2,3 10000");
   try {
       const userId = req.session.user_id;
-
+console.log(userId);
       const backpackItems = await Backpack.findAll({
           where: { user_id: userId },
           include: [{ model: Item }],
       });
-
+console.log(backpackItems);
       const items = backpackItems.map(b => {
           if (!b.item) {
               console.error(`Item not found for backpack item with ID: ${b.id}`);
@@ -24,7 +25,7 @@ router.get('/', async (req, res) => {
               effect_amount: b.item.effect_amount,
           };
       });
-
+console.log(items);
       res.status(200).json(items);
   } catch (err) {
       console.error('Error in backpack route:', err.message);
