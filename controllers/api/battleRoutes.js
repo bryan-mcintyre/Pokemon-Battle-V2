@@ -52,6 +52,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
                 userBattlePokemon.levelUp();
             }
 
+            userBattlePokemon.resetAbility();
             userBattlePokemon.toModelFormat();
             // save data pokemon
             updatePokemonForUser(req.session.user_id, userBattlePokemon.id, userBattlePokemon)
@@ -125,10 +126,12 @@ router.post('/opponent/attack', withAuth, async (req, res) => {
             // check max level
             if (userBattlePokemon.experience >= currentLevelData.experience && userBattlePokemon.level < currentLevelData.level) {
                 userBattlePokemon.levelUp();
+                userBattlePokemon.resetAbility();
                 userBattlePokemon.toModelFormat();
                 updatePokemonForUser(req.session.user_id, userBattlePokemon.id, userBattlePokemon)
                 userBattlePokemon.current_hp = 0;
             } else {
+                userBattlePokemon.resetAbility();
                 userBattlePokemon.toModelFormat();
                 updatePokemonForUser(req.session.user_id, userBattlePokemon.id, userBattlePokemon)
             }
