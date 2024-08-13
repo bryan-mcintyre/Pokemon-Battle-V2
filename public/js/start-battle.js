@@ -165,9 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             headers: { 'Content-Type': 'application/json' },
                         }).then(response => response.json())
                             .then(data => {
-                                alert(data.message) // Change alert to modal
+                        showYouWinModal(data.message);
                             })
-                        showYouWinModal();
                     } else {
                         showEnemyDeadModal();
                     }
@@ -280,12 +279,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function showYouWinModal() {
+    function showYouWinModal(message) {
         const modal = document.createElement('div');
         modal.className = 'you-win-modal';
         modal.innerHTML = `
             <div class="you-win-modal-content">
-                <h2>You Win!</h2>
+                <h2>You Win!</h2>|
+                <p>${message}</p>
                 <div class="you-win-modal-buttons">
                     <button id="go-to-dashboard">Go to Dashboard</button>
                     <button id="try-again">Battle again?</button>
@@ -294,6 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         document.body.appendChild(modal);
+
+        modal.style.display = 'flex';
+    modal.style.opacity = 1;
+
 
         gsap.to(modal, { display: 'flex', opacity: 1, duration: 0.5 });
 
