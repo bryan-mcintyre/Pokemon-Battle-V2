@@ -63,12 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    function isMobileScreen() {
+        return window.innerWidth <= 768; 
+    }
+
     // Attack animation for the user's Pokémon
     function userAttackAnimation(onComplete) {
+        const xValue = isMobileScreen() ? 175 : 1380;
+        const durationValue = isMobileScreen() ? 0.7 : 0.6;
+        console.log('User Attack - x:', xValue, 'duration:', durationValue);
+
         gsap.to('.user-main-pokemon-img', {
             zIndex: 10,
-            x: 1380,
-            duration: 0.5,
+            x: isMobileScreen() ? 175 : 1380,
+            duration: isMobileScreen() ? 0.7 : 0.6,
             onComplete: () => {
                 gsap.to('.opponent-pokemon-card img', {
                     opacity: 0,
@@ -76,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     repeat: 5,
                     duration: 0.1,
                     onComplete: () => {
-                        gsap.to('.user-main-pokemon-img', { x: 0, duration: 0.5 });
+                        gsap.to('.user-main-pokemon-img', { x: 0, duration: isMobileScreen() ? 0.7 : 0.6});
                         gsap.set('.user-main-pokemon-img', { zIndex: 1 });
                         if (typeof onComplete === "function") {
                             onComplete();
@@ -89,10 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attack animation for the opponent's Pokémon
     function opponentAttackAnimation(onComplete) {
+        const xValue = isMobileScreen() ? -175 : -1380;
+        const durationValue = isMobileScreen() ? 0.7 : 0.6;
+        console.log('Opponent Attack - x:', xValue, 'duration:', durationValue);
+
         gsap.to('.opponent-pokemon-card img', {
             zIndex: 10,
-            x: -1380,
-            duration: 0.5,
+            x: isMobileScreen() ? -175 : -1380,
+            duration: isMobileScreen() ? 0.7 : 0.6,
             onComplete: () => {
                 gsap.to('.user-main-pokemon-img', {
                     opacity: 0,
@@ -100,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     repeat: 5,
                     duration: 0.1,
                     onComplete: () => {
-                        gsap.to('.opponent-pokemon-card img', { x: 0, duration: 0.5 });
+                        gsap.to('.opponent-pokemon-card img', { x: 0, duration: isMobileScreen() ? 0.7 : 0.6 });
                         gsap.set('.opponent-pokemon-card img', { zIndex: 1 });
                         if (typeof onComplete === "function") {
                             onComplete();
@@ -110,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // Hover animation for the Attack button using GSAP
     attackButton.addEventListener('mouseenter', () => {
         gsap.to(attackButton, {
@@ -183,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         .catch(error => {
                             console.error('Error during opponent\'s attack:', error);
                         });
-                }, 2500); // 3-second timer
+                }, 2500); 
             })
             .catch(error => {
                 console.error('Error:', error);

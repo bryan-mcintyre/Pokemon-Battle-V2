@@ -1,3 +1,7 @@
+const ATTACK = 'attack';
+const DEFENSE = 'defense';
+const HP = 'hp';
+
 class BattlePokemon {
     constructor(pokemonData) {
         this.id = pokemonData.id || null;
@@ -45,6 +49,47 @@ class BattlePokemon {
             this.max_hp += 10;
             this.defense += 5;
             this.speed += 3;
+        }
+    }
+
+    triggerAbility() {
+        // loop array and increase stat based on ability effect
+        for (let i = 0; i < this.abilities.length; i++) {
+            switch (this.abilities[i].effect_type) {
+                case ATTACK: 
+                    this.attack += this.abilities[i].effect_amount;
+                    break;
+                case DEFENSE:
+                    this.defense += this.abilities[i].effect_amount;
+                    break;
+                case HP:
+                    this.current_hp += this.abilities[i].effect_amount;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    resetAbility() {
+        for (let i = 0; i < this.abilities.length; i++) {
+            switch (this.abilities[i].effect_type) {
+                case ATTACK:
+                    this.attack -= this.abilities[i].effect_amount;
+                    break;
+                case DEFENSE:
+                    this.defense -= this.abilities[i].effect_amount;
+                    break;
+                case HP:
+                    if (this.current_hp <= 0 ) {
+                        this.current_hp += this.max_hp
+                    } else {
+                        this.current_hp -= this.abilities[i].effect_amount;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
