@@ -16,10 +16,12 @@ class Pokemon extends Model {
                 const currentHP = pokemonStats.current_hp;
                 const maxHP = pokemonStats.max_hp;
                 const restoreHP = currentHP + effectAmount;
-                const healing = Math.min(restoreHP,maxHP)
+                const healing = Math.min(restoreHP, maxHP)
 
                 if (pokemonStats.current_hp >= maxHP) {
-                    return { status: false, message: 'Cannot exceed Max HP'};
+                    return { status: false, message: 'Cannot exceed Max HP' };
+                } else if (!this.alive) {
+                    return { status: false, message: 'Your Pokemon is now dead. You should resurrect him before giving him heal.' };
                 } else {
                     await PokemonStats.update(
                         { current_hp: healing },
@@ -37,10 +39,11 @@ class Pokemon extends Model {
                         { alive: true },
                         { where: { id: this.id } }
                     );
-                } else { 
-                    return { status: false, message: 'Cannot apply to alive Pokemon'}; }
+                } else {
+                    return { status: false, message: 'Cannot apply to alive Pokemon' };
+                }
                 break;
-            case "catch":
+            case "catch": // TODO catch i think we no need it here
                 await Pokemon.update(
                     { user_id: this.user_id },
                     { where: { id: this.id } }
@@ -48,7 +51,7 @@ class Pokemon extends Model {
                 break;
 
         }
-       
+
         return { status: true, message: 'Item used' };
     };
 

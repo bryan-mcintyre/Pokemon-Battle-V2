@@ -28,6 +28,7 @@
   <h2 class="select-title">Select a Pokémon</h2>
   <div id="pokemon-storage" class="bg-container">
     {{#each gallery }}
+    {{#if this.alive}}
     <div class="pokemon-card" data-id="{{id}}">
       <img src="{{picture}}" alt="{{name}}">
       <h2>{{name}}</h2>
@@ -42,6 +43,7 @@
       {{/each}}
       <button class="select-button">Select</button>
     </div>
+    {{/if}}
     {{/each}}
   </div>
 
