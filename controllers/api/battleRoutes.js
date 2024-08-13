@@ -16,17 +16,17 @@ router.post('/user/attack', withAuth, async (req, res) => {
                 userTurn: req.session.battleState.userTurn,
                 userPokemon: userBattlePokemon,
                 opponentPokemon: opponentBattlePokemon,
+                attackOpponent: false
             });
         }
 
 
         userBattlePokemon.attackOpponent(opponentBattlePokemon);
 
-
-        req.session.battleState.opponentPokemon.current_hp = opponentBattlePokemon.current_hp;
+        req.session.battleState.opponentPokemon = opponentBattlePokemon;
         req.session.battleState.userTurn = !req.session.battleState.userTurn;
 
-        console.log('Updated Opponent HP:', req.session.battleState.opponentPokemon.current_hp);
+        console.log('Updated Opponent HP:', req.session.battleState.opponentPokemon);
 
         if (!opponentBattlePokemon.isAlive()) {
             req.session.battleState.opponentPokemon.alive = false;
@@ -38,6 +38,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
             return res.json({
                 userPokemon: userBattlePokemon,
                 opponentPokemon: opponentBattlePokemon,
+                attackOpponent: true,
                 message: "You win!",
                 userTurn: req.session.battleState.userTurn
             });
@@ -48,6 +49,7 @@ router.post('/user/attack', withAuth, async (req, res) => {
             userPokemon: req.session.battleState.userPokemon,
             opponentPokemon: req.session.battleState.opponentPokemon,
             userTurn: req.session.battleState.userTurn,
+            attackOpponent: true,
             message: "Waiting for opponent's move..."
         });
     } catch (err) {
@@ -87,8 +89,8 @@ router.post('/opponent/attack', withAuth, async (req, res) => {
             const currentLevelData = battleState.levelData.find(data => data.level === userBattlePokemon.level + 1);
             if (currentLevelData) {
                 if (userBattlePokemon.experience > currentLevelData.experience) {
-                    req.session.battleState.userPokemon.current_hp = 0;
                     userBattlePokemon.levelUp();
+                    req.session.battleState.userPokemon.current_hp = 0;
                 }
             }
             return res.json({

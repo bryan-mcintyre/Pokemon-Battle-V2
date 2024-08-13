@@ -26,8 +26,8 @@ class BattlePokemon {
     }
 
     attackOpponent(opponent) {
-        const damage = Math.max(this.attack - (opponent.defense / 2), 1);
-        opponent.current_hp = Math.max(opponent.current_hp - damage, 0);
+        const damage = Math.round(Math.max(this.attack - (opponent.defense / 2), 1));
+        opponent.current_hp = Math.round(Math.max(opponent.current_hp - damage, 0));
 
         if (opponent.current_hp <= 0) {
             opponent.current_hp = 0;
