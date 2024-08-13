@@ -56,7 +56,7 @@ class BattlePokemon {
         // loop array and increase stat based on ability effect
         for (let i = 0; i < this.abilities.length; i++) {
             switch (this.abilities[i].effect_type) {
-                case ATTACK: 
+                case ATTACK:
                     this.attack += this.abilities[i].effect_amount;
                     break;
                 case DEFENSE:
@@ -81,10 +81,8 @@ class BattlePokemon {
                     this.defense -= this.abilities[i].effect_amount;
                     break;
                 case HP:
-                    if (this.current_hp <= 0 ) {
-                        this.current_hp += this.max_hp
-                    } else {
-                        this.current_hp -= this.abilities[i].effect_amount;
+                    if (this.current_hp > this.max_hp) {
+                        this.current_hp = this.max_hp;
                     }
                     break;
                 default:
