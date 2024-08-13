@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const { User, PokemonStats, Pokemon, Backpack, Item } = require('../../models');
+const { User, PokemonStats, Pokemon, Backpack, Item, Ability } = require('../../models');
 const { createPokemonForUser, createAbilityForPokemon, updatePokemonForUser } = require('../../service/pokemonService');
 const { withAuth } = require('../../utils/auth');
+const { fetchPokemonByName } = require('../../utils/pokemonFetch');
 
 
 
@@ -18,6 +19,44 @@ router.post('/', withAuth, async (req, res) => {
 
         res.status(200).json(pokemon);
 
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
+// after win battle, catchPokemon
+router.post('/catch', withAuth, async (req, res) => {
+    const catching = 1;
+    // const catching = Math.round(Math.random());
+    console.log(catching)
+    try {
+        if (catching === 1) {
+            const pokemonName = req.body.pokemon
+            const user = await User.findByPk(req.session.user_id);
+            const pokemonData = await fetchPokemonByName(pokemonName);
+
+            const { pokemon } = await createPokemonForUser(user.id, pokemonData);
+
+            const abilitiesData = await Ability.findAll({ raw: true });
+            if (abilitiesData) {
+                const randomIndex = Math.floor(Math.random() * abilitiesData.length);
+                pokemonData.abilities = [abilitiesData[randomIndex]];
+
+                await createAbilityForPokemon(pokemon.id, pokemonData.abilities[0].id)
+            }
+
+
+            res.status(200).json({
+                pokemon: pokemon,
+                status: true,
+                message: `Congratulations! You caught ${pokemon.name}`
+            });
+        } else {
+            res.status(418).json({
+                status: true,
+                message: `Sorry, he disappeared faster than you could get your pokeball.`
+            });
+        }
     } catch (err) {
         res.status(400).json(err);
     }
@@ -72,9 +111,9 @@ router.post('/item', async (req, res) => {
             //Calls this function form Backpack Model
             const currentItem = itemData.find(item => item.id === req.body.item_id);
             currentItem.deleteUsedItem(req.body.item_id);
-        return res.status(200).json({ status: itemUsed.status, message: 'Item Route Works', item: currentItem});
-        } else { 
-           return res.status(200).json({ status: itemUsed.status, message: "Cannot use item on this Pokemon"});
+            return res.status(200).json({ status: itemUsed.status, message: 'Item Route Works', item: currentItem });
+        } else {
+            return res.status(200).json({ status: itemUsed.status, message: "Cannot use item on this Pokemon" });
         }
     } catch (err) {
         console.error(err);
