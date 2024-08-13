@@ -132,22 +132,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // logic attack
     attackButton.addEventListener('click', () => {
         attackButton.disabled = true;
-    
-        userAttackAnimation(() => {
-            fetch('/api/battle/user/attack', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            })
+
+
+        fetch('/api/battle/user/attack', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        })
             .then(response => response.json())
             .then(data => {
-    
-                data.userPokemon.current_hp = Math.round(data.userPokemon.current_hp);
-                data.opponentPokemon.current_hp = Math.round(data.opponentPokemon.current_hp);
-    
-                updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
-    
-                console.log(data.userPokemon);
-    
+                if (data.attackOpponent) {
+                    userAttackAnimation();
+                    updateUI(data.userPokemon.current_hp, data.opponentPokemon.current_hp);
+                }
                 if (!data.opponentPokemon.alive || data.opponentPokemon.current_hp <= 0) {
                     if (data.message === "You win!") {
                         showYouWinModal();
@@ -156,12 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     return;
                 }
-    
+
                 if (!data.userPokemon.alive || data.userPokemon.current_hp <= 0) {
                     showUserPokemonDeadModal();
                     return;
                 }
-    
+
                 showWaitingOpponentModal();
                 setTimeout(() => {
                     opponentAttackAnimation();
@@ -169,30 +165,29 @@ document.addEventListener('DOMContentLoaded', () => {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                     })
-                    .then(response => response.json())
-                    .then(opponentData => {
-                        opponentData.userPokemon.current_hp = Math.round(opponentData.userPokemon.current_hp);
-                        opponentData.opponentPokemon.current_hp = Math.round(opponentData.opponentPokemon.current_hp);
-    
-                        // Update UI after opponent's attack
-                        updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
-    
-                        if (opponentData.message === "You lost!") {
-                            showYouLoseModal();
-                        } else {
-                            attackButton.disabled = false;
-                            showYourMoveModal();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error during opponent\'s attack:', error);
-                    });
+                        .then(response => response.json())
+                        .then(opponentData => {
+                            opponentData.userPokemon.current_hp = Math.round(opponentData.userPokemon.current_hp);
+                            opponentData.opponentPokemon.current_hp = Math.round(opponentData.opponentPokemon.current_hp);
+
+                            // Update UI after opponent's attack
+                            updateUI(opponentData.userPokemon.current_hp, opponentData.opponentPokemon.current_hp);
+
+                            if (opponentData.message === "You lost!") {
+                                showYouLoseModal();
+                            } else {
+                                attackButton.disabled = false;
+                                showYourMoveModal();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error during opponent\'s attack:', error);
+                        });
                 }, 2500); // 3-second timer
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-        });
     });
 
     function showWaitingOpponentModal(onComplete) {
@@ -222,11 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.createElement('div');
         modal.className = 'your-move-modal';
         modal.innerHTML = `<h2>Your move!</h2>`;
-    
+
         document.body.appendChild(modal);
-    
-        gsap.to(modal, {display: 'block', opacity: 1, duration: 0.5});
-    
+
+        gsap.to(modal, { display: 'block', opacity: 1, duration: 0.5 });
+
         setTimeout(() => {
             gsap.to(modal, {
                 opacity: 0,
@@ -250,15 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-    
+
         document.body.appendChild(modal);
-    
+
         gsap.to(modal, { display: 'flex', opacity: 1, duration: 0.5 });
-    
+
         document.getElementById('go-to-dashboard').addEventListener('click', () => {
             window.location.href = '/dashboard';
         });
-    
+
         document.getElementById('try-again').addEventListener('click', () => {
             window.location.href = '/battle';
         });
@@ -276,15 +271,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-    
+
         document.body.appendChild(modal);
-    
+
         gsap.to(modal, { display: 'flex', opacity: 1, duration: 0.5 });
-    
+
         document.getElementById('go-to-dashboard').addEventListener('click', () => {
             window.location.href = '/dashboard';
         });
-    
+
         document.getElementById('try-again').addEventListener('click', () => {
             window.location.href = '/battle';
         });
@@ -294,11 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.createElement('div');
         modal.className = 'enemy-dead-modal';
         modal.innerHTML = `<h2>Enemy Pokémon is dead</h2>`;
-    
+
         document.body.appendChild(modal);
-    
-        gsap.to(modal, {display: 'block', opacity: 1, duration: 0.5});
-    
+
+        gsap.to(modal, { display: 'block', opacity: 1, duration: 0.5 });
+
         setTimeout(() => {
             gsap.to(modal, {
                 opacity: 0,
@@ -314,11 +309,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.createElement('div');
         modal.className = 'user-pokemon-dead-modal';
         modal.innerHTML = `<h2>Your Pokémon is dead</h2>`;
-    
+
         document.body.appendChild(modal);
-    
-        gsap.to(modal, {display: 'block', opacity: 1, duration: 0.5});
-    
+
+        gsap.to(modal, { display: 'block', opacity: 1, duration: 0.5 });
+
         setTimeout(() => {
             gsap.to(modal, {
                 opacity: 0,
