@@ -89,10 +89,8 @@ async function updatePokemonForUser(userId, pokemonId, pokemonData) {
         }
 
         // update pokemon
-        await pokemon.update({
-            ...pokemonData,
-            pokemon_level_id: level.id,
-        });
+        Object.assign(pokemon, pokemonData, { pokemon_level_id: level.id }); //TODO: think about logic
+        await pokemon.save();
 
         // update or create stats for pokemon
         const [stats, created] = await PokemonStats.upsert({

@@ -159,6 +159,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (!data.opponentPokemon.alive || data.opponentPokemon.current_hp <= 0) {
                     if (data.message === "You win!") {
+                        fetch('/api/pokemon/catch', {
+                            method: 'POST',
+                            body: JSON.stringify({ pokemon: data.opponentPokemon.name }),
+                            headers: { 'Content-Type': 'application/json' },
+                        }).then(response => response.json())
+                            .then(data => {
+                                alert(data.message) // Change alert to modal
+                            })
                         showYouWinModal();
                     } else {
                         showEnemyDeadModal();
