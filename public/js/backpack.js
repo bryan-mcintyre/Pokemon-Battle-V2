@@ -1,6 +1,4 @@
 
-// const { use } = require("../../controllers/api/pokemonRoutes");
-
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/api/backpack');
@@ -12,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       throw new Error('Expected an array but received something else');
     }
 
-    backpackContainer.innerHTML = '';
+    backpackContainer.innerHTML ='';
 
     backpackItems.forEach(item => {
       const itemDiv = document.createElement('div');
@@ -32,10 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       useButton.textContent = 'Use';
       useButton.classList.add('use-button');
       useButton.addEventListener('click', async () => {
-
-        // alert(`Using ${item.name} and ${item.effect_type} and ${item.effect_amount}`);
-        console.log(item.name + " | " + item.effect_type)
-        // logic to use the item goes here
 
         // Fetch users Pokemon and show them
         const pokemonData = await fetch(`/api/pokemon/team`);
@@ -73,10 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           pokemonName.classList.add('use-button');
           pokemonName.textContent = `${pokemon.name} ${pokemon.pokemon_stat.current_hp} / ${pokemon.pokemon_stat.max_hp}`;
           pokemonName.value = pokemon.name;
-
           openModal(pokemonName);
-          console.log(pokemonName)
-
           pokemonName.addEventListener('click', async (event) => {
             const selectedPokemon = event.target.value;
             console.log("Selected:" + " " + selectedPokemon)
@@ -96,11 +87,8 @@ document.addEventListener('DOMContentLoaded', async () => {
               else {
                 backpackContainer.removeChild(itemDiv);
               }
-              // alert user why they cant used the item
-              console.log('Request Works!')
             } else {
               alert(`Error: ${useOnPokemon.message}`)
-              console.log('Error:', useOnPokemon.status, useOnPokemon.message);
             }
           });
         });

@@ -145,14 +145,12 @@ router.post('/startBattle', withAuth, async (req, res) => {
 
         //get lvlData
         const levelData = await PokemonLevel.findAll({ raw: true });
-
         req.session.battleState = {
             userPokemon: userPokemon,
             opponentPokemon: opponentPokemon,
             levelData: levelData,
             userTurn: userTurn
         };
-
         res.render('startBattle', {
             userPokemon: userPokemon,
             opponentPokemon: opponentPokemon,

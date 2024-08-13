@@ -10,7 +10,6 @@ class Pokemon extends Model {
         // Define item effect 
         const effectType = effect_type;
         const effectAmount = effect_amount;
-        console.log(`Tipo de efecto: ${effectType} Cantidad: ${effectAmount}`)
         // Call item_effect 
         switch (effectType) {
             case "heal":
@@ -20,14 +19,12 @@ class Pokemon extends Model {
                 const healing = Math.min(restoreHP,maxHP)
 
                 if (pokemonStats.current_hp >= maxHP) {
-                    console.log('Cannot exceed Max HP');
                     return { status: false, message: 'Cannot exceed Max HP'};
                 } else {
                     await PokemonStats.update(
                         { current_hp: healing },
                         { where: { pokemon_id: this.id } }
                     );
-                    console.log("Heal works");
                 }
                 break;
             case "revive":
@@ -40,7 +37,6 @@ class Pokemon extends Model {
                         { alive: true },
                         { where: { id: this.id } }
                     );
-                    console.log("Revive Works")
                 } else { 
                     return { status: false, message: 'Cannot apply to alive Pokemon'}; }
                 break;
@@ -49,7 +45,6 @@ class Pokemon extends Model {
                     { user_id: this.user_id },
                     { where: { id: this.id } }
                 );
-                console.log("Catch works")
                 break;
 
         }
