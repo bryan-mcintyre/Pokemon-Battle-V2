@@ -21,7 +21,7 @@ class Pokemon extends Model {
                 if (pokemonStats.current_hp >= maxHP) {
                     return { status: false, message: 'Cannot exceed Max HP' };
                 } else if (!this.alive) {
-                    return { status: false, message: 'Your Pokemon is now dead. You should resurrect him before giving him heal.' };
+                    return { status: false, message: 'Your Pokemon is dead. Use a revive to bring him back to life before using a potion.' };
                 } else {
                     await PokemonStats.update(
                         { current_hp: healing },
@@ -40,7 +40,7 @@ class Pokemon extends Model {
                         { where: { id: this.id } }
                     );
                 } else {
-                    return { status: false, message: 'Cannot apply to alive Pokemon' };
+                    return { status: false, message: 'Cannot apply to Pokémon that is alive' };
                 }
                 break;
             case "catch": // TODO catch i think we no need it here

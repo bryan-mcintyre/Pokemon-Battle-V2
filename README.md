@@ -194,9 +194,9 @@ This project is licensed under the terms of the [MIT License](LICENSE).
 
 ## Credits
 
-Aleksandr Polbennikov [Aleksandr Polbennikov](https://github.com/iKeyToLife)
-Colin Taaffe [Colin Taaffe](https://github.com/ColinBurner)
-Bryan McIntyre [Bryan McIntyre](https://github.com/bryan-mcintyre)
-Leena Cruz [Leena Cruz](https://github.com/LeenaCruz)
+- [Aleksandr Polbennikov](https://github.com/iKeyToLife)
+- [Colin Taaffe](https://github.com/ColinBurner)
+- [Bryan McIntyre](https://github.com/bryan-mcintyre)
+- [Leena Cruz](https://github.com/LeenaCruz)
 
 
