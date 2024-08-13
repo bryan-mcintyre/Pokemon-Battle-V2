@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await fetch('/api/backpack');
     const backpackItems = await response.json();
-    console.log(response);
     const backpackContainer = document.getElementById('backpack-items');
 
     if (!Array.isArray(backpackItems)) {
