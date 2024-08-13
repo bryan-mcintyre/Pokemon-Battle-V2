@@ -22,6 +22,7 @@ router.get('/', withAuth, async (req, res) => {
                 { model: PokemonStats },
                 { model: Ability, through: PokemonAbility }
             ],
+            order: [['level', 'DESC']]
         });
 
         const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }));
