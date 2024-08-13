@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const { withAuth } = require('../utils/auth');
-const { fetchPokemonByName, fetchRandomPokemon, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
+const { fetchRandomPokemon, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability, PokemonLevel } = require('../models');
 const BattlePokemon = require('../utils/BattlePokemon');
+
 
 // Fetch and display a random Pokémon when the battle starts
 router.get('/', withAuth, async (req, res) => {
@@ -77,6 +78,15 @@ router.post('/startBattle', withAuth, async (req, res) => {
         opponentPokemon.abilities = [randomAbility.dataValues];
 
         const userTurn = userPokemon.speed >= opponentPokemon.speed;
+
+        const userBattlePokemon = new BattlePokemon(userPokemon);
+        const opponentBattlePokemon = new BattlePokemon(opponentPokemon);
+
+
+        userBattlePokemon.triggerAbility();
+
+        opponentBattlePokemon.triggerAbility();
+
 
         //get lvlData
         const levelData = await PokemonLevel.findAll({ raw: true });
