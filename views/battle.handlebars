@@ -1,11 +1,11 @@
 <header>
-    <nav>
-      <ul>
-        <li><a href='/dashboard'>Dashboard</a></li>
-        <li><a href='#' id="logout">Logout</a></li>
+  <nav>
+    <ul>
+      <li><a href='/dashboard'>Dashboard</a></li>
+      <li><a href='#' id="logout">Logout</a></li>
     </ul>
-    </nav>
-  </header>
+  </nav>
+</header>
 
 <main>
   <h2>A wild Pokémon appeared!</h2>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-    <h2 class="select-title">Select a Pokémon</h2>
+  <h2 class="select-title">Select a Pokémon</h2>
   <div id="pokemon-storage" class="bg-container">
     {{#each gallery }}
     <div class="pokemon-card" data-id="{{id}}">
@@ -49,10 +49,10 @@
 
   <div id="battle-modal" class="battle-modal" style="display: none;">
     <div class="battle-modal-content">
-        <h2>Please select your Pokémon for battle!</h2>
-        <button id="battle-modal-ok-button" class="battle-modal-ok-button">Okay!</button>
+      <h2>Please select your Pokémon for battle!</h2>
+      <button id="battle-modal-ok-button" class="battle-modal-ok-button">Okay!</button>
     </div>
-</div>
+  </div>
 </main>
 
 <script src="/js/battle.js"></script>

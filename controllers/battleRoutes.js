@@ -81,15 +81,25 @@ router.post('/startBattle', withAuth, async (req, res) => {
 
         //get lvlData
         const levelData = await PokemonLevel.findAll({ raw: true });
+
+        const userBattlePokemon = new BattlePokemon(userPokemon);
+        const opponentBattlePokemon = new BattlePokemon(opponentPokemon);
+
+        // up stats by ability
+        userBattlePokemon.triggerAbility();
+        // up stats by ability
+        opponentBattlePokemon.triggerAbility();
+
         req.session.battleState = {
-            userPokemon: userPokemon,
-            opponentPokemon: opponentPokemon,
+            userPokemon: userBattlePokemon,
+            opponentPokemon: opponentBattlePokemon,
             levelData: levelData,
             userTurn: userTurn
         };
+
         res.render('startBattle', {
-            userPokemon: userPokemon,
-            opponentPokemon: opponentPokemon,
+            userPokemon: userBattlePokemon,
+            opponentPokemon: opponentBattlePokemon,
             levelData: levelData
         });
     } catch (err) {
