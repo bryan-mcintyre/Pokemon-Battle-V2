@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function isMobileScreen() {
-        return window.innerWidth <= 768; 
+        return window.innerWidth <= 768;
     }
 
     // Attack animation for the user's Pokémon
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     repeat: 5,
                     duration: 0.1,
                     onComplete: () => {
-                        gsap.to('.user-main-pokemon-img', { x: 0, duration: isMobileScreen() ? 0.7 : 0.6});
+                        gsap.to('.user-main-pokemon-img', { x: 0, duration: isMobileScreen() ? 0.7 : 0.6 });
                         gsap.set('.user-main-pokemon-img', { zIndex: 1 });
                         if (typeof onComplete === "function") {
                             onComplete();
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         .catch(error => {
                             console.error('Error during opponent\'s attack:', error);
                         });
-                }, 2500); 
+                }, 2500);
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const { withAuth } = require('../utils/auth');
-const { fetchPokemonByName, fetchRandomPokemon, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
+const { fetchRandomPokemon, fetchBalancedPokemonByName } = require('../utils/pokemonFetch')
 const { User, Pokemon, PokemonStats, PokemonAbility, Ability, PokemonLevel } = require('../models');
 const BattlePokemon = require('../utils/BattlePokemon');
+
 
 // Fetch and display a random Pokémon when the battle starts
 router.get('/', withAuth, async (req, res) => {
@@ -21,6 +22,7 @@ router.get('/', withAuth, async (req, res) => {
                 { model: PokemonStats },
                 { model: Ability, through: PokemonAbility }
             ],
+            order: [['level', 'DESC']]
         });
 
         const convertPokemonData = pokemonData.map(pokemon => pokemon.get({ plain: true }));
