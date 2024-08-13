@@ -1403,7 +1403,7 @@ label {
   }
 
   .battle-action-button {
-    top: 40%; 
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -1441,13 +1441,13 @@ label {
   }
 
   .toggle-storage-button {
-    width: 65%; 
-    padding: 10px; 
+    width: 65%;
+    padding: 10px;
     text-align: center;
   }
 
   .wallet-value {
-    left: 50%; 
+    left: 50%;
     transform: translateX(-50%);
   }
 
@@ -1463,8 +1463,6 @@ label {
 }
 
 @media (max-width: 480px) {
-
-  /* Further adjust for very small screens */
   body {
     padding: 0 10px;
   }
@@ -1611,5 +1609,239 @@ label {
     width: 200px;
     height: 320px;
     margin: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+
+  /* Header adjustments */
+  header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+  }
+
+  header img {
+    width: 100%;
+    max-width: 375px;
+  }
+
+  nav ul {
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  nav ul li {
+    font-size: 14px;
+  }
+
+  /* Main adjustments */
+  main {
+    width: 100%;
+    padding: 0 5px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .pokemon-card h2 {
+    font-size: 14px;
+  }
+
+  .wallet {
+    width: 100%;
+    height: auto;
+    background-size: contain;
+  }
+
+  .wallet-value {
+    font-size: 14px;
+    left: 30px;
+  }
+
+  /* Store and Backpack item adjustments */
+  .store-item,
+  .backpack-item {
+    width: 45%;
+    padding: 10px;
+    margin: 5px 0;
+  }
+
+  .store-item img,
+  .backpack-item img {
+    width: 75px;
+    height: auto;
+  }
+
+  .store-item h2 {
+    font-size: 16px;
+  }
+
+  .backpack-item h2 {
+    font-size: 16px;
+  }
+
+  /* Button adjustments */
+  .toggle-storage-button,
+  .purchase-button,
+  .use-button,
+  .delete-button,
+  .select-button,
+  .battle-action-button,
+  .quit-battle-button {
+    font-size: 12px;
+    padding: 6px;
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .quit-battle-button {
+    width: 80%;
+    bottom: 0;
+    margin: 20px auto 0;
+    top: 50%;
+    left: 45%;
+  }
+
+  /* Battlefield adjustments */
+  .battlefield-background {
+    width: 100%;
+    height: 400px;
+    padding: 10px;
+  }
+
+  .battle-action-button {
+    background: radial-gradient(circle, #dcdcdc, #a9a9a9, #696969, #2f2f2f);
+    color: #FFCC00;
+    font-family: "Press Start 2P", system-ui;
+    font-size: 20px;
+    padding: 6px 15px;
+    border: 2px solid #FFCC00;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: auto;
+    position: absolute;
+    top: 250px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .user-pokemon-card {
+    width: 150px;
+    left: 10px;
+    top: 30%;
+  }
+
+  .opponent-pokemon-card {
+    width: 150px;
+    right: 10px;
+    top: 30%;
+  }
+
+  .user-main-pokemon-img,
+  .opponent-pokemon-card img {
+    width: 120px;
+  }
+
+  .user-main-pokemon-img,
+  .opponent-pokemon-card img {
+    width: 100px;
+    height: auto;
+  }
+
+  .vs-text {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+
+  .pokemon-card,
+  .starter-card {
+    width: 150px;
+    margin: 5px 0;
+  }
+
+  /* Modal adjustments */
+  .store-modal-content,
+  .pokemon-modal-content,
+  .you-win-modal-content,
+  .you-lose-modal-content {
+    width: 80%;
+    max-width: 350px;
+    font-size: 14px;
+  }
+
+  /* Footer adjustments */
+  footer {
+    font-size: 12px;
+    padding: 10px 0;
+  }
+
+  .battle-pokemon-card {
+    width: 160px;
+    height: 350px;
+    margin: 10px auto;
+  }
+
+  .battlefield-background h2 {
+    font-size: 14px;
+  }
+
+  .user-main-pokemon-img {
+    width: 120px;
+  }
+
+  .user-pokemon-card {
+    width: 150px;
+    left: 10px;
+    top: 30%;
+  }
+
+  .user-pokemon-card h2 {
+    font-size: 14px;
+  }
+
+  .user-pokemon-card p {
+    font-size: 12px;
+  }
+
+  .opponent-pokemon-card img {
+    width: 120px;
+  }
+
+  .opponent-pokemon-card {
+    width: 150px;
+    right: 10px;
+    top: 30%;
+  }
+
+  /* Quit Battle Button Adjustment */
+  .quit-battle-button {
+    width: 90%;
+    margin: 10px auto;
+    position: relative;
+    bottom: 0;
+  }
+
+  .you-win-modal,
+  .you-lose-modal {
+    top: 20%;
+  }
+
+  .tooltip-container {
+    position: relative;
+    display: flex;
+    justify-content: right;
+    margin-left: 150px;
   }
 }
