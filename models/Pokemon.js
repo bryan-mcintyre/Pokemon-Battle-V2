@@ -31,8 +31,9 @@ class Pokemon extends Model {
                 break;
             case "revive":
                 if (!this.alive) {
+                    const currentHP = Math.round(pokemonStats.max_hp / 2);
                     await PokemonStats.update(
-                        { current_hp: pokemonStats.max_hp / 2 },
+                        { current_hp: currentHP },
                         { where: { pokemon_id: this.id } }
                     );
                     await Pokemon.update(
@@ -43,13 +44,14 @@ class Pokemon extends Model {
                     return { status: false, message: 'Cannot apply to Pokémon that is alive' };
                 }
                 break;
-            case "catch": // TODO catch i think we no need it here
-                await Pokemon.update(
-                    { user_id: this.user_id },
-                    { where: { id: this.id } }
-                );
+            // case "catch": // TODO catch i think we no need it here
+            //     await Pokemon.update(
+            //         { user_id: this.user_id },
+            //         { where: { id: this.id } }
+            //     );
+            //     break;
+            default:
                 break;
-
         }
 
         return { status: true, message: 'Item used' };
