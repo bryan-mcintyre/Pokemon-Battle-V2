@@ -177,6 +177,8 @@ Add Pokémon attacks that can be chosen during battle, example: slash, bite, tac
 
 Add individual animations for specific attacks.
 
+Add Pokémon center for faster healing of all Pokémon.
+
 ## Repository Link
 
 GitHub Repository:
