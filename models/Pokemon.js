@@ -44,12 +44,6 @@ class Pokemon extends Model {
                     return { status: false, message: 'Cannot apply to Pokémon that is alive' };
                 }
                 break;
-            // case "catch": // TODO catch i think we no need it here
-            //     await Pokemon.update(
-            //         { user_id: this.user_id },
-            //         { where: { id: this.id } }
-            //     );
-            //     break;
             default:
                 break;
         }
