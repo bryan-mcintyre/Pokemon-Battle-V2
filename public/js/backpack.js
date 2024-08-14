@@ -32,11 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Fetch users Pokemon and show them
         const pokemonData = await fetch(`/api/pokemon/team`);
-        console.log(pokemonData);
         const pokemons = await pokemonData.json();
-        console.log(pokemons)
         const pokemonContainer = document.getElementById('pokemon-container');
-
         // Clear modal 
         pokemonContainer.innerHTML = " ";
         // Declare modal

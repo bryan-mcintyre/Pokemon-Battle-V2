@@ -6,7 +6,7 @@ const { fetchPokemonByName } = require('../../utils/pokemonFetch');
 
 
 
-// TODO: post for current user, if he catch or choose pokemon
+// Post for current user, if he catch or choose pokemon
 router.post('/', withAuth, async (req, res) => {
     try {
         const pokemonData = req.body.pokemon
@@ -16,7 +16,6 @@ router.post('/', withAuth, async (req, res) => {
             await createAbilityForPokemon(pokemon.id, pokemonData.abilities[i])
         }
 
-
         res.status(200).json(pokemon);
 
     } catch (err) {
@@ -24,11 +23,9 @@ router.post('/', withAuth, async (req, res) => {
     }
 });
 
-// after win battle, catchPokemon
+// After win battle, catchPokemon
 router.post('/catch', withAuth, async (req, res) => {
     const catching = 1;
-    // const catching = Math.round(Math.random());
-    console.log(catching)
     try {
         if (catching === 1) {
             const pokemonName = req.body.pokemon
@@ -44,7 +41,6 @@ router.post('/catch', withAuth, async (req, res) => {
 
                 await createAbilityForPokemon(pokemon.id, pokemonData.abilities[0].id)
             }
-
 
             res.status(200).json({
                 pokemon: pokemon,
@@ -67,8 +63,6 @@ router.post('/update', withAuth, async (req, res) => {
         const pokemonData = req.body.pokemon
         const user = await User.findByPk(req.session.user_id);
         const { pokemon } = await updatePokemonForUser(user.id, pokemonData.id, pokemonData);
-
-
         res.status(200).json(pokemon);
 
     } catch (err) {
