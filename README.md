@@ -20,27 +20,33 @@ This is a full-stack web application that allows you to play Pokémon in a brand
 This application prompts you to log in or sign up on the home page. When you create an account, you are presented with 3 options to choose a starter Pokémon. When you choose your starter, you are taken to the dashboard where you can see your Pokémon storage and a nav bar for navigating to other areas of the application such as store, backpack and battle. The main function of this application is to battle Pokémon, enjoy finding wild Pokémon with a chance to catch them if you defeat them in battle and be able to level your Pokémon up to earn abilities through battling.
 
 ## User Story
-```AS A user,
+```
+AS A user,
 I WANT to collect Pokémon 
 SO THAT I can battle them
-
-```AS A user,
+```
+```
+AS A user,
 I WANT to be able to heal my Pokémon after battle
 SO THAT I can continue to use them in more battles
-
-```AS A user,
+```
+```
+AS A user,
 I WANT to be able to earn currency
 SO THAT I can buy and sell items for use in the game
-
-```AS A user,
+```
+```
+AS A user,
 I WANT to see an animated battle
 SO THAT I know which Pokémon is attacking and which is being attacked
-
-```AS A user, 
+```
+```
+AS A user, 
 I WANT to be able to catch Pokémon
 SO THAT I can keep adding to my collection
-
-```AS A user,
+```
+```
+AS A user,
 I WANT to level up my Pokémon
 SO THAT they will get stronger
 ```
