@@ -160,6 +160,9 @@ Battle!
 
 ![6 battle view](https://github.com/user-attachments/assets/864efae2-71cd-4fcb-a197-2958439f8258)
 
+## Full Presentation 
+
+[Pokemon Battle Simulator v2 Download](./assets/Pokemon%20Battle%20v2.pdf)
 
 ## Future Development
 
